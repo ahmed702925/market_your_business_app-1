@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:io' show Platform;
 
+import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:shoryanelhayat_user/Animation/FadeAnimation.dart';
 import 'package:shoryanelhayat_user/models/user_nav.dart';
 import 'package:shoryanelhayat_user/notifiers/campaign_notifier.dart';
@@ -13,7 +12,6 @@ import 'package:shoryanelhayat_user/screens/navigation_drawer.dart';
 import 'package:shoryanelhayat_user/screens/org_widgets/movie_details_page.dart';
 import 'package:shoryanelhayat_user/screens/organization_activities.dart';
 import 'package:app_settings/app_settings.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -30,8 +28,7 @@ class OrgOverviewScreen extends StatefulWidget {
 }
 
 class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
-  StreamSubscription connectivitySubscription;
-  ConnectivityResult _previousResult;
+  StreamSubscription? connectivitySubscription;
   bool dialogShown = false;
 
   void _showErrorDialog(String message) {
@@ -41,13 +38,13 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
         title: const Text('تسجيل دخول'),
         content: Text(message),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: const Text('ليس الأن'),
             onPressed: () {
               Navigator.of(ctx).pop();
             },
           ),
-          FlatButton(
+          TextButton(
             child: const Text('تسجيل الدخول'),
             onPressed: () {
               Navigator.of(ctx).pop();
@@ -63,128 +60,128 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
 
   ////////////////////////////////////////////////////
   Future<UserNav> loadSharedPrefs() async {
-    UserNav user;
+    UserNav? user;
     try {
       SharedPref sharedPref = SharedPref();
       user = UserNav.fromJson(await sharedPref.read("user"));
     } catch (error) {
       // do something
     }
-    return user;
+    return user!;
   }
 
-  Future<bool> checkinternet() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        return Future.value(true);
-      }
-    } on SocketException catch (_) {
-      return Future.value(false);
-    }
-  }
+  // Future<bool> checkinternet() async {
+  //   try {
+  //     final result = await InternetAddress.lookup('google.com');
+  //     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+  //       return Future.value(true);
+  //     }
+  //   } on SocketException catch (_) {
+  //     return Future.value(false);
+  //   }
+  // }
 
   @override
   void initState() {
     super.initState();
-    connectivitySubscription = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult connresult) {
-      if (connresult == ConnectivityResult.none) {
-        dialogShown = true;
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            child: (Platform.isAndroid)
-                ? AlertDialog(
-                    title: const Text('حدث خطأ ما '),
-                    content: Text(
-                        'فقدنا الاتصال بالانترنت  ،\n تأكد من اتصالك وحاول مرة أخرى'),
-                    actions: <Widget>[
-                      FlatButton(
-                          onPressed: () => {
-                                SystemChannels.platform
-                                    .invokeMethod('SystemNavigator.pop'),
-                              },
-                          child: Text(
-                            'خروج ',
-                            style: TextStyle(color: Colors.red),
-                          )),
-                      FlatButton(
-                          onPressed: () => {
-                                AppSettings.openWIFISettings(),
-                              },
-                          child: Text(
-                            ' اعدادت Wi-Fi ',
-                            style: TextStyle(color: Colors.blue),
-                          )),
-                      FlatButton(
-                          onPressed: () => {
-                                AppSettings.openDataRoamingSettings(),
-                              },
-                          child: Text(
-                            ' اعدادت الباقه ',
-                            style: TextStyle(
-                              color: Colors.blue,
-                            ),
-                          ))
-                    ],
-                  )
-                : CupertinoAlertDialog(
-                    title: const Text('حدث خطأ ما '),
-                    content: Text(
-                        'فقدنا الاتصال بالانترنت  ،\n تأكد من اتصالك وحاول مرة أخرى'),
-                    actions: <Widget>[
-                      CupertinoDialogAction(
-                          onPressed: () => {
-                                AppSettings.openWIFISettings(),
-                              },
-                          child: Text(
-                            ' اعدادت Wi-Fi ',
-                            style: TextStyle(color: Colors.blue),
-                          )),
-                      CupertinoDialogAction(
-                          onPressed: () => {
-                                AppSettings.openDataRoamingSettings(),
-                              },
-                          child: Text(
-                            ' اعدادت الباقه ',
-                            style: TextStyle(
-                              color: Colors.blue,
-                            ),
-                          )),
-                      CupertinoDialogAction(
-                          onPressed: () => {
-                                SystemChannels.platform
-                                    .invokeMethod('SystemNavigator.pop'),
-                              },
-                          child: Text(
-                            'خروج ',
-                            style: TextStyle(color: Colors.red),
-                          ))
-                    ],
-                  ));
-      } else if (_previousResult == ConnectivityResult.none) {
-        checkinternet().then((result) {
-          if (result == true) {
-            if (dialogShown == true) {
-              dialogShown = false;
+    // connectivitySubscription = Connectivity()
+    //     .onConnectivityChanged
+    //     .listen((ConnectivityResult connresult) {
+    //   if (connresult == ConnectivityResult.none) {
+    //     dialogShown = true;
+    //     showDialog(
+    //         context: context,
+    //         barrierDismissible: false,
+    //         child: (Platform.isAndroid)
+    //             ? AlertDialog(
+    //                 title: const Text('حدث خطأ ما '),
+    //                 content: Text(
+    //                     'فقدنا الاتصال بالانترنت  ،\n تأكد من اتصالك وحاول مرة أخرى'),
+    //                 actions: <Widget>[
+    //                   TextButton(
+    //                       onPressed: () => {
+    //                             SystemChannels.platform
+    //                                 .invokeMethod('SystemNavigator.pop'),
+    //                           },
+    //                       child: Text(
+    //                         'خروج ',
+    //                         style: TextStyle(color: Colors.red),
+    //                       )),
+    //                   TextButton(
+    //                       onPressed: () => {
+    //                             AppSettings.openWIFISettings(),
+    //                           },
+    //                       child: Text(
+    //                         ' اعدادت Wi-Fi ',
+    //                         style: TextStyle(color: Colors.blue),
+    //                       )),
+    //                   TextButton(
+    //                       onPressed: () => {
+    //                             AppSettings.openDataRoamingSettings(),
+    //                           },
+    //                       child: Text(
+    //                         ' اعدادت الباقه ',
+    //                         style: TextStyle(
+    //                           color: Colors.blue,
+    //                         ),
+    //                       ))
+    //                 ],
+    //               )
+    //             : CupertinoAlertDialog(
+    //                 title: const Text('حدث خطأ ما '),
+    //                 content: Text(
+    //                     'فقدنا الاتصال بالانترنت  ،\n تأكد من اتصالك وحاول مرة أخرى'),
+    //                 actions: <Widget>[
+    //                   CupertinoDialogAction(
+    //                       onPressed: () => {
+    //                             AppSettings.openWIFISettings(),
+    //                           },
+    //                       child: Text(
+    //                         ' اعدادت Wi-Fi ',
+    //                         style: TextStyle(color: Colors.blue),
+    //                       )),
+    //                   CupertinoDialogAction(
+    //                       onPressed: () => {
+    //                             AppSettings.openDataRoamingSettings(),
+    //                           },
+    //                       child: Text(
+    //                         ' اعدادت الباقه ',
+    //                         style: TextStyle(
+    //                           color: Colors.blue,
+    //                         ),
+    //                       )),
+    //                   CupertinoDialogAction(
+    //                       onPressed: () => {
+    //                             SystemChannels.platform
+    //                                 .invokeMethod('SystemNavigator.pop'),
+    //                           },
+    //                       child: Text(
+    //                         'خروج ',
+    //                         style: TextStyle(color: Colors.red),
+    //                       ))
+    //                 ],
+    //               ));
+    //   } else if (_previousResult == ConnectivityResult.none) {
+    //     checkinternet().then((result) {
+    //       if (result == true) {
+    //         if (dialogShown == true) {
+    //           dialogShown = false;
 
-              getOrganizationsAndCampaign();
+    //           getOrganizationsAndCampaign();
 
-              Navigator.pop(context);
-            }
-          }
-        });
-      }
-      _previousResult = connresult;
-    });
+    //           Navigator.pop(context);
+    //         }
+    //       }
+    //     });
+    //   }
+    //   _previousResult = connresult;
+    // });
   }
 
   @override
   void dispose() {
     super.dispose();
-    connectivitySubscription.cancel();
+    // connectivitySubscription.cancel();
   }
 
   var _isLoading = false;
@@ -212,7 +209,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
 
     await Provider.of<OrganizationNotifier>(context).getOrganizations();
 
-    await Provider.of<CampaignNotifier>(context).fetchAndSetProducts();
+    await Provider.of<CampaignNotifier>(context, listen: false).fetchAndSetProducts();
 
     setState(() {
       _isLoading = false;
@@ -225,7 +222,6 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
         MediaQuery.of(context).orientation == Orientation.landscape;
 
     final _width = MediaQuery.of(context).size.width;
-    final _height = MediaQuery.of(context).size.height;
     var appBar = AppBar(
       title: new Text(
         'شريان الحياة',
@@ -327,7 +323,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
         centerTitle: true,
         backgroundColor: Colors.green,
       ),
-      drawer: NavigationDrawer(),
+      drawer: CustomNavigationDrawer(),
       backgroundColor: Colors.green[50],
       body: _isLoading
           ? Center(
@@ -344,20 +340,34 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                       aspectRatio: 4 / 2,
                       child: new Container(
                         // height:(_height/3)<150?160: _height/3,
-                        child: new Carousel(
-                          boxFit: BoxFit.cover,
-                          images: [
-                            AssetImage('assets/offers/sh2.png'),
-                            AssetImage('assets/offers/Offer2.jpg'),
-                            AssetImage('assets/offers/offer6.jpg'),
-                            AssetImage('assets/offers/offer7.jpg'),
-                            AssetImage('assets/offers/Offer5.jpg'),
+                        child: FlutterCarousel(
+                          options: CarouselOptions(
+                            height: 200.0,
+                            autoPlay: true,
+                            autoPlayInterval: Duration(seconds: 3),
+                            autoPlayAnimationDuration:
+                                Duration(milliseconds: 3000),
+                            // curve: Curves.fastLinearToSlowEaseIn,
+                            enlargeCenterPage: true,
+                            // dotSize: 4.0,
+                            // dotSpacing: 15.0,
+                            // dotIncreasedColor: Colors.blue,
+                            // dotBgColor: Colors.transparent,
+                            // indicatorBgPadding: 2.0,
+                            viewportFraction: 0.9,
+                          ),
+                          items: [
+                            Image.asset('assets/offers/sh2.png',
+                                fit: BoxFit.cover),
+                            Image.asset('assets/offers/Offer2.jpg',
+                                fit: BoxFit.cover),
+                            Image.asset('assets/offers/offer6.jpg',
+                                fit: BoxFit.cover),
+                            Image.asset('assets/offers/offer7.jpg',
+                                fit: BoxFit.cover),
+                            Image.asset('assets/offers/Offer5.jpg',
+                                fit: BoxFit.cover),
                           ],
-                          autoplay: true,
-                          animationCurve: Curves.fastLinearToSlowEaseIn,
-                          animationDuration: Duration(milliseconds: 3000),
-                          dotSize: 4.0,
-                          indicatorBgPadding: 2.0,
                         ),
                       ),
                     ),
@@ -373,32 +383,32 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            RaisedButton(
-                              color: Color.fromRGBO(1, 123, 126, 1),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(24.0),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color.fromRGBO(
+                                    1, 123, 126, 1), // Background color
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                ),
+                                textStyle: TextStyle(
+                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               onPressed: () async {
-                                // showCustomDialogWithImage(context);
-                                UserNav userLoad = await loadSharedPrefs();
-                                if (userLoad == null) {
-                                  _showErrorDialog("برجاء تسجيل الدخول أولا ");
-                                } else {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) {
-                                        return FastDonationScreen();
-                                      },
-                                    ),
-                                  );
-                                }
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return FastDonationScreen();
+                                    },
+                                  ),
+                                );
                               },
                               child: Text(
                                 'تبرع الآن',
                                 style: TextStyle(
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ],
@@ -505,15 +515,19 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                             crossAxisAlignment:
                                                 WrapCrossAlignment.center,
                                             children: <Widget>[
-                                              RaisedButton(
-                                                //color: Colors.green[50],
-                                                color: Colors.white,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      new BorderRadius.circular(
-                                                          24.0),
-                                                  // side: BorderSide(
-                                                  //     color: Colors.black),
+                                              ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors
+                                                      .white, // Background color
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            24.0),
+                                                  ),
+                                                  textStyle: TextStyle(
+                                                    color: Colors.green[
+                                                        900], // Text color
+                                                  ),
                                                 ),
                                                 onPressed: () {
                                                   orgNotifier
@@ -522,71 +536,23 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                                           .orgList[index];
 
                                                   Navigator.push(
-                                                      context,
-                                                      PageRouteBuilder(
-                                                        pageBuilder: (c, a1,
-                                                                a2) =>
-                                                            MovieDetailsPage(
-                                                          orgNotifier
-                                                              .orgList[index],
-                                                        ),
-                                                        transitionsBuilder: (c,
-                                                                anim,
-                                                                a2,
-                                                                child) =>
-                                                            FadeTransition(
-                                                                opacity: anim,
-                                                                child: child),
-                                                        transitionDuration:
-                                                            Duration(
-                                                                milliseconds:
-                                                                    500),
-                                                      ));
-                                                },
-                                                child: Text(
-                                                  'تفاصيل',
-                                                  style: TextStyle(
-                                                      // fontSize: 18.0,
-                                                      // color: Colors.black,
-                                                      color: Colors.green[900]),
-                                                ),
-                                              ),
-                                              RaisedButton(
-                                                //color: Colors.green[50],
-                                                color: Colors.white,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      new BorderRadius.circular(
-                                                          24),
-                                                  // side: BorderSide(
-                                                  //     color: Colors.black),
-                                                ),
-                                                onPressed: () {
-                                                  orgNotifier
-                                                          .currentOrganization =
-                                                      orgNotifier
-                                                          .orgList[index];
-                                                  Navigator.push(
                                                     context,
                                                     PageRouteBuilder(
                                                       pageBuilder: (context,
-                                                          animation1,
-                                                          animation2) {
-                                                        return OrganizationActivity(
-                                                            orgNotifier
-                                                                .orgList[index]
-                                                                .id);
-                                                      },
-                                                      transitionsBuilder:
-                                                          (context,
                                                               animation1,
-                                                              animation2,
-                                                              child) {
-                                                        return FadeTransition(
-                                                          opacity: animation1,
-                                                          child: child,
-                                                        );
-                                                      },
+                                                              animation2) =>
+                                                          MovieDetailsPage(
+                                                              orgNotifier
+                                                                      .orgList[
+                                                                  index]),
+                                                      transitionsBuilder: (context,
+                                                              animation,
+                                                              secondaryAnimation,
+                                                              child) =>
+                                                          FadeTransition(
+                                                              opacity:
+                                                                  animation,
+                                                              child: child),
                                                       transitionDuration:
                                                           Duration(
                                                               milliseconds:
@@ -594,13 +560,56 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                                     ),
                                                   );
                                                 },
-                                                child: Text(
-                                                  'أنشطة',
-                                                  style: TextStyle(
-                                                      // fontSize: 16.0,
-                                                      // color: Colors.black,
-                                                      color: Colors.green[900]),
+                                                child: Text('تفاصيل'),
+                                              ),
+                                              ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors
+                                                      .white, // Background color
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            24.0),
+                                                  ),
+                                                  textStyle: TextStyle(
+                                                    color: Colors.green[
+                                                        900], // Text color
+                                                  ),
                                                 ),
+                                                onPressed: () {
+                                                  orgNotifier
+                                                          .currentOrganization =
+                                                      orgNotifier
+                                                          .orgList[index];
+
+                                                  Navigator.push(
+                                                    context,
+                                                    PageRouteBuilder(
+                                                      pageBuilder: (context,
+                                                              animation1,
+                                                              animation2) =>
+                                                          OrganizationActivity(
+                                                              orgNotifier
+                                                                  .orgList[
+                                                                      index]
+                                                                  .id),
+                                                      transitionsBuilder:
+                                                          (context,
+                                                                  animation1,
+                                                                  animation2,
+                                                                  child) =>
+                                                              FadeTransition(
+                                                                  opacity:
+                                                                      animation1,
+                                                                  child: child),
+                                                      transitionDuration:
+                                                          Duration(
+                                                              milliseconds:
+                                                                  500),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Text('أنشطة'),
                                               ),
                                             ],
                                           )
@@ -622,7 +631,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
     );
     final bodyPortrait = new Scaffold(
       appBar: appBar,
-      drawer: NavigationDrawer(),
+      drawer: CustomNavigationDrawer(),
       backgroundColor: Colors.green[50],
       body: _isLoading
           ? Center(
@@ -655,20 +664,47 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                       child: Container(
 //                        width: MediaQuery.of(context).size.width / 2,
 //                        height:
-                        child: new Carousel(
-//                          boxFit: BoxFit.cover,
-                          images: [
-                            AssetImage('assets/offers/sh2.png'),
-                            AssetImage('assets/offers/Offer2.jpg'),
-                            AssetImage('assets/offers/offer6.jpg'),
-                            AssetImage('assets/offers/offer7.jpg'),
+                        child: FlutterCarousel(
+                          options: CarouselOptions(
+                            height: 200.0,
+                            autoPlay: true,
+                            autoPlayInterval: Duration(seconds: 3),
+                            autoPlayAnimationDuration:
+                                Duration(milliseconds: 3000),
+                            // curve: Curves.fastLinearToSlowEaseIn,
+                            enlargeCenterPage: true,
+                            // dotSize: 4.0,
+                            // dotSpacing: 15.0,
+                            // dotIncreasedColor: Colors.blue,
+                            // dotBgColor: Colors.transparent,
+                            // indicatorBgPadding: 2.0,
+                            viewportFraction: 0.9,
+                          ),
+                          items: [
+                            Image.asset('assets/offers/sh2.png',
+                                fit: BoxFit.cover),
+                            Image.asset('assets/offers/Offer2.jpg',
+                                fit: BoxFit.cover),
+                            Image.asset('assets/offers/offer6.jpg',
+                                fit: BoxFit.cover),
+                            Image.asset('assets/offers/offer7.jpg',
+                                fit: BoxFit.cover),
                           ],
-                          autoplay: true,
-                          animationCurve: Curves.fastLinearToSlowEaseIn,
-                          animationDuration: Duration(milliseconds: 5000),
-                          dotSize: 4.0,
-                          indicatorBgPadding: 2.0,
                         ),
+//                         new Carousel(
+// //                          boxFit: BoxFit.cover,
+//                           images: [
+//                             AssetImage('assets/offers/sh2.png'),
+//                             AssetImage('assets/offers/Offer2.jpg'),
+//                             AssetImage('assets/offers/offer6.jpg'),
+//                             AssetImage('assets/offers/offer7.jpg'),
+//                           ],
+//                           autoplay: true,
+//                           animationCurve: Curves.fastLinearToSlowEaseIn,
+//                           animationDuration: Duration(milliseconds: 5000),
+//                           dotSize: 4.0,
+//                           indicatorBgPadding: 2.0,
+//                         ),
                       ),
                     ),
                   ),
@@ -695,33 +731,30 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          RaisedButton(
-                            color: Color.fromRGBO(1, 123, 126, 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(24.0),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromRGBO(
+                                  1, 123, 126, 1), // Background color
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    24.0), // Border radius
+                              ),
+                              textStyle: TextStyle(
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white, // Text color
+                              ),
                             ),
                             onPressed: () async {
-                              // showCustomDialogWithImage(context);
-                              UserNav userLoad = await loadSharedPrefs();
-                              if (userLoad == null) {
-                                _showErrorDialog("برجاء تسجيل الدخول أولا ");
-                              } else {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) {
-                                      return FastDonationScreen();
-                                    },
-                                  ),
-                                );
-                              }
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return FastDonationScreen();
+                                  },
+                                ),
+                              );
                             },
-                            child: Text(
-                              'تبرع الآن',
-                              style: TextStyle(
-                                  fontSize: 22.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
+                            child: Text('تبرع الآن'),
                           ),
                         ],
                       ),
@@ -778,35 +811,37 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                                   0.27,
                                               width: _width * .38,
                                               decoration: new BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: Colors.white,
-                                                  boxShadow: [
-                                                    new BoxShadow(
-                                                        color: Colors.blueGrey
-                                                            .withAlpha(70),
-                                                        offset: const Offset(
-                                                            2.0, 2.0),
-                                                        blurRadius: 2.0)
-                                                  ],
-                                                  image: new DecorationImage(
-                                                    image: orgNotifier
-                                                                    .orgList[
-                                                                        index]
-                                                                    .logo !=
-                                                                null &&
-                                                            orgNotifier
-                                                                    .orgList[
-                                                                        index]
-                                                                    .logo !=
-                                                                ""
-                                                        ? new NetworkImage(
-                                                            orgNotifier
-                                                                .orgList[index]
-                                                                .logo)
-                                                        : Container(),
-                                                    fit: BoxFit.contain,
-                                                  )),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                  new BoxShadow(
+                                                      color: Colors.blueGrey
+                                                          .withAlpha(70),
+                                                      offset: const Offset(
+                                                          2.0, 2.0),
+                                                      blurRadius: 2.0)
+                                                ],
+                                                image: DecorationImage(
+                                                  image: orgNotifier
+                                                                  .orgList[
+                                                                      index]
+                                                                  .logo !=
+                                                              null &&
+                                                          orgNotifier
+                                                                  .orgList[
+                                                                      index]
+                                                                  .logo !=
+                                                              ""
+                                                      ? NetworkImage(orgNotifier
+                                                              .orgList[index]
+                                                              .logo)
+                                                          as ImageProvider
+                                                      : Container()
+                                                          as ImageProvider,
+                                                  fit: BoxFit.contain,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                           new SizedBox(
@@ -942,77 +977,82 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                                     children: <Widget>[
                                                       Expanded(
                                                         child: Container(
-                                                          margin:
-                                                              EdgeInsets.only(
-                                                                  left: 5),
-                                                          child: RaisedButton(
-                                                            //color: Colors.green[50],
-                                                            color: Colors.white,
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  new BorderRadius
+                                                            margin:
+                                                                EdgeInsets.only(
+                                                                    left: 5),
+                                                            child:
+                                                                ElevatedButton(
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                backgroundColor: Colors
+                                                                    .white, // Background color
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
                                                                           .circular(
-                                                                      24.0),
-                                                              // side: BorderSide(
-                                                              //     color: Colors.black),
-                                                            ),
-                                                            onPressed: () {
-                                                              orgNotifier
-                                                                      .currentOrganization =
-                                                                  orgNotifier
-                                                                          .orgList[
-                                                                      index];
+                                                                              24.0),
+                                                                ),
+                                                              ),
+                                                              onPressed: () {
+                                                                orgNotifier
+                                                                        .currentOrganization =
+                                                                    orgNotifier
+                                                                            .orgList[
+                                                                        index];
 
-                                                              Navigator.push(
+                                                                Navigator.push(
                                                                   context,
                                                                   PageRouteBuilder(
-                                                                    pageBuilder: (c,
-                                                                            a1,
-                                                                            a2) =>
+                                                                    pageBuilder: (context,
+                                                                            animation1,
+                                                                            animation2) =>
                                                                         MovieDetailsPage(
                                                                       orgNotifier
                                                                               .orgList[
                                                                           index],
                                                                     ),
-                                                                    transitionsBuilder: (c,
-                                                                            anim,
-                                                                            a2,
+                                                                    transitionsBuilder: (context,
+                                                                            animation,
+                                                                            secondaryAnimation,
                                                                             child) =>
                                                                         FadeTransition(
                                                                             opacity:
-                                                                                anim,
+                                                                                animation,
                                                                             child:
                                                                                 child),
                                                                     transitionDuration:
                                                                         Duration(
                                                                             milliseconds:
                                                                                 500),
-                                                                  ));
-                                                            },
-                                                            child: Text(
-                                                              'تفاصيل',
-                                                              style: TextStyle(
-                                                                  // fontSize: 18.0,
-                                                                  // color: Colors.black,
+                                                                  ),
+                                                                );
+                                                              },
+                                                              child: Text(
+                                                                'تفاصيل',
+                                                                style:
+                                                                    TextStyle(
                                                                   color: Colors
                                                                           .green[
-                                                                      900]),
-                                                            ),
-                                                          ),
-                                                        ),
+                                                                      900],
+                                                                ),
+                                                              ),
+                                                            )),
                                                       ),
                                                       Expanded(
-                                                        child: RaisedButton(
-                                                          //color: Colors.green[50],
-                                                          color: Colors.white,
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                new BorderRadius
-                                                                    .circular(24),
-                                                            // side: BorderSide(
-                                                            //     color: Colors.black),
+                                                        child: ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                            backgroundColor: Colors
+                                                                .white, // Background color
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          24),
+                                                            ),
                                                           ),
                                                           onPressed: () {
                                                             orgNotifier
@@ -1054,11 +1094,9 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                                           child: Text(
                                                             'أنشطة',
                                                             style: TextStyle(
-                                                                // fontSize: 16.0,
-                                                                // color: Colors.black,
-                                                                color: Colors
-                                                                        .green[
-                                                                    900]),
+                                                              color: Colors
+                                                                  .green[900],
+                                                            ),
                                                           ),
                                                         ),
                                                       ),

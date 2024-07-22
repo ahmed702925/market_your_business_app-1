@@ -1,19 +1,20 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:another_flushbar/flushbar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shoryanelhayat_user/models/user_nav.dart';
 import 'package:shoryanelhayat_user/providers/auth.dart';
 import 'package:shoryanelhayat_user/providers/shard_pref.dart';
 import 'package:shoryanelhayat_user/providers/usersProvider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:google_fonts_arabic/fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/usersProvider.dart';
 import 'login_screen.dart';
 import 'org_widgets/arc_banner_image.dart';
 
@@ -29,20 +30,20 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  UsersPtovider usersPtovider;
-  UserNav userLoad;
+  UsersProvider? usersProvider;
+  UserNav? userLoad;
   var _isLoadImg = false;
   var _edited = false;
   var editedClicked = false;
   var _submitLoading = false;
-  File _image;
-  String userName;
+  XFile? _image;
+  String? userName;
 
   final GlobalKey<FormState> _formKey = GlobalKey();
 //  final globalKey = GlobalKey<ScaffoldState>();
 
   Future<UserNav> loadSharedPrefs() async {
-    UserNav user;
+    UserNav? user;
     try {
       SharedPref sharedPref = SharedPref();
       user = UserNav.fromJson(await sharedPref.read("user"));
@@ -52,18 +53,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     } catch (Excepetion) {
       // do something
     }
-    return user;
+    return user!;
   }
 
   Future<String> uploadImage(File image) async {
-    StorageReference storageReference =
+    String? _downloadUrl;
+    Reference storageReference =
         FirebaseStorage.instance.ref().child(image.path.split('/').last);
-    StorageUploadTask uploadTask = storageReference.putFile(image);
-    await uploadTask.onComplete;
-
-    String _downloadUrl = await storageReference.getDownloadURL();
-
-    return _downloadUrl;
+    UploadTask uploadTask = storageReference.putFile(image);
+    uploadTask.then((res) async {
+      _downloadUrl = await storageReference.getDownloadURL();
+    });
+    return _downloadUrl!;
   }
 
   void _showErrorDialog(String message) {
@@ -76,13 +77,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 title: const Text('تسجيل خروج'),
                 content: Text(message),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: const Text('الغاء'),
                     onPressed: () {
                       Navigator.of(ctx).pop();
                     },
                   ),
-                  FlatButton(
+                  TextButton(
                     child: const Text(
                       'نعم',
                       style: TextStyle(
@@ -129,8 +130,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   Future getImage() async {
-    File img;
-    img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    // File img;
+    // img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? img = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (img != null) {
         _image = img;
@@ -154,7 +157,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
+    Theme.of(context);
     var textTheme = Theme.of(context).textTheme;
     var screenWidth = MediaQuery.of(context).size.width;
     var column = Column(
@@ -190,10 +193,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                     Border.all(color: Colors.white, width: 5)),
                             child: _isLoadImg
                                 ? CircleAvatar(
-                                    backgroundImage: FileImage(_image)
+                                    backgroundImage:
+                                        FileImage(File(_image!.path))
                                     // radius: 40.0,
                                     )
-                                : userLoad.userImage == null
+                                : userLoad!.userImage == null
                                     ? CircleAvatar(
                                         backgroundImage: AssetImage(
                                             "assets/images/profile2.png"),
@@ -201,7 +205,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                       )
                                     : CircleAvatar(
                                         backgroundImage:
-                                            NetworkImage(userLoad.userImage),
+                                            NetworkImage(userLoad!.userImage!),
                                         // radius: 40.0,
                                       ),
                           ),
@@ -246,13 +250,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         title: Padding(
           padding: const EdgeInsets.only(left: 40),
           child: Center(
-            child: const Text(
+            child: Text(
               'الملف الشخصى',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: ArabicFonts.Changa,
-                  package: 'google_fonts_arabic',
-                  fontWeight: FontWeight.bold),
+              style: GoogleFonts.amiri(
+                fontSize: 18,
+              ),
             ),
           ),
         ),
@@ -277,7 +279,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       children: [
                         Text(
                           'اسم المستخدم',
-                          style: textTheme.subtitle1.copyWith(fontSize: 21.0),
+                          style:
+                              textTheme.titleMedium!.copyWith(fontSize: 21.0),
                         ),
                         SizedBox(height: 5.0),
                         Row(
@@ -287,9 +290,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                             !editedClicked
                                 ? Text(
                                     userName == null
-                                        ? userLoad.userName
-                                        : userName,
-                                    style: textTheme.bodyText2.copyWith(
+                                        ? userLoad!.userName!
+                                        : userName!,
+                                    style: textTheme.bodyMedium!.copyWith(
                                       color: Colors.black45,
                                       fontSize: 18.0,
                                     ),
@@ -302,11 +305,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                       key: _formKey,
                                       child: TextFormField(
                                         initialValue: userName == null
-                                            ? userLoad.userName
+                                            ? userLoad!.userName
                                             : userName,
                                         validator: (value) {
-                                          if (value.length < 3 ||
-                                              value == null) {
+                                          if (value!.length < 3) {
                                             bool spaceRex =
                                                 new RegExp(r"^\\s+$")
                                                     .hasMatch(value);
@@ -351,12 +353,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         Text(
                           'البريد الإلكتروني',
-                          style: textTheme.subtitle1.copyWith(fontSize: 21.0),
+                          style:
+                              textTheme.titleMedium!.copyWith(fontSize: 21.0),
                         ),
                         SizedBox(height: 5.0),
                         Text(
-                          userLoad.email,
-                          style: textTheme.bodyText2.copyWith(
+                          userLoad!.email!,
+                          style: textTheme.bodyMedium!.copyWith(
                             color: Colors.black45,
                             fontSize: 18.0,
                           ),
@@ -374,7 +377,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         //   ),
                         // ),
                         SizedBox(height: 5.0),
-                        FlatButton(
+                        TextButton(
                           child: Text(
                             ' تغير كلمة المرور',
                             style: TextStyle(
@@ -384,9 +387,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           ),
                           onPressed: () async {
                             try {
-                              print("Email is : " + userLoad.email);
+                              print("Email is : " + userLoad!.email!);
                               Auth auth = new Auth();
-                              await auth.resetPassword(userLoad.email);
+                              await auth.resetPassword(userLoad!.email!);
                               Flushbar(
                                 message: 'تم إرسال رابط تغيير كلمة المرور',
                                 icon: Icon(
@@ -396,7 +399,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                 ),
                                 duration: Duration(seconds: 3),
                                 margin: const EdgeInsets.all(8),
-                                borderRadius: 8,
+                                borderRadius: BorderRadius.circular(8),
                               )..show(context);
                             } catch (error) {
                               const errorMessage =
@@ -407,102 +410,120 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         if (_edited)
                           Container(
+                              height: 45,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 80, vertical: 20),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      Colors.green, // Background color
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    // side: BorderSide(color: Colors.green, width: 2),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    !_submitLoading
+                                        ? Text(
+                                            ' حفظ',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 14.0,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )
+                                        : CircularProgressIndicator(
+                                            backgroundColor: Colors.white,
+                                          ),
+                                  ],
+                                ),
+                                onPressed: () async {
+                                  // if (!_formKey.currentState.validate()) {
+                                  //   // Invalid!
+                                  //   print("formKey.currentState IS Invalid");
+                                  //   return;
+                                  // }
+                                  setState(() {
+                                    _submitLoading = true;
+                                  });
+                                  String imageUrl;
+                                  if (userName == null) {
+                                    userName = userLoad!.userName;
+                                  }
+                                  if (_image == null) {
+                                    imageUrl = userLoad!.userImage!;
+                                  } else {
+                                    imageUrl =
+                                        await uploadImage(File(_image!.path));
+                                  }
+                                  try {
+                                    await Provider.of<UsersProvider>(context,
+                                            listen: false)
+                                        .updateUser(
+                                      userLoad!.id!,
+                                      userName!,
+                                      userLoad!.email!,
+                                      imageUrl,
+                                    );
+                                    Flushbar(
+                                        message: 'تم تعديل بياناتك بنجاح',
+                                        icon: Icon(
+                                          Icons.thumb_up,
+                                          size: 28.0,
+                                          color: Colors.blue[300],
+                                        ),
+                                        duration: Duration(seconds: 3),
+                                        margin: EdgeInsets.all(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0))
+                                      ..show(context);
+                                    setState(() {
+                                      _submitLoading = false;
+                                    });
+                                  } catch (error) {
+                                    print(error);
+                                    const errorMessage = ' حدث خطا ما';
+                                    _showErrorDialog(errorMessage);
+                                  }
+                                },
+                              )),
+                        Container(
                             height: 45,
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 80, vertical: 20),
-                            child: RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0),
-                                //  side: BorderSide(color: Colors.green, width: 2),
+                            margin: const EdgeInsets.fromLTRB(80, 100, 80, 10),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.green,
+                                backgroundColor: Colors.white, // Text color
+                                side: BorderSide(
+                                    color: Colors.green,
+                                    width: 2), // Border color and width
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      30.0), // Button border radius
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 12.0,
+                                    horizontal: 20.0), // Padding
                               ),
-                              color: Colors.green,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  _submitLoading == false
-                                      ? Text(
-                                          ' حفظ',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 14.0,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      : CircularProgressIndicator(
-                                          backgroundColor: Colors.white,
-                                        ),
+                                  Text(
+                                    'تسجيل خروج',
+                                    style: TextStyle(
+                                      color: Colors.green, // Text color
+                                      fontSize: 14.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ],
                               ),
-                              onPressed: () async {
-                                // if (!_formKey.currentState.validate()) {
-                                //   // Invalid!
-                                //   print("formKey.currentState IS Invalid");
-                                //   return;
-                                // }
-                                setState(() {
-                                  _submitLoading = true;
-                                });
-                                String imageUrl;
-                                if (userName == null) {
-                                  userName = userLoad.userName;
-                                }
-                                if (_image == null) {
-                                  imageUrl = userLoad.userImage;
-                                } else {
-                                  imageUrl = await uploadImage(_image);
-                                }
-                                try {
-                                  await Provider.of<UsersPtovider>(context,
-                                          listen: false)
-                                      .apdateUser(userLoad.id, userName,
-                                          userLoad.email, imageUrl);
-                                  Flushbar(
-                                    message: 'تم تعديل بياناتك بنجاح',
-                                    icon: Icon(
-                                      Icons.thumb_up,
-                                      size: 28.0,
-                                      color: Colors.blue[300],
-                                    ),
-                                    duration: Duration(seconds: 3),
-                                    margin: EdgeInsets.all(8),
-                                    borderRadius: 8,
-                                  )..show(context);
-                                  setState(() {
-                                    _submitLoading = false;
-                                  });
-                                } catch (error) {
-                                  print(error);
-                                  const errorMessage = ' حدث خطا ما';
-                                  _showErrorDialog(errorMessage);
-                                }
+                              onPressed: () {
+                                _showErrorDialog("هل تريد تسجيل الخروج");
                               },
-                            ),
-                          ),
-                        Container(
-                          height: 45,
-                          margin: const EdgeInsets.fromLTRB(80, 100, 80, 10),
-                          child: RaisedButton(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0),
-                              side: BorderSide(color: Colors.green, width: 2),
-                            ),
-                            color: Colors.white,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  'تسجيل خروج',
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            onPressed: () {
-                              _showErrorDialog("هل تريد تسجيل الخروج");
-                            },
-                          ),
-                        ),
+                            )),
                       ],
                     ),
                   ),

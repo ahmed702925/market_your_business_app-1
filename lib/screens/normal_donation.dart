@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:shoryanelhayat_user/notifiers/activity_notifier.dart';
 import 'package:shoryanelhayat_user/notifiers/organization_notifier.dart';
 import 'package:shoryanelhayat_user/providers/auth.dart';
@@ -13,7 +14,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
-import 'package:flushbar/flushbar.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'dart:io' show Platform;
@@ -24,9 +24,9 @@ class NormalDenotationScreen extends StatefulWidget {
 }
 
 class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
-  String selectedType;
-  ActivityNotifier activityNotifier;
-  OrganizationNotifier orgNotifier;
+  String? selectedType;
+  ActivityNotifier? activityNotifier;
+  OrganizationNotifier? orgNotifier;
   var _submitLoading = false;
   List<String> _denoteType = <String>[
     'نقدى',
@@ -60,16 +60,11 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
     'amount': '',
   };
   Future<void> _submit(BuildContext context) async {
-    String amount = _authData['amount'];
-    String items = _authData['items'];
+    String amount = _authData['amount']!;
+    String items = _authData['items']!;
 
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       // Invalid!
-      return;
-    }
-
-    if (selectedType == null) {
-      _showErrorDialog("من فضلك اختار نوع التبرع ");
       return;
     }
     if (_image == null && selectedType != 'نقدى') {
@@ -77,13 +72,13 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
       return;
     }
 
-    _formKey.currentState.save();
+    _formKey.currentState!.save();
 
     setState(() {
       _submitLoading = true;
     });
     if (selectedType != 'نقدى') {
-      _downloadUrl = await uploadImage(_image);
+      _downloadUrl = await uploadImage(File(_image!.path));
       if (selectedType == 'عينى') {
         amount = "";
       }
@@ -101,16 +96,16 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
     String arabicFormattedDateTime = formattedTime + ' ' + formattedDate;
     final data = Provider.of<Auth>(context);
     try {
-      await Provider.of<UsersPtovider>(context, listen: false)
+      await Provider.of<UsersProvider>(context, listen: false)
           .makeDonationRequest2(
               userId: data.userData.id,
-              orgId: orgNotifier.currentOrg.id,
-              orgName: orgNotifier.currentOrg.orgName,
+              orgId: orgNotifier!.currentOrg.id,
+              orgName: orgNotifier!.currentOrg.orgName,
               availableOn: _authData['time'],
               donationAmount: amount,
               donationDate: arabicFormattedDateTime,
               donationType: selectedType,
-              activityName: activityNotifier.currentActivity.name,
+              activityName: activityNotifier!.currentActivity.name,
               donatorAddress: _authData['address'],
               donatorItems: items,
               image: _downloadUrl,
@@ -126,7 +121,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
         ),
         duration: Duration(seconds: 3),
         margin: const EdgeInsets.all(8),
-        borderRadius: 8,
+        borderRadius: BorderRadius.circular(8),
       )..show(context).then((value) => Navigator.of(context).pop());
     } catch (error) {
       print(error);
@@ -141,13 +136,15 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final globalKey = GlobalKey<ScaffoldState>();
   var _isLoadImg = false;
-  File _image;
-  String _downloadUrl;
+  XFile? _image;
+  String? _downloadUrl;
 
   Future getImage() async {
-    File img;
+    // File img;
 
-    img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    // img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? img = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (img != null) {
         _image = img;
@@ -164,14 +161,14 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
   }
 
   Future<String> uploadImage(File image) async {
-    StorageReference storageReference =
+    String? _downloadUrl;
+    Reference storageReference =
         FirebaseStorage.instance.ref().child(image.path.split('/').last);
-    StorageUploadTask uploadTask = storageReference.putFile(image);
-    await uploadTask.onComplete;
-
-    String _downloadUrl = await storageReference.getDownloadURL();
-
-    return _downloadUrl;
+    UploadTask uploadTask = storageReference.putFile(image);
+    uploadTask.then((res) async {
+      _downloadUrl = await storageReference.getDownloadURL();
+    });
+    return _downloadUrl!;
   }
 
   void _showErrorDialog(String message) {
@@ -182,7 +179,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
               title: const Text('تحذير'),
               content: Text(message),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: const Text('حسنا'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
@@ -231,8 +228,9 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
             flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
                 title: Text(
-                  activityNotifier.currentActivity.name != null
-                      ? activityNotifier.currentActivity.name
+                  // ignore: unnecessary_null_comparison
+                  activityNotifier!.currentActivity.name != null
+                      ? activityNotifier!.currentActivity.name
                       : 'تبرع الآن',
                   style: TextStyle(
                     color: Colors.white,
@@ -276,11 +274,12 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                               bottomRight: Radius.circular(0),
                               topRight: Radius.circular(20),
                               topLeft: Radius.circular(0)),
-                          color: Colors.green[700].withOpacity(0.75),
+                          color: Colors.green[700]!.withOpacity(0.75),
                         ),
                         child: Text(
-                          orgNotifier.currentOrg.orgName != null
-                              ? orgNotifier.currentOrg.orgName
+                          // ignore: unnecessary_null_comparison
+                          orgNotifier!.currentOrg.orgName != null
+                              ? orgNotifier!.currentOrg.orgName
                               : 'تبرع الآن',
                           style: TextStyle(
                               fontSize: 21,
@@ -288,7 +287,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                               color: Colors.white,
                               shadows: [
                                 Shadow(
-                                    color: Colors.grey[600],
+                                    color: Colors.grey[600]!,
                                     blurRadius: 2.0,
                                     offset: Offset(4, 2))
                               ]),
@@ -321,8 +320,8 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.grey[200]))),
+                                      bottom: BorderSide(
+                                          color: Colors.grey[200]!))),
                               child: TextFormField(
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
@@ -335,10 +334,8 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                     hintStyle: TextStyle(color: Colors.grey)),
                                 validator: (value) {
                                   bool spaceRex =
-                                      new RegExp(r"^\\s+$").hasMatch(value);
-                                  if (spaceRex ||
-                                      value.length == 0 ||
-                                      value == null) {
+                                      new RegExp(r"^\\s+$").hasMatch(value!);
+                                  if (spaceRex || value.length == 0) {
                                     return 'ادخل الاسم من فضلك';
                                   } else if (value.length < 3) {
                                     return 'الاسم لايمكن ان يكون اقل من ثلاثه احرف';
@@ -355,8 +352,8 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.grey[200]))),
+                                      bottom: BorderSide(
+                                          color: Colors.grey[200]!))),
                               child: TextFormField(
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -368,7 +365,8 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                     hintStyle: TextStyle(color: Colors.grey)),
                                 keyboardType: TextInputType.phone,
                                 inputFormatters: <TextInputFormatter>[
-                                  WhitelistingTextInputFormatter.digitsOnly
+                                  FilteringTextInputFormatter
+                                      .digitsOnly // Allows only digits
                                 ],
                                 onChanged: (val) {
                                   _authData['mobile'] = val;
@@ -376,10 +374,8 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                 controller: mobileController,
                                 validator: (value) {
                                   bool spaceRex =
-                                      new RegExp(r"^\\s+$").hasMatch(value);
-                                  if (spaceRex ||
-                                      value.length == 0 ||
-                                      value == null) {
+                                      new RegExp(r"^\\s+$").hasMatch(value!);
+                                  if (spaceRex || value.length == 0) {
                                     return 'ادخل رقم الهاتف من فضلك';
                                   } else if (value.length < 11) {
                                     return 'رقم الهاتف لايمكن ان يكون اقل من 11 رقم';
@@ -407,10 +403,8 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                 },
                                 validator: (value) {
                                   bool spaceRex =
-                                      new RegExp(r"^\\s+$").hasMatch(value);
-                                  if (spaceRex ||
-                                      value.length == 0 ||
-                                      value == null) {
+                                      new RegExp(r"^\\s+$").hasMatch(value!);
+                                  if (spaceRex || value.length == 0) {
                                     return 'ادخل العنوان من فضلك';
                                   } else if (value.length < 5) {
                                     return 'العنوان لايمكن ان يكون اقل من 5 احرف';
@@ -434,8 +428,8 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                               padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
                               decoration: BoxDecoration(
                                   border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.grey[200]))),
+                                      bottom: BorderSide(
+                                          color: Colors.grey[200]!))),
                               child: TextFormField(
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -456,10 +450,8 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                 controller: timeController,
                                 validator: (value) {
                                   bool spaceRex =
-                                      new RegExp(r"^\\s+$").hasMatch(value);
-                                  if (spaceRex ||
-                                      value.length == 0 ||
-                                      value == null) {
+                                      new RegExp(r"^\\s+$").hasMatch(value!);
+                                  if (spaceRex || value.length == 0) {
                                     return 'ادخل الوقت من فضلك';
                                   }
                                   return null;
@@ -502,7 +494,8 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                   onChanged: (selectedAccountType) {
                                     print('$selectedAccountType');
                                     setState(() {
-                                      selectedType = selectedAccountType;
+                                      selectedType =
+                                          (selectedAccountType as String?)!;
                                     });
                                   },
                                   value: selectedType,
@@ -521,7 +514,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                 decoration: BoxDecoration(
                                     border: Border(
                                         bottom: BorderSide(
-                                            color: Colors.grey[200]))),
+                                            color: Colors.grey[200]!))),
                                 child: TextFormField(
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
@@ -533,7 +526,8 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                       hintStyle: TextStyle(color: Colors.grey)),
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
-                                    WhitelistingTextInputFormatter.digitsOnly
+                                    FilteringTextInputFormatter
+                                        .digitsOnly // Allows only digits
                                   ],
                                   onChanged: (value) {
                                     _authData['amount'] = value;
@@ -541,10 +535,8 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                   controller: moneyController,
                                   validator: (value) {
                                     bool spaceRex =
-                                        new RegExp(r"^\\s+$").hasMatch(value);
-                                    if (spaceRex ||
-                                        value.length == 0 ||
-                                        value == null) {
+                                        new RegExp(r"^\\s+$").hasMatch(value!);
+                                    if (spaceRex || value.length == 0) {
                                       return 'ادخل المبلغ من فضلك';
                                     }
 
@@ -552,7 +544,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                   },
                                 ),
                               ),
-                            if (selectedType != 'نقدى' && selectedType != null)
+                            if (selectedType != 'نقدى')
                               Container(
                                 padding: const EdgeInsets.all(20),
                                 child: Row(
@@ -572,7 +564,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                   ],
                                 ),
                               ),
-                            if (selectedType != 'نقدى' && selectedType != null)
+                            if (selectedType != 'نقدى')
                               InkWell(
                                 child: Container(
                                   padding: const EdgeInsets.all(10),
@@ -580,7 +572,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                   width: 200,
                                   height: 200,
                                   child: _isLoadImg
-                                      ? Image.file(_image)
+                                      ? Image.file(File(_image!.path))
                                       : Icon(
                                           Icons.add,
                                           size: 40,
@@ -588,7 +580,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                 ),
                                 onTap: getImage,
                               ),
-                            if (selectedType != 'نقدى' && selectedType != null)
+                            if (selectedType != 'نقدى')
                               Container(
                                   padding:
                                       const EdgeInsets.fromLTRB(10, 5, 10, 0),
@@ -599,7 +591,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                         height: 1,
                                         fontWeight: FontWeight.bold),
                                   )),
-                            if (selectedType != 'نقدى' && selectedType != null)
+                            if (selectedType != 'نقدى')
                               Container(
                                   padding:
                                       const EdgeInsets.fromLTRB(10, 5, 10, 0),
@@ -610,7 +602,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                         height: 1,
                                         color: Colors.grey),
                                   )),
-                            if (selectedType != 'نقدى' && selectedType != null)
+                            if (selectedType != 'نقدى')
                               Container(
                                 padding:
                                     const EdgeInsets.fromLTRB(10, 5, 10, 10),
@@ -631,10 +623,8 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                   controller: itemsController,
                                   validator: (value) {
                                     bool spaceRex =
-                                        new RegExp(r"^\\s+$").hasMatch(value);
-                                    if (spaceRex ||
-                                        value.length == 0 ||
-                                        value == null) {
+                                        new RegExp(r"^\\s+$").hasMatch(value!);
+                                    if (spaceRex || value.length == 0) {
                                       return 'ادخل الوصف من فضلك';
                                     }
                                     return null;

@@ -11,7 +11,7 @@ class Auth with ChangeNotifier {
     return _userData;
   }
 
-  final String myKey = 'AIzaSyALv7hZQYwXCLLKxR1T1WgVZUlEeHPYCTw';
+  final String myKey = 'AIzaSyBvWoCL9RGZdK9Y2vpFAlJho3vW7G6jOws';
 
   Future<String> _authenticate(
       String email, String password, String urlSegment) async {
@@ -20,7 +20,7 @@ class Auth with ChangeNotifier {
         'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=$myKey';
     try {
       final response = await http.post(
-        url,
+        Uri.parse(url),
         body: json.encode(
           {
             'email': email,
@@ -105,7 +105,7 @@ class Auth with ChangeNotifier {
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$myKey';
     try {
       final response = await http.post(
-        url,
+        Uri.parse(url),
         body: json.encode(
           {"requestType": "PASSWORD_RESET", "email": email},
         ),

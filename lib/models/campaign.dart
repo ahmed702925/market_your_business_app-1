@@ -10,12 +10,12 @@ class Campaign with ChangeNotifier {
   final String time;
 
   Campaign({
-    this.id,
-    @required this.campaignName,
-    @required this.campaignDescription,
-    @required this.orgId,
-    @required this.orgName,
-    this.imagesUrl,
-    this.time,
+    required this.id,
+    required this.campaignName,
+    required this.campaignDescription,
+    required this.orgId,
+    required this.orgName,
+    required this.imagesUrl,
+    required this.time,
   });
 }

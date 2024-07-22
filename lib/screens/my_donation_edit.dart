@@ -24,8 +24,8 @@ class _EditDonationState extends State<EditDonation> {
   var _isLoadImg = false;
   var _isInit = true;
   var _isLoading = true;
-  File _image;
-  String _downloadUrl;
+  File? _image;
+  String? _downloadUrl;
   var _editedDonation = MyDonation(
     id: null,
     status: '',
@@ -59,21 +59,22 @@ class _EditDonationState extends State<EditDonation> {
   };
 
   Future getImage() async {
-    File img;
-    img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? img = await picker.pickImage(source: ImageSource.gallery);
+
     setState(() {
-      _image = img;
+      _image = File(img!.path);
       _isLoadImg = true;
     });
 
     Provider.of<MyDonationsProvider>(context, listen: false)
-        .uploadImage(_image)
+        .uploadImage(_image!)
         .then((val) {
       _downloadUrl = val;
       setState(() {
         _isLoadImg = false;
       });
-      print("value from upload" + _downloadUrl);
+      print("value from upload" + _downloadUrl!);
     });
   }
 
@@ -91,19 +92,17 @@ class _EditDonationState extends State<EditDonation> {
   }
 
   Future<void> _saveForm() async {
-    final isValid = _form.currentState.validate();
+    final isValid = _form.currentState!.validate();
     if (!isValid) {
       return;
     }
-    if (_editedDonation.image != null && _downloadUrl != null) {
-      Provider.of<MyDonationsProvider>(context, listen: false)
-          .deleteImage(_editedDonation.image);
-    }
-    _form.currentState.save();
+    Provider.of<MyDonationsProvider>(context, listen: false)
+        .deleteImage(_editedDonation.image);
+    _form.currentState!.save();
 
     _editedDonation = MyDonation(
       id: _editedDonation.id,
-      image: _downloadUrl != null ? _downloadUrl : _editedDonation.image,
+      image: _downloadUrl != null ? _downloadUrl! : _editedDonation.image,
       orgName: _editedDonation.orgName,
       actName: _editedDonation.actName,
       donationAmount: _editedDonation.donationAmount,
@@ -119,7 +118,7 @@ class _EditDonationState extends State<EditDonation> {
     );
 
     Provider.of<MyDonationsProvider>(context, listen: false)
-        .updateMyDonation(_editedDonation.id, _editedDonation);
+        .updateMyDonation(_editedDonation.id!, _editedDonation);
     Provider.of<MyDonationsProvider>(context, listen: false)
         .updateDonationReq(_editedDonation, orgId);
     setState(() {
@@ -136,7 +135,7 @@ class _EditDonationState extends State<EditDonation> {
           .findById(reqId);
       MyDonation myDonation =
           Provider.of<MyDonationsProvider>(context, listen: false)
-              .findById(_editedDonation.id);
+              .findById(_editedDonation.id!);
       setState(() {
         _isLoading = false;
       });
@@ -187,14 +186,14 @@ class _EditDonationState extends State<EditDonation> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            _initValues['orgName'],
+                            _initValues['orgName']!,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            _initValues['actName'],
+                            _initValues['actName']!,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 24,
@@ -213,13 +212,13 @@ class _EditDonationState extends State<EditDonation> {
                                   .requestFocus(_descFocusNode);
                             },
                             validator: (value) {
-                              if (value.isEmpty) {
+                              if (value!.isEmpty) {
                                 return 'من فضلك أدخل أسم المتبرع';
                               }
                               return null;
                             },
                             onSaved: (value) {
-                              print('from on save name = ' + value);
+                              print('from on save name = ' + value!);
                               _editedDonation = MyDonation(
                                 donatorName: value,
                                 actName: _editedDonation.actName,
@@ -254,14 +253,14 @@ class _EditDonationState extends State<EditDonation> {
                                   .requestFocus(_descFocusNode);
                             },
                             validator: (value) {
-                              if (value.isEmpty) {
+                              if (value!.isEmpty) {
                                 return 'من فضلك أدخل عنوان المتبرع';
                               }
                               return null;
                             },
                             onSaved: (value) {
                               _editedDonation = MyDonation(
-                                donatorAddress: value,
+                                donatorAddress: value!,
                                 donatorMobileNo:
                                     _editedDonation.donatorMobileNo,
                                 availableOn: _editedDonation.availableOn,
@@ -286,7 +285,8 @@ class _EditDonationState extends State<EditDonation> {
                           TextFormField(
                             keyboardType: TextInputType.phone,
                             inputFormatters: <TextInputFormatter>[
-                              WhitelistingTextInputFormatter.digitsOnly
+                              FilteringTextInputFormatter
+                                  .digitsOnly // Allows only digits
                             ],
                             textAlign: TextAlign.right,
                             initialValue: _initValues['donatorMobile'],
@@ -296,7 +296,7 @@ class _EditDonationState extends State<EditDonation> {
                                   .requestFocus(_descFocusNode);
                             },
                             validator: (value) {
-                              if (value.isEmpty) {
+                              if (value!.isEmpty) {
                                 return 'من فضلك أدخل رقم التليفون';
                               }
                               return null;
@@ -304,7 +304,7 @@ class _EditDonationState extends State<EditDonation> {
                             onSaved: (value) {
                               _editedDonation = MyDonation(
                                 donatorAddress: _editedDonation.donatorAddress,
-                                donatorMobileNo: value,
+                                donatorMobileNo: value!,
                                 availableOn: _editedDonation.availableOn,
                                 userId: _editedDonation.userId,
                                 donatorName: _editedDonation.donatorName,
@@ -333,7 +333,7 @@ class _EditDonationState extends State<EditDonation> {
                                   .requestFocus(_descFocusNode);
                             },
                             validator: (value) {
-                              if (value.isEmpty) {
+                              if (value!.isEmpty) {
                                 return 'من فضلك أدخل المواعيد المتاحه';
                               }
                               return null;
@@ -343,7 +343,7 @@ class _EditDonationState extends State<EditDonation> {
                                 donatorAddress: _editedDonation.donatorAddress,
                                 donatorMobileNo:
                                     _editedDonation.donatorMobileNo,
-                                availableOn: value,
+                                availableOn: value!,
                                 userId: _editedDonation.userId,
                                 donatorName: _editedDonation.donatorName,
                                 actName: _editedDonation.actName,
@@ -370,7 +370,8 @@ class _EditDonationState extends State<EditDonation> {
                                   initialValue: _initValues['donationAmount'],
                                   keyboardType: TextInputType.phone,
                                   inputFormatters: <TextInputFormatter>[
-                                    WhitelistingTextInputFormatter.digitsOnly
+                                    FilteringTextInputFormatter
+                                        .digitsOnly // Allows only digits
                                   ],
                                   textInputAction: TextInputAction.next,
                                   onFieldSubmitted: (_) {
@@ -378,7 +379,7 @@ class _EditDonationState extends State<EditDonation> {
                                         .requestFocus(_descFocusNode);
                                   },
                                   validator: (value) {
-                                    if (value.isEmpty) {
+                                    if (value!.isEmpty) {
                                       return 'من فضلك أدخل المبلغ';
                                     }
                                     return null;
@@ -394,7 +395,7 @@ class _EditDonationState extends State<EditDonation> {
                                           _editedDonation.donationItems,
                                       donationDate:
                                           _editedDonation.donationDate,
-                                      donationAmount: value,
+                                      donationAmount: value!,
                                       orgName: _editedDonation.orgName,
                                       image: _editedDonation.image,
                                       userId: _editedDonation.userId,
@@ -413,20 +414,20 @@ class _EditDonationState extends State<EditDonation> {
                           ),
                           _initValues['donationType'] != 'نقدى'
                               ? Container(
-                                  child: RaisedButton(
-                                    child: Text(
-                                      'اختيار صورة',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.bold),
+                                  child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.green, // Text color
+                                    textStyle: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    color: Colors.green,
-                                    onPressed: () {
-                                      getImage();
-                                    },
                                   ),
-                                )
+                                  child: Text('اختيار صورة'),
+                                  onPressed: () {
+                                    getImage();
+                                  },
+                                ))
                               : Container(),
                           Container(
                             padding: const EdgeInsets.all(5.0),
@@ -439,14 +440,15 @@ class _EditDonationState extends State<EditDonation> {
                                     : Container(),
                           ),
                           Container(
-                            padding: const EdgeInsets.all(5.0),
-                            child: new RaisedButton(
-                              textColor: Colors.white,
-                              child: Text('حفظ'),
-                              color: Colors.green,
-                              onPressed: _saveForm,
-                            ),
-                          ),
+                              padding: const EdgeInsets.all(5.0),
+                              child: new ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: Colors.green, // Text color
+                                ),
+                                child: Text('حفظ'),
+                                onPressed: _saveForm,
+                              )),
                         ],
                       ),
                     ),
@@ -464,18 +466,17 @@ class _EditDonationState extends State<EditDonation> {
           children: <Widget>[
             _editedDonation.id != null && _image != null
                 ? Image.file(
-                    _image,
+                    _image!,
                     height: MediaQuery.of(context).size.width / 2,
                   )
-                : _editedDonation.id != null &&
-                        _editedDonation.image != null //update
+                : _editedDonation.id != null //update
                     ? Container(
                         height: MediaQuery.of(context).size.width / 2,
                         child: Image.network(_editedDonation.image))
                     : _image == null
                         ? Container()
                         : Image.file(
-                            _image,
+                            _image!,
                             height: MediaQuery.of(context).size.width / 2,
                           ),
           ],

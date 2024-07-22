@@ -61,11 +61,8 @@ class _HelpOrganizationState extends State<HelpOrganization> {
 
   Widget buildItem(
       BuildContext context, String orgName, String orgId, String img) {
-    if (orgName == null) {
-      return Container();
-    } else {
-      return Container(
-        child: FlatButton(
+    return Container(
+      child: TextButton(
           child: Row(
             children: <Widget>[
               Container(
@@ -104,11 +101,15 @@ class _HelpOrganizationState extends State<HelpOrganization> {
                 MaterialPageRoute(
                     builder: (context) => ChatScreen(orgId: orgId)));
           },
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        ),
-        margin: const EdgeInsets.only(bottom: 10.0, left: 5.0, right: 5.0),
-      );
-    }
+          style: TextButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          )
+          // shape:
+          //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          ),
+      margin: const EdgeInsets.only(bottom: 10.0, left: 5.0, right: 5.0),
+    );
   }
 }

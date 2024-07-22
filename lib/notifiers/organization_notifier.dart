@@ -7,9 +7,9 @@ import 'package:http/http.dart' as http;
 class OrganizationNotifier with ChangeNotifier {
   List<Organization> _orgList = [];
 
-  Organization _currentOrg;
+  Organization? _currentOrg;
 
-  Organization get currentOrg => _currentOrg;
+  Organization get currentOrg => _currentOrg!;
 
   set currentOrganization(Organization organization) {
     _currentOrg = organization;
@@ -24,7 +24,7 @@ class OrganizationNotifier with ChangeNotifier {
     final url =
         'https://shoryanelhayat-a567c.firebaseio.com/CharitableOrganizations.json';
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Organization> loadedOrganizations = [];
       extractedData.forEach((prodId, prodData) {

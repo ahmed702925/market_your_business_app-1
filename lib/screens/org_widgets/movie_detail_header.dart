@@ -1,10 +1,8 @@
 import 'package:shoryanelhayat_user/models/organization.dart';
-import 'package:shoryanelhayat_user/screens/org_widgets/movie_api.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shoryanelhayat_user/screens/org_widgets/arc_banner_image.dart';
 
-import 'package:shoryanelhayat_user/screens/org_widgets/rating_information.dart';
 
 class MovieDetailHeader extends StatelessWidget {
   // MovieDetailHeader(this.movie);

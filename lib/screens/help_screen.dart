@@ -23,13 +23,13 @@ class _HelpScreenState extends State<HelpScreen> {
               title: const Text('تسجيل دخول'),
               content: Text(message),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: const Text('ليس الأن'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: const Text('تسجيل الدخول'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
@@ -58,8 +58,8 @@ class _HelpScreenState extends State<HelpScreen> {
     );
   }
 
-  Future<UserNav> loadSharedPrefs() async {
-    UserNav user;
+  Future<UserNav?> loadSharedPrefs() async {
+    UserNav? user;
     try {
       SharedPref sharedPref = SharedPref();
       user = UserNav.fromJson(await sharedPref.read("user"));
@@ -169,7 +169,7 @@ class _HelpScreenState extends State<HelpScreen> {
               ),
               InkWell(
                 onTap: () async {
-                  UserNav userLoad = await loadSharedPrefs();
+                  UserNav? userLoad = await loadSharedPrefs();
                   if (userLoad == null) {
                     _showErrorDialog("برجاء تسجيل الدخول أولا");
                   } else {

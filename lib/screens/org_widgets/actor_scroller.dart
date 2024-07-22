@@ -5,18 +5,19 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class ActorScroller extends StatelessWidget {
   ActorScroller(this.actors);
   final List<Activity> actors;
 
-  ActivityNotifier activityNotifier;
+  ActivityNotifier? activityNotifier;
 
   Widget _buildActor(BuildContext ctx, int index) {
     var actor = actors[index];
 
     return InkWell(
       onTap: () {
-        activityNotifier.currentActivity = actor;
+        activityNotifier!.currentActivity = actor;
         Navigator.of(ctx).push(
           MaterialPageRoute(
             builder: (BuildContext context) {
@@ -54,7 +55,7 @@ class ActorScroller extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
             'الأنشطة',
-            style: textTheme.subhead.copyWith(fontSize: 18.0),
+            style: textTheme.titleMedium!.copyWith(fontSize: 18.0),
           ),
         ),
         SizedBox.fromSize(

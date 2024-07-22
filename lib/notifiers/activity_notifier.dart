@@ -8,11 +8,11 @@ import '../helper/fav_helper.dart';
 
 class ActivityNotifier with ChangeNotifier {
   List<Activity> _activityList = [];
-  Activity _currentActivity;
+  Activity? _currentActivity;
 
   List<Activity> _fav = [];
 
-  Activity get currentActivity => _currentActivity;
+  Activity get currentActivity => _currentActivity!;
 
   set currentActivity(Activity activity) {
     _currentActivity = activity;
@@ -32,8 +32,8 @@ class ActivityNotifier with ChangeNotifier {
   }
 
   Future<void> fetchAndSetActivities(String orgId) async {
-    final url =
-        'https://shoryanelhayat-a567c.firebaseio.com/activities/$orgId.json';
+    final url = Uri.parse(
+        'https://shoryanelhayat-a567c.firebaseio.com/activities/$orgId.json');
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;

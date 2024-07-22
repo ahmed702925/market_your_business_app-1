@@ -7,8 +7,8 @@ class EmailM with ChangeNotifier{
   final String recipientController;
 
   EmailM({
-    this.bodyController,
-    this.subjectController,
-    @required this.recipientController,
+    required this.bodyController,
+    required this.subjectController,
+    required this.recipientController,
   });
 }

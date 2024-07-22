@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 
 class UserNav with ChangeNotifier {
-  final String id;
-  final String userName;
-  final String userImage;
-  final String email;
+  final String? id;
+  final String? userName;
+  final String? userImage;
+  final String? email;
 
   UserNav({
-    this.id,
-    @required this.userName,
-    @required this.email,
-    this.userImage,
+     this.id,
+    required this.userName,
+    required this.email,
+     this.userImage,
   });
 
   Map<String, dynamic> toJson() => {

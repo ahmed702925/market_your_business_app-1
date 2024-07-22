@@ -5,15 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyDonationItem extends StatefulWidget {
-  final String donationType;
-  final String donationImage;
-  final String donationItems;
-  final String donationAmount;
-  final String donationDate;
-  final String orgName;
-  final String actName;
-  final String status;
-  final String id;
+  final String? donationType;
+  final String? donationImage;
+  final String? donationItems;
+  final String? donationAmount;
+  final String? donationDate;
+  final String? orgName;
+  final String? actName;
+  final String? status;
+  final String? id;
 
   MyDonationItem({
     this.id,
@@ -57,7 +57,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
               AspectRatio(
                 aspectRatio: 3 / 2,
                 child: Image.network(
-                  widget.donationImage,
+                  widget.donationImage!,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -76,7 +76,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          widget.orgName,
+                          widget.orgName!,
                           style: TextStyle(
                             color: Colors.green,
                             fontSize: 16.0,
@@ -99,7 +99,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            widget.actName,
+                            widget.actName!,
                             style: TextStyle(
                               color: Colors.green,
                               fontSize: 16.0,
@@ -123,7 +123,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            widget.donationType,
+                            widget.donationType!,
                             style: TextStyle(
                               color: Colors.green,
                               fontSize: 16.0,
@@ -147,7 +147,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            widget.donationDate,
+                            widget.donationDate!,
                             style: TextStyle(
                               color: Colors.green,
                               fontSize: 16.0,
@@ -172,7 +172,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                widget.donationItems,
+                                widget.donationItems!,
                                 style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 16.0,
@@ -197,7 +197,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                widget.donationAmount,
+                                widget.donationAmount!,
                                 style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 16.0,
@@ -215,25 +215,29 @@ class _MyDonationItemState extends State<MyDonationItem> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.all(10),
-                    child: RaisedButton(
-                      // color: Colors.blue,
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(24.0),
-                        // side: BorderSide(
-                        //     color: Colors.black),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        'حسنا',
-                        style:
-                            TextStyle(fontSize: 18.0, color: Colors.green[900]),
-                      ),
-                    ),
-                  ),
+                      margin: EdgeInsets.all(10),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.green[900],
+                          backgroundColor: Colors.white, // Background color
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24.0),
+                            // side: BorderSide(color: Colors.black), // Uncomment if you want a border
+                          ), // Text color
+                          padding: EdgeInsets.symmetric(
+                              vertical:
+                                  10.0), // Optional: Adjust padding if needed
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text(
+                          'حسنا',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      )),
                   // SizedBox(
                   //   width: 10,
                   // ),
@@ -283,7 +287,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          widget.orgName,
+                          widget.orgName!,
                           style: TextStyle(
                               color: Colors.green,
                               fontSize: 12.0,
@@ -305,7 +309,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          widget.actName,
+                          widget.actName!,
                           style: TextStyle(
                               color: Colors.green,
                               fontSize: 12.0,
@@ -411,39 +415,51 @@ class _MyDonationItemState extends State<MyDonationItem> {
                 spacing: 10.0,
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: <Widget>[
-                  RaisedButton(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(24.0),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.green[900],
+                      backgroundColor: Colors.white, // Background color
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24.0),
+                      ), // Text color
                     ),
                     child: Text(
-                      ' التفاصيل',
-                      style: TextStyle(color: Colors.green[900]),
+                      'التفاصيل',
+                      style: TextStyle(
+                        color: Colors.green[900],
+                      ),
                     ),
                     onPressed: () {
                       showCustomDialogWithImage(context);
                     },
                   ),
                   widget.status == 'waiting'
-                      ? RaisedButton(
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(24.0),
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.green[900],
+                            backgroundColor: Colors.white, // Background color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24.0),
+                            ), // Text color
                           ),
                           child: Text(
                             'تعديل التبرع',
-                            style: TextStyle(color: Colors.green[900]),
+                            style: TextStyle(
+                              color: Colors.green[900],
+                            ),
                           ),
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => EditDonation(
-                                        reqId: widget.id,
-                                      )),
+                                builder: (context) => EditDonation(
+                                  reqId: widget.id,
+                                ),
+                              ),
                             );
                           },
                         )
+
 //            IconButton(
 //                    icon: Icon(Icons.edit),
 //                    onPressed: () {
@@ -459,26 +475,24 @@ class _MyDonationItemState extends State<MyDonationItem> {
 //                  )
                       : Container(),
                   widget.status == 'done' || widget.status == 'cancel'
-                      ? RaisedButton(
-                          color: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(24.0),
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.green[900],
+                            backgroundColor: Colors.white, // Background color
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24.0),
+                            ), // Text color
                           ),
                           child: Text(
                             'حذف من القائمة',
-                            style: TextStyle(color: Colors.green[900]),
+                            style: TextStyle(
+                              color: Colors.green[900],
+                            ),
                           ),
                           onPressed: () {
                             Provider.of<MyDonationsProvider>(context,
                                     listen: false)
                                 .deleteMyDonation(id: widget.id, userId: '');
-//                      Navigator.push(
-//                        context,
-//                        MaterialPageRoute(
-//                            builder: (context) => EditDonation(
-//                              reqId: widget.id,
-//                            )),
-//                      );
                           },
                         )
                       : Container(),

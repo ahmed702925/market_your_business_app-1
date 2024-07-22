@@ -58,13 +58,13 @@ class _FavouriteState extends State<Favourite> {
               title: const Text('تسجيل دخول'),
               content: Text(message),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: const Text('ليس الأن'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: const Text('تسجيل الدخول'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
@@ -96,14 +96,14 @@ class _FavouriteState extends State<Favourite> {
   }
 
   Future<UserNav> loadSharedPrefs() async {
-    UserNav user;
+    UserNav? user;
     try {
       SharedPref sharedPref = SharedPref();
       user = UserNav.fromJson(await sharedPref.read("user"));
     } catch (Excepetion) {
       // do something
     }
-    return user;
+    return user!;
   }
 
   @override
@@ -260,15 +260,20 @@ class _FavouriteState extends State<Favourite> {
                                                             MainAxisAlignment
                                                                 .start,
                                                         children: <Widget>[
-                                                          RaisedButton(
-                                                            color: Colors
-                                                                .grey[200],
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  new BorderRadius
-                                                                          .circular(
-                                                                      5.0),
+                                                          ElevatedButton(
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor: Colors
+                                                                      .grey[
+                                                                  200], // Background color
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5.0),
+                                                              ),
                                                             ),
                                                             onPressed:
                                                                 () async {
@@ -278,47 +283,44 @@ class _FavouriteState extends State<Favourite> {
                                                                           .favorites[
                                                                       index];
 
-                                                              UserNav userLoad =
-                                                                  await loadSharedPrefs();
-                                                              if (userLoad ==
-                                                                  null) {
-                                                                _showErrorDialog(
-                                                                    "برجاء تسجيل الدخول أولا ");
-                                                              } else {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .push(
-                                                                  MaterialPageRoute(
-                                                                    builder:
-                                                                        (BuildContext
-                                                                            context) {
-                                                                      return NormalDenotationScreen();
-                                                                    },
-                                                                  ),
-                                                                );
-                                                              }
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .push(
+                                                                MaterialPageRoute(
+                                                                  builder:
+                                                                      (BuildContext
+                                                                          context) {
+                                                                    return NormalDenotationScreen();
+                                                                  },
+                                                                ),
+                                                              );
                                                             },
                                                             child: Text(
                                                               'تبرع',
                                                               style: TextStyle(
-                                                                  fontSize:
-                                                                      20.0,
-                                                                  color: Colors
-                                                                      .black),
+                                                                fontSize: 20.0,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
                                                             ),
                                                           ),
                                                           SizedBox(
                                                             width: 10,
                                                           ),
-                                                          RaisedButton(
-                                                            color: Colors
-                                                                .grey[200],
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  new BorderRadius
-                                                                          .circular(
-                                                                      5.0),
+                                                          ElevatedButton(
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              backgroundColor: Colors
+                                                                      .grey[
+                                                                  200], // Background color
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5.0),
+                                                              ),
                                                             ),
                                                             onPressed:
                                                                 () async {
@@ -329,21 +331,25 @@ class _FavouriteState extends State<Favourite> {
                                                                       index];
                                                               Navigator.of(
                                                                       context)
-                                                                  .push(MaterialPageRoute(builder:
+                                                                  .push(
+                                                                MaterialPageRoute(
+                                                                  builder:
                                                                       (BuildContext
                                                                           context) {
-                                                                return ActivityDetails();
-                                                              }));
+                                                                    return ActivityDetails();
+                                                                  },
+                                                                ),
+                                                              );
                                                             },
                                                             child: Text(
                                                               'تفاصيل ',
                                                               style: TextStyle(
-                                                                  fontSize:
-                                                                      20.0,
-                                                                  color: Colors
-                                                                      .black),
+                                                                fontSize: 20.0,
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
                                                             ),
-                                                          ),
+                                                          )
                                                         ],
                                                       ),
                                                     ],

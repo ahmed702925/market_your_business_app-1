@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
+// ignore: must_be_immutable
 class OrganizationDetails extends StatelessWidget {
-  OrganizationNotifier orgNotifier;
-  Organization currentOrg;
+  OrganizationNotifier? orgNotifier;
+  Organization? currentOrg;
   OrganizationDetails(this.currentOrg);
 
   @override
@@ -15,7 +16,8 @@ class OrganizationDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          currentOrg.orgName != null ? currentOrg.orgName : 'no value',
+          // ignore: unnecessary_null_comparison
+          currentOrg!.orgName != null ? currentOrg!.orgName : 'no value',
         ),
         backgroundColor: Colors.green[900],
       ),
@@ -26,24 +28,24 @@ class OrganizationDetails extends StatelessWidget {
             GestureDetector(
                 child: Hero(
                     tag: 'imageHero',
-                    child: Flexible(child: Image.network(currentOrg.logo))),
+                    child: Flexible(child: Image.network(currentOrg!.logo))),
                 onTap: () {
                   Navigator.pop(context);
                 }),
             Text(
-              "رقم الرخصة: " + currentOrg.licenseNo,
+              "رقم الرخصة: " + currentOrg!.licenseNo,
               style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
             ),
             Text(
-              "رقم الهاتف الأرضي : " + currentOrg.landLineNo,
+              "رقم الهاتف الأرضي : " + currentOrg!.landLineNo,
               style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
             ),
             Text(
-              "رقم الهاتف المحمول: " + currentOrg.mobileNo,
+              "رقم الهاتف المحمول: " + currentOrg!.mobileNo,
               style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
             ),
             Text(
-              "العنوان: " + currentOrg.address,
+              "العنوان: " + currentOrg!.address,
               style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
             ),
             Text(
@@ -51,7 +53,7 @@ class OrganizationDetails extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
             ),
             Text(
-              currentOrg.bankAccounts,
+              currentOrg!.bankAccounts,
               style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
             ),
             Text(
@@ -63,9 +65,9 @@ class OrganizationDetails extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: InkWell(
-                  onTap: () => launch(currentOrg.webPage),
+                  onTap: () => launch(currentOrg!.webPage),
                   child: Text(
-                    currentOrg.webPage,
+                    currentOrg!.webPage,
                     textDirection: TextDirection.ltr,
                     style: TextStyle(
                         decoration: TextDecoration.underline,

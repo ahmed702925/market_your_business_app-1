@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ChatProvider with ChangeNotifier {
-  UserNav userLoad;
+  UserNav? userLoad;
 
   List<Chat> _items = [];
 
@@ -30,7 +30,7 @@ class ChatProvider with ChangeNotifier {
     final url =
         'https://shoryanelhayat-a567c.firebaseio.com/chat/$orgId/$id.json';
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Chat> loadedChat = [];
       if (extractedData != null) {
@@ -62,7 +62,7 @@ class ChatProvider with ChangeNotifier {
         'https://shoryanelhayat-a567c.firebaseio.com/chat/$orgId/$id.json';
     try {
       final response = await http.post(
-        url,
+        Uri.parse(url),
         body: json.encode(
           {
             'name': chat.userName,
@@ -90,12 +90,13 @@ class ChatProvider with ChangeNotifier {
   }
 
   Future<String> uploadImage(File image) async {
-    StorageReference storageReference =
+    String? _downloadUrl;
+    Reference storageReference =
         FirebaseStorage.instance.ref().child(image.path.split('/').last);
-    StorageUploadTask uploadTask = storageReference.putFile(image);
-    await uploadTask.onComplete;
-    String _downloadUrl = await storageReference.getDownloadURL();
-    return _downloadUrl;
-    //todo
+    UploadTask uploadTask = storageReference.putFile(image);
+    uploadTask.then((res) async {
+      _downloadUrl = await storageReference.getDownloadURL();
+    });
+    return _downloadUrl!;
   }
 }

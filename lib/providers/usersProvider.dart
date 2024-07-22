@@ -6,21 +6,21 @@ import 'dart:convert';
 import '../models/http_exception.dart';
 import 'package:shoryanelhayat_user/providers/shard_pref.dart';
 
-class UsersPtovider with ChangeNotifier {
-  UserNav userLoad;
+class UsersProvider with ChangeNotifier {
+  UserNav? userLoad;
   var _userData2 = UserNav(email: null, userName: null);
   UserNav get userData2 {
     return _userData2;
   }
 
-  void setUserData({String userId, String email}) async {
-    getUserData(userId);
+  void setUserData({String? userId, String? email}) async {
+    getUserData(userId!);
   }
 
   Future<void> getUserData(String userId) async {
     final url = 'https://shoryanelhayat-user.firebaseio.com/Users/$userId.json';
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       final responseData = json.decode(response.body) as Map<String, dynamic>;
 
       _userData2 = UserNav(
@@ -55,7 +55,7 @@ class UsersPtovider with ChangeNotifier {
     final url = 'https://shoryanelhayat-user.firebaseio.com/Users/$userId.json';
     try {
       final response = await http.patch(
-        url,
+        Uri.parse(url),
         body: json.encode(
           {
             "userName": userName,
@@ -83,12 +83,12 @@ class UsersPtovider with ChangeNotifier {
     }
   }
 
-  Future<void> apdateUser(
+  Future<void> updateUser(
       String userId, String userName, String email, String image) async {
     final url = 'https://shoryanelhayat-user.firebaseio.com/Users/$userId.json';
     try {
       final response = await http.patch(
-        url,
+        Uri.parse(url),
         body: json.encode(
           {
             "userName": userName,
@@ -114,26 +114,26 @@ class UsersPtovider with ChangeNotifier {
   }
 
   Future<void> makeDonationRequest2(
-      {String userName,
-      String orgId,
-      String donationAmount,
-      String donationDate,
-      String availableOn,
-      String mobile,
-      String donationType,
-      String donatorAddress,
-      String donatorItems,
-      String image,
-      String activityName,
-      String userId,
-      String orgName}) async {
+      {String? userName,
+      String? orgId,
+      String? donationAmount,
+      String? donationDate,
+      String? availableOn,
+      String? mobile,
+      String? donationType,
+      String? donatorAddress,
+      String? donatorItems,
+      String? image,
+      String? activityName,
+      String? userId,
+      String? orgName}) async {
     await loadSharedPrefs();
-    userId = userLoad.id;
+    userId = userLoad!.id;
     final url =
         'https://shoryanelhayat-a567c.firebaseio.com/DonationRequests/$orgId.json';
     try {
       final response = await http.post(
-        url,
+        Uri.parse(url),
         body: json.encode(
           {
             "availableOn": availableOn,
@@ -160,7 +160,7 @@ class UsersPtovider with ChangeNotifier {
       final reqUrl =
           'https://shoryanelhayat-a567c.firebaseio.com/MyDonations/$userId/$reqId.json';
       await http.patch(
-        reqUrl,
+        Uri.parse(reqUrl),
         body: json.encode(
           {
             "availableOn": availableOn,

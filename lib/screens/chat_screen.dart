@@ -23,7 +23,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   final _controller = new TextEditingController();
   // var data;
-  UserNav userLoad;
+  UserNav? userLoad;
   bool _loading = false;
   loadSharedPrefs() async {
     try {
@@ -47,7 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
       time: chat.time,
     );
     Provider.of<ChatProvider>(context, listen: false)
-        .addMessage(chat, userLoad.email.split('.')[0], widget.orgId)
+        .addMessage(chat, userLoad!.email!.split('.')[0], widget.orgId)
         .then((value) => {
               _controller.clear(),
               _enteredMessage = '',
@@ -59,7 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (_isInit) {
       loadSharedPrefs().then((_) => {
             Provider.of<ChatProvider>(context)
-                .fetchAndSetChat(userLoad.email.split('.')[0], widget.orgId)
+                .fetchAndSetChat(userLoad!.email!.split('.')[0], widget.orgId)
                 .then((value) => {
                       _loading = true,
                     }),
@@ -70,8 +70,8 @@ class _ChatScreenState extends State<ChatScreen> {
       chat = Chat(
           time: '',
           text: '',
-          userId: userLoad.id.toString(),
-          userName: userLoad.email.split('@')[0],
+          userId: userLoad!.id.toString(),
+          userName: userLoad!.email!.split('@')[0],
           img: '',
           id: null);
     }
@@ -93,7 +93,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: _loading
                   ? FutureBuilder(
                       future: chatDocs.fetchAndSetChat(
-                          userLoad.email.split('.')[0], widget.orgId),
+                          userLoad!.email!.split('.')[0], widget.orgId),
                       builder: (ctx, futureSnapshot) {
                         return StreamBuilder(builder: (ctx, chatSnapshot) {
                           return ListView.builder(
@@ -105,7 +105,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               chatDocs.items[index].userName == "Admin",
                             ),
                           );
-                        });
+                        }, stream: null,);
                       },
                     )
                   : Center(child: CircularProgressIndicator()),

@@ -8,9 +8,9 @@ class CampaignNotifier with ChangeNotifier {
   List<Campaign> _campaignList = [];
   List<PreviousCampaign> _prevCampaignList = [];
 
-  Campaign _currentCampaign;
+  Campaign? _currentCampaign;
 
-  Campaign get currentCampaign => _currentCampaign;
+  Campaign get currentCampaign => _currentCampaign!;
 
   set currentCampaign(Campaign campaign) {
     _currentCampaign = campaign;
@@ -28,7 +28,7 @@ class CampaignNotifier with ChangeNotifier {
   Future<void> fetchAndSetProducts() async {
     const url = 'https://shoryanelhayat-a567c.firebaseio.com/Campaigns.json';
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       final List<Campaign> loadedCampaigns = [];
@@ -56,7 +56,7 @@ class CampaignNotifier with ChangeNotifier {
     const url =
         'https://shoryanelhayat-user.firebaseio.com/PreviousCampaigns.json';
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       final List<PreviousCampaign> loadedCampaigns = [];
@@ -77,8 +77,8 @@ class CampaignNotifier with ChangeNotifier {
 }
 
 class PreviousCampaign {
-  String url;
-  String id;
+  String? url;
+  String? id;
 
   PreviousCampaign({
     this.id,

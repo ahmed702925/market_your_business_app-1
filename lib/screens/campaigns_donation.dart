@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:shoryanelhayat_user/notifiers/campaign_notifier.dart';
 
 import 'package:shoryanelhayat_user/providers/usersProvider.dart';
@@ -12,7 +13,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
-import 'package:flushbar/flushbar.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'dart:io' show Platform;
 
@@ -23,8 +23,8 @@ class CampaignDenotationScreen extends StatefulWidget {
 }
 
 class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
-  String selectedType;
-  CampaignNotifier campaignNotifier;
+  String? selectedType;
+  CampaignNotifier? campaignNotifier;
   var _submitLoading = false;
   List<String> _denoteType = <String>[
     'نقدى',
@@ -58,29 +58,24 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
     'amount': '',
   };
   Future<void> _submit(BuildContext context) async {
-    String amount = _authData['amount'];
-    String items = _authData['items'];
+    String amount = _authData['amount']!;
+    String items = _authData['items']!;
 
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       // Invalid!
       return;
     }
-
-    if (selectedType == null) {
-      _showErrorDialog("من فضلك اختار نوع التبرع ");
-      return;
-    }
-    if (_image == null && selectedType != 'نقدى') {
+    if (selectedType != 'نقدى') {
       _showErrorDialog("من فضلك اضف صورة التبرع ");
       return;
     }
 
-    _formKey.currentState.save();
+    _formKey.currentState!.save();
     setState(() {
       _submitLoading = true;
     });
     if (selectedType != 'نقدى') {
-      _downloadUrl = await uploadImage(_image);
+      _downloadUrl = await uploadImage(_image!);
       if (selectedType == 'عينى') {
         amount = "";
       }
@@ -97,15 +92,15 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
     String formattedDate = arabicDateFormat.format(DateTime.now());
     String arabicFormattedDateTime = formattedTime + ' ' + formattedDate;
     try {
-      await Provider.of<UsersPtovider>(context, listen: false)
+      await Provider.of<UsersProvider>(context, listen: false)
           .makeDonationRequest2(
-        orgId: campaignNotifier.currentCampaign.orgId,
-        orgName: campaignNotifier.currentCampaign.orgName,
+        orgId: campaignNotifier!.currentCampaign.orgId,
+        orgName: campaignNotifier!.currentCampaign.orgName,
         availableOn: _authData['time'],
         donationAmount: amount,
         donationDate: arabicFormattedDateTime,
         donationType: selectedType,
-        activityName: campaignNotifier.currentCampaign.campaignName,
+        activityName: campaignNotifier!.currentCampaign.campaignName,
         donatorAddress: _authData['address'],
         donatorItems: items,
         image: _downloadUrl,
@@ -122,7 +117,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
         ),
         duration: Duration(seconds: 3),
         margin: EdgeInsets.all(8),
-        borderRadius: 8,
+        borderRadius: BorderRadius.circular(8),
       )..show(context).then((value) => Navigator.of(context).pop());
     } catch (error) {
       print(error);
@@ -137,13 +132,14 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final globalKey = GlobalKey<ScaffoldState>();
   var _isLoadImg = false;
-  File _image;
-  String _downloadUrl;
+  XFile? _image;
+  String? _downloadUrl;
 
   Future getImage() async {
-    File img;
-
-    img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    // File? img;
+    final ImagePicker picker = ImagePicker();
+    final XFile? img = await picker.pickImage(source: ImageSource.gallery);
+    // img = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (img != null) {
         _image = img;
@@ -158,15 +154,17 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
     });
   }
 
-  Future<String> uploadImage(File image) async {
-    StorageReference storageReference =
+  Future<String> uploadImage(XFile image) async {
+    String? _downloadUrl;
+    File file = File(image.path);
+    Reference storageReference =
         FirebaseStorage.instance.ref().child(image.path.split('/').last);
-    StorageUploadTask uploadTask = storageReference.putFile(image);
-    await uploadTask.onComplete;
+    UploadTask uploadTask = storageReference.putFile(file);
+    uploadTask.then((res) async {
+      _downloadUrl = await storageReference.getDownloadURL();
+    });
 
-    String _downloadUrl = await storageReference.getDownloadURL();
-
-    return _downloadUrl;
+    return _downloadUrl!;
   }
 
   void _showErrorDialog(String message) {
@@ -177,7 +175,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
               title: const Text('تحذير'),
               content: Text(message),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: const Text('حسنا'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
@@ -232,8 +230,9 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
             flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
                 title: Text(
-                  campaignNotifier.currentCampaign.campaignName != null
-                      ? campaignNotifier.currentCampaign.campaignName
+                  // ignore: unnecessary_null_comparison
+                  campaignNotifier!.currentCampaign.campaignName != null
+                      ? campaignNotifier!.currentCampaign.campaignName
                       : 'تبرع الآن',
                   style: TextStyle(
                     color: Colors.white,
@@ -280,11 +279,12 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                               bottomRight: Radius.circular(0),
                               topRight: Radius.circular(20),
                               topLeft: Radius.circular(0)),
-                          color: Colors.green[700].withOpacity(0.75),
+                          color: Colors.green[700]!.withOpacity(0.75),
                         ),
                         child: Text(
-                          campaignNotifier.currentCampaign.orgName != null
-                              ? campaignNotifier.currentCampaign.orgName
+                          // ignore: unnecessary_null_comparison
+                          campaignNotifier!.currentCampaign.orgName != null
+                              ? campaignNotifier!.currentCampaign.orgName
                               : 'تبرع الآن',
                           style: TextStyle(
                               fontSize: 21,
@@ -292,7 +292,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                               color: Colors.white,
                               shadows: [
                                 Shadow(
-                                    color: Colors.grey[600],
+                                    color: Colors.grey[600]!,
                                     blurRadius: 2.0,
                                     offset: Offset(4, 2))
                               ]),
@@ -325,8 +325,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                               padding: EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.grey[200]))),
+                                      bottom: BorderSide(
+                                          color: Colors.grey[200]!))),
                               child: TextFormField(
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -340,10 +340,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
 //                              textAlign: TextAlign.end,
                                 validator: (value) {
                                   bool spaceRex =
-                                      new RegExp(r"^\\s+$").hasMatch(value);
-                                  if (spaceRex ||
-                                      value.length == 0 ||
-                                      value == null) {
+                                      new RegExp(r"^\\s+$").hasMatch(value!);
+                                  if (spaceRex || value.length == 0) {
                                     return 'ادخل الاسم من فضلك';
                                   } else if (value.length < 3) {
                                     return 'الاسم لايمكن أن يكون أقل من ثلاثه احرف';
@@ -361,8 +359,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                               padding: EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                   border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.grey[200]))),
+                                      bottom: BorderSide(
+                                          color: Colors.grey[200]!))),
                               child: TextFormField(
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -374,7 +372,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                     hintStyle: TextStyle(color: Colors.grey)),
                                 keyboardType: TextInputType.phone,
                                 inputFormatters: <TextInputFormatter>[
-                                  WhitelistingTextInputFormatter.digitsOnly
+                                  FilteringTextInputFormatter
+                                      .digitsOnly // Allows only digits
                                 ],
                                 onChanged: (val) {
                                   _authData['mobile'] = val;
@@ -382,10 +381,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                 controller: mobileController,
                                 validator: (value) {
                                   bool spaceRex =
-                                      new RegExp(r"^\\s+$").hasMatch(value);
-                                  if (spaceRex ||
-                                      value.length == 0 ||
-                                      value == null) {
+                                      new RegExp(r"^\\s+$").hasMatch(value!);
+                                  if (spaceRex || value.length == 0) {
                                     return 'ادخل رقم الهاتف من فضلك';
                                   } else if (value.length < 11) {
                                     return 'رقم الهاتف لايمكن ان يكون اقل من 11 رقم';
@@ -413,10 +410,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                 },
                                 validator: (value) {
                                   bool spaceRex =
-                                      new RegExp(r"^\\s+$").hasMatch(value);
-                                  if (spaceRex ||
-                                      value.length == 0 ||
-                                      value == null) {
+                                      new RegExp(r"^\\s+$").hasMatch(value!);
+                                  if (spaceRex || value.length == 0) {
                                     return 'ادخل العنوان من فضلك';
                                   } else if (value.length < 5) {
                                     return 'العنوان لايمكن ان يكون اقل من 5 احرف';
@@ -439,8 +434,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                               padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
                               decoration: BoxDecoration(
                                   border: Border(
-                                      bottom:
-                                          BorderSide(color: Colors.grey[200]))),
+                                      bottom: BorderSide(
+                                          color: Colors.grey[200]!))),
                               child: TextFormField(
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
@@ -462,10 +457,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                 controller: timeController,
                                 validator: (value) {
                                   bool spaceRex =
-                                      new RegExp(r"^\\s+$").hasMatch(value);
-                                  if (spaceRex ||
-                                      value.length == 0 ||
-                                      value == null) {
+                                      new RegExp(r"^\\s+$").hasMatch(value!);
+                                  if (spaceRex || value.length == 0) {
                                     return 'ادخل الوقت من فضلك';
                                   }
                                   return null;
@@ -507,7 +500,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                       .toList(),
                                   onChanged: (selectedAccountType) {
                                     setState(() {
-                                      selectedType = selectedAccountType;
+                                      selectedType =
+                                          selectedAccountType as String?;
                                     });
                                   },
                                   value: selectedType,
@@ -526,7 +520,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                 decoration: BoxDecoration(
                                     border: Border(
                                         bottom: BorderSide(
-                                            color: Colors.grey[200]))),
+                                            color: Colors.grey[200]!))),
                                 child: TextFormField(
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
@@ -538,7 +532,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                       hintStyle: TextStyle(color: Colors.grey)),
                                   keyboardType: TextInputType.number,
                                   inputFormatters: <TextInputFormatter>[
-                                    WhitelistingTextInputFormatter.digitsOnly
+                                    FilteringTextInputFormatter
+                                        .digitsOnly // Allows only digits
                                   ],
                                   onChanged: (value) {
                                     _authData['amount'] = value;
@@ -546,10 +541,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                   controller: moneyController,
                                   validator: (value) {
                                     bool spaceRex =
-                                        new RegExp(r"^\\s+$").hasMatch(value);
-                                    if (spaceRex ||
-                                        value.length == 0 ||
-                                        value == null) {
+                                        new RegExp(r"^\\s+$").hasMatch(value!);
+                                    if (spaceRex || value.length == 0) {
                                       return 'ادخل المبلغ من فضلك';
                                     }
 
@@ -585,7 +578,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                   width: 200,
                                   height: 200,
                                   child: _isLoadImg
-                                      ? Image.file(_image)
+                                      ? Image.file(File(_image!.path))
                                       : Icon(
                                           Icons.add,
                                           size: 40,
@@ -634,10 +627,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                   controller: itemsController,
                                   validator: (value) {
                                     bool spaceRex =
-                                        new RegExp(r"^\\s+$").hasMatch(value);
-                                    if (spaceRex ||
-                                        value.length == 0 ||
-                                        value == null) {
+                                        new RegExp(r"^\\s+$").hasMatch(value!);
+                                    if (spaceRex || value.length == 0) {
                                       return 'ادخل الوصف من فضلك';
                                     }
                                     return null;

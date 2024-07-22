@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'package:shoryanelhayat_user/models/mydonation.dart';
-import 'package:shoryanelhayat_user/screens/my_donation_screen.dart';
-import 'package:shoryanelhayat_user/screens/onboardScreen.dart';
-import 'package:shoryanelhayat_user/screens/overview_screen.dart';
+
 import 'package:flutter/material.dart';
+import 'package:shoryanelhayat_user/screens/overview_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override

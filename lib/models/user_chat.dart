@@ -4,7 +4,7 @@ class UserChat with ChangeNotifier {
   final String id;
   final String email;
   UserChat({
-    this.id,
-    @required this.email,
+    required this.id,
+    required this.email,
   });
 }

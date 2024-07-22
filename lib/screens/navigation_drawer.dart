@@ -1,25 +1,25 @@
+import 'dart:io' show Platform;
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shoryanelhayat_user/models/user_nav.dart';
 import 'package:shoryanelhayat_user/providers/shard_pref.dart';
-import 'package:shoryanelhayat_user/providers/usersProvider.dart';
 import 'package:shoryanelhayat_user/screens/help_screen.dart';
 import 'package:shoryanelhayat_user/screens/login_screen.dart';
 import 'package:shoryanelhayat_user/screens/my_donation_screen.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'dart:io' show Platform;
 
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../providers/usersProvider.dart';
 
-class NavigationDrawer extends StatefulWidget {
+class CustomNavigationDrawer extends StatefulWidget {
   @override
-  _NavigationDrawerState createState() => _NavigationDrawerState();
+  _CustomNavigationDrawerState createState() => _CustomNavigationDrawerState();
 }
 
-class _NavigationDrawerState extends State<NavigationDrawer> {
-  UsersPtovider usersPtovider;
-  UserNav userLoad;
+class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
+  UsersProvider? usersProvider;
+  UserNav? userLoad;
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -31,13 +31,13 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 title: const Text('تسجيل خروج'),
                 content: Text(message),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: const Text('الغاء'),
                     onPressed: () {
                       Navigator.of(ctx).pop();
                     },
                   ),
-                  FlatButton(
+                  TextButton(
                     child: const Text(
                       'نعم',
                       style: TextStyle(
@@ -89,13 +89,13 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               title: Text('تسجيل دخول'),
               content: Text(message),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text('ليس الأن'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: Text('تسجيل الدخول'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
@@ -127,7 +127,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
   }
 
   Future<UserNav> loadSharedPrefs() async {
-    UserNav user;
+    UserNav? user;
     try {
       SharedPref sharedPref = SharedPref();
       user = UserNav.fromJson(await sharedPref.read("user"));
@@ -137,7 +137,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     } catch (Excepetion) {
       // do something
     }
-    return user;
+    return user!;
   }
 
   @override
@@ -167,7 +167,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                         fontWeight: FontWeight.bold, fontSize: 17, height: 0.5),
                   )
                 : Text(
-                    userLoad.userName,
+                    userLoad!.userName!,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
             accountEmail: userLoad == null
@@ -183,7 +183,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     ),
                   )
                 : Text(
-                    userLoad.email,
+                    userLoad!.email!,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                   ),
             currentAccountPicture: CircleAvatar(
@@ -194,7 +194,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                       size: 40,
                     )
                   : Text(
-                      userLoad.userName.substring(0, 1),
+                      userLoad!.userName!.substring(0, 1),
                       style: TextStyle(color: Colors.white),
                     ),
             ),
@@ -272,16 +272,11 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               color: Colors.green,
             ),
             onTap: () async {
-              UserNav userLoad = await loadSharedPrefs();
               Navigator.pop(context);
-              if (userLoad == null) {
-                _showErrorDialogLogin("الرجاء التسجيل قبل الدخول");
-              } else {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (BuildContext context) {
-                  return MyDonationsScreen();
-                }));
-              }
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                return MyDonationsScreen();
+              }));
             },
           ),
 //          new ListTile(

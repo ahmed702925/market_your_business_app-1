@@ -1,7 +1,7 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:shoryanelhayat_user/providers/auth.dart';
 import 'package:shoryanelhayat_user/providers/usersProvider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Animation/FadeAnimation.dart';
@@ -45,7 +45,7 @@ class _SignupScreenState extends State<SignupScreen> {
               title: const Text('حدث خطأ ما'),
               content: Text(message),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: const Text('حسنا'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
@@ -76,11 +76,11 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future<void> _submit() async {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       // Invalid!
       return;
     }
-    _formKey.currentState.save();
+    _formKey.currentState!.save();
 
     setState(() {
       _submitLoading = true;
@@ -89,15 +89,15 @@ class _SignupScreenState extends State<SignupScreen> {
     try {
       // Log user in
       String localId = await Provider.of<Auth>(context, listen: false).signup(
-        _authData['email'],
-        _authData['password'],
+        _authData['email']!,
+        _authData['password']!,
       );
 
-      await Provider.of<UsersPtovider>(context, listen: false).addUser(
+      await Provider.of<UsersProvider>(context, listen: false).addUser(
         localId,
-        _authData['name'],
-        _authData['email'],
-        _authData['password'],
+        _authData['name']!,
+        _authData['email']!,
+        _authData['password']!,
       );
 
       Flushbar(
@@ -109,7 +109,7 @@ class _SignupScreenState extends State<SignupScreen> {
         ),
         duration: Duration(seconds: 3),
         margin: EdgeInsets.all(8),
-        borderRadius: 8,
+        borderRadius: BorderRadius.circular(8),
       )..show(context).then(
           (value) => Navigator.of(context).pushReplacementNamed('/Login'));
     } catch (error) {
@@ -125,7 +125,6 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height * (1 / 3);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -215,7 +214,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     decoration: BoxDecoration(
                                         border: Border(
                                             bottom: BorderSide(
-                                                color: Colors.grey[200]))),
+                                                color: Colors.grey[200]!))),
                                     child: TextFormField(
                                       textInputAction: TextInputAction.next,
                                       onFieldSubmitted: (_) {
@@ -232,7 +231,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                           hintStyle:
                                               TextStyle(color: Colors.grey)),
                                       onSaved: (value) {
-                                        _authData['name'] = value;
+                                        _authData['name'] = value!;
                                       },
                                     ),
                                   ),
@@ -241,7 +240,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     decoration: BoxDecoration(
                                         border: Border(
                                             bottom: BorderSide(
-                                                color: Colors.grey[200]))),
+                                                color: Colors.grey[200]!))),
                                     child: TextFormField(
                                       focusNode: _emailFocusNode,
                                       textInputAction: TextInputAction.next,
@@ -263,14 +262,14 @@ class _SignupScreenState extends State<SignupScreen> {
                                       validator: (value) {
                                         bool emailValid = RegExp(
                                                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                            .hasMatch(value);
+                                            .hasMatch(value!);
                                         if (!emailValid) {
                                           return 'البريد الإلكتروني غير صالح ';
                                         }
                                         return null;
                                       },
                                       onSaved: (value) {
-                                        _authData['email'] = value;
+                                        _authData['email'] = value!;
                                       },
                                     ),
                                   ),
@@ -279,7 +278,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     decoration: BoxDecoration(
                                         border: Border(
                                             bottom: BorderSide(
-                                                color: Colors.grey[200]))),
+                                                color: Colors.grey[200]!))),
                                     child: TextFormField(
                                       textInputAction: TextInputAction.next,
                                       focusNode: _pwdFocusNode,
@@ -299,13 +298,14 @@ class _SignupScreenState extends State<SignupScreen> {
                                       obscureText: true,
                                       controller: _passwordController,
                                       validator: (value) {
-                                        if (value.isEmpty || value.length < 5) {
+                                        if (value!.isEmpty ||
+                                            value.length < 5) {
                                           return 'كلمة المرور قصيرة جدا';
                                         }
                                         return null;
                                       },
                                       onSaved: (value) {
-                                        _authData['password'] = value;
+                                        _authData['password'] = value!;
                                       },
                                     ),
                                   ),
@@ -314,7 +314,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     decoration: BoxDecoration(
                                         border: Border(
                                             bottom: BorderSide(
-                                                color: Colors.grey[200]))),
+                                                color: Colors.grey[200]!))),
                                     child: TextFormField(
                                       focusNode: _repeatPwdFocusNode,
                                       decoration: InputDecoration(
@@ -335,7 +335,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         return null;
                                       },
                                       onSaved: (value) {
-                                        _authData['password'] = value;
+                                        _authData['password'] = value!;
                                       },
                                     ),
                                   ),
@@ -390,7 +390,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(30, 0, 30, 30),
                               child: Center(
-                                child: FlatButton(
+                                child: TextButton(
                                   child: const Text(
                                     "أمتلك حساب",
                                     style: TextStyle(

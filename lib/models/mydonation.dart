@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class MyDonation with ChangeNotifier {
-  final String id;
+  final String? id;
   final String donationType;
   final String donationItems;
   final String donationAmount;
@@ -17,19 +17,19 @@ class MyDonation with ChangeNotifier {
   final String donatorName;
 
   MyDonation({
-    this.id,
-    this.donatorName,
-    this.availableOn,
-    this.donationType,
-    this.donationItems,
-    this.donationAmount,
-    this.donationDate,
-    this.image,
-    this.orgName,
-    this.actName,
-    this.status,
-    this.userId,
-    this.donatorMobileNo,
-    this.donatorAddress,
+    required this.id,
+    required this.donatorName,
+    required this.availableOn,
+    required this.donationType,
+    required this.donationItems,
+    required this.donationAmount,
+    required this.donationDate,
+    required this.image,
+    required this.orgName,
+    required this.actName,
+    required this.status,
+    required this.userId,
+    required this.donatorMobileNo,
+    required this.donatorAddress,
   });
 }

@@ -50,7 +50,7 @@ class _EmailOrganizationState extends State<EmailOrganization> {
                       itemBuilder: (context, index) => buildItem(
                           context,
                           allOrg.orgList[index].orgName,
-                          allOrg.orgList[index].email,
+                          allOrg.orgList[index].email!,
                           allOrg.orgList[index].logo),
                       itemCount: allOrg.orgList.length,
                     ),
@@ -63,52 +63,52 @@ class _EmailOrganizationState extends State<EmailOrganization> {
 
   Widget buildItem(
       BuildContext context, String orgName, String email, String img) {
-    if (orgName == null) {
-      return Container();
-    } else {
-      return Container(
-        child: FlatButton(
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: 70,
-                height: 70,
-                child: Material(
-                  child: Image.network(img),
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                  clipBehavior: Clip.hardEdge,
-                ),
+    return Container(
+      child: TextButton(
+        child: Row(
+          children: <Widget>[
+            Container(
+              width: 70,
+              height: 70,
+              child: Material(
+                child: Image.network(img),
+                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                clipBehavior: Clip.hardEdge,
               ),
-              Padding(
-                padding: const EdgeInsets.all(2.0),
-              ),
-              Flexible(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        child: Text(
-                          orgName,
-                          style: TextStyle(color: Colors.black, fontSize: 20.0),
-                        ),
-                        alignment: Alignment.centerRight,
-                        margin: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 5.0),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(2.0),
+            ),
+            Flexible(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      child: Text(
+                        orgName,
+                        style: TextStyle(color: Colors.black, fontSize: 20.0),
                       ),
-                    ],
-                  ),
+                      alignment: Alignment.centerRight,
+                      margin: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 5.0),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => EmailScreen(email)));
-          },
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+            ),
+          ],
         ),
-        margin: const EdgeInsets.only(bottom: 10.0, left: 5.0, right: 5.0),
-      );
-    }
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => EmailScreen(email)));
+        },
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.all(8.0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+      margin: const EdgeInsets.only(bottom: 10.0, left: 5.0, right: 5.0),
+    );
   }
 }

@@ -1,11 +1,10 @@
 import 'dart:async';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:shoryanelhayat_user/providers/auth.dart';
 
 import 'package:shoryanelhayat_user/providers/usersProvider.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import '../Animation/FadeAnimation.dart';
@@ -13,7 +12,7 @@ import 'org_widgets/arc_banner_image.dart';
 import 'overview_screen.dart';
 import 'dart:io' show Platform;
 
-GoogleSignInAccount _currentUser;
+GoogleSignInAccount? _currentUser;
 
 enum AuthMode { ResetPassword, Login }
 
@@ -46,15 +45,15 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     LoginScreen.googleSignIn.onCurrentUserChanged
-        .listen((GoogleSignInAccount account) {
+        .listen((GoogleSignInAccount? account) {
       setState(() {
         _currentUser = account;
       });
-      Provider.of<UsersPtovider>(context, listen: false).addUser(
-        _currentUser.id,
-        _currentUser.displayName,
-        _currentUser.email,
-        _authData['password'],
+      Provider.of<UsersProvider>(context, listen: false).addUser(
+        _currentUser!.id,
+        _currentUser!.displayName!,
+        _currentUser!.email,
+        _authData['password']!,
       );
     });
 
@@ -69,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
               title: const Text('حدث خطأ ما'),
               content: Text(message),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: const Text('حسنا'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
@@ -92,12 +91,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _submit() async {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       // Invalid!
       print("formKey.currentState IS Invalid");
       return;
     }
-    _formKey.currentState.save();
+    _formKey.currentState!.save();
 
     setState(() {
       _submitLoading = true;
@@ -105,11 +104,11 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_authMode == AuthMode.Login) {
       try {
         String localId = await Provider.of<Auth>(context, listen: false).login(
-          _authData['email'],
-          _authData['password'],
+          _authData['email']!,
+          _authData['password']!,
         );
 
-        Provider.of<UsersPtovider>(context, listen: false)
+        Provider.of<UsersProvider>(context, listen: false)
             .setUserData(email: _authData['email'], userId: localId);
 
         Navigator.pushReplacement(context,
@@ -122,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       try {
         Auth auth = new Auth();
-        await auth.resetPassword(_authData['email']);
+        await auth.resetPassword(_authData['email']!);
 
         Flushbar(
           message: 'تم ارسال تغير رابط كلمة المرور',
@@ -133,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           duration: Duration(seconds: 3),
           margin: const EdgeInsets.all(8),
-          borderRadius: 8,
+          borderRadius: BorderRadius.circular(8.0),
         )..show(context);
       } catch (error) {
         const errorMessage = 'البريد الإلكتروني غير موجود';
@@ -162,7 +161,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height * (2 / 3);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -317,7 +315,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           decoration: BoxDecoration(
                                             border: Border(
                                               bottom: BorderSide(
-                                                  color: Colors.grey[200]),
+                                                  color: Colors.grey[200]!),
                                             ),
                                           ),
                                           child: TextFormField(
@@ -343,14 +341,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                             validator: (value) {
                                               bool emailValid = RegExp(
                                                       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                                  .hasMatch(value);
+                                                  .hasMatch(value!);
                                               if (!emailValid) {
                                                 bool spaceRex =
                                                     new RegExp(r"^\\s+$")
                                                         .hasMatch(value);
                                                 if (spaceRex ||
-                                                    value.length == 0 ||
-                                                    value == null) {
+                                                    value.length == 0) {
                                                   return 'ادخل البريد الإلكتروني من فضلك';
                                                 } else {
                                                   return 'البريد الإلكتروني غير صالح';
@@ -359,7 +356,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               return null;
                                             },
                                             onSaved: (value) {
-                                              _authData['email'] = value;
+                                              _authData['email'] = value!;
                                             },
                                           ),
                                         ),
@@ -369,7 +366,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             decoration: BoxDecoration(
                                               border: Border(
                                                 bottom: BorderSide(
-                                                    color: Colors.grey[200]),
+                                                    color: Colors.grey[200]!),
                                               ),
                                             ),
                                             child: TextFormField(
@@ -387,15 +384,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                               obscureText: true,
                                               controller: _passwordController,
                                               onSaved: (value) {
-                                                _authData['password'] = value;
+                                                _authData['password'] = value!;
                                               },
                                               validator: (value) {
                                                 bool spaceRex =
                                                     new RegExp(r"^\\s+$")
-                                                        .hasMatch(value);
+                                                        .hasMatch(value!);
                                                 if (spaceRex ||
-                                                    value.length == 0 ||
-                                                    value == null) {
+                                                    value.length == 0) {
                                                   return 'ادخل  كلمة المرور من فضلك';
                                                 }
                                                 return null;
@@ -515,7 +511,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             FadeAnimation(
                               1.7,
                               Center(
-                                child: FlatButton(
+                                child: TextButton(
                                   child: Text(
                                     '${_authMode == AuthMode.Login ? 'هل نسيت كلمة المرور؟' : 'الرجوع إلي تسجيل الدخول'} ',
                                     style: TextStyle(
@@ -536,7 +532,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 padding:
                                     const EdgeInsets.fromLTRB(30, 0, 30, 30),
                                 child: Center(
-                                  child: FlatButton(
+                                  child: TextButton(
                                     child: const Text(
                                       "حساب جديد",
                                       style: TextStyle(

@@ -1,8 +1,8 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:shoryanelhayat_user/models/activity.dart';
 import 'package:shoryanelhayat_user/models/organization.dart';
 import 'package:shoryanelhayat_user/providers/auth.dart';
 import 'package:shoryanelhayat_user/providers/usersProvider.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,18 +25,17 @@ class FastDonationScreen extends StatefulWidget {
 }
 
 class _FastDonationScreenState extends State<FastDonationScreen> {
-  String selectedType;
-  Future formatDates;
+  String? selectedType;
+  Future? formatDates;
 
   final GlobalKey<FormState> _formKey = GlobalKey();
   final globalKey = GlobalKey<ScaffoldState>();
   var _isLoadImg = false;
-  File _image;
-  String _downloadUrl;
+  XFile? _image;
+  String? _downloadUrl;
 
   var selectedOraginzaton;
-  Activity selectedActivity;
-  var _loading = false;
+  Activity? selectedActivity;
   var _submitLoading = false;
 
   var firstForm = true;
@@ -47,7 +46,6 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
   var next = true;
   var prev = false;
   List<Organization> _orgList = [];
-  List<Activity> _activitesList = [];
 
   List<String> _denoteType = <String>[
     'نقدى',
@@ -82,7 +80,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
   };
 
   void _nextSubmit() {
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       // Invalid!
       return;
     }
@@ -101,10 +99,10 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
   }
 
   Future<void> _submit(BuildContext context) async {
-    String amount = _authData['amount'];
-    String items = _authData['items'];
+    String amount = _authData['amount']!;
+    String items = _authData['items']!;
 
-    if (!_formKey.currentState.validate()) {
+    if (!_formKey.currentState!.validate()) {
       // Invalid!
       return;
     }
@@ -114,14 +112,14 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
       return;
     }
 
-    _formKey.currentState.save();
+    _formKey.currentState!.save();
 
     setState(() {
       _submitLoading = true;
     });
 
     if (selectedType != 'نقدى') {
-      _downloadUrl = await uploadImage(_image);
+      _downloadUrl = await uploadImage(File(_image!.path));
       if (selectedType == 'عينى') {
         amount = "";
       }
@@ -140,7 +138,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
 
     final data = Provider.of<Auth>(context);
     try {
-      await Provider.of<UsersPtovider>(context, listen: false)
+      await Provider.of<UsersProvider>(context, listen: false)
           .makeDonationRequest2(
               userId: data.userData.id,
               orgId: _orgList[0].id,
@@ -164,7 +162,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
         ),
         duration: Duration(seconds: 3),
         margin: EdgeInsets.all(8),
-        borderRadius: 8,
+        borderRadius: BorderRadius.circular(8),
       )..show(context) //;
           .then((value) => Navigator.of(context).pop());
     } catch (error) {
@@ -178,8 +176,8 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
   }
 
   Future getImage() async {
-    File img;
-    img = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? img = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (img != null) {
         _image = img;
@@ -195,14 +193,15 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
   }
 
   Future<String> uploadImage(File image) async {
-    StorageReference storageReference =
+    String? _downloadUrl;
+    Reference storageReference =
         FirebaseStorage.instance.ref().child(image.path.split('/').last);
-    StorageUploadTask uploadTask = storageReference.putFile(image);
-    await uploadTask.onComplete;
+    UploadTask uploadTask = storageReference.putFile(image);
+    uploadTask.then((res) async {
+      _downloadUrl = await storageReference.getDownloadURL();
+    });
 
-    String _downloadUrl = await storageReference.getDownloadURL();
-
-    return _downloadUrl;
+    return _downloadUrl!;
   }
 
   void _showErrorDialog(String message) {
@@ -213,7 +212,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                 title: Text('تحذير'),
                 content: Text(message),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text('حسنا'),
                     onPressed: () {
                       Navigator.of(ctx).pop();
@@ -243,7 +242,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
 //    selectedActivity = null;
     final url = 'https://shoryanelhayat-a567c.firebaseio.com/activities.json';
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       final List<Activity> loadedOrganizations = [];
@@ -267,14 +266,11 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
   }
 
   Future<void> getActivites(String orgId) async {
-    _loading = true;
-
-    _activitesList = [];
     selectedActivity = null;
     final url =
         'https://shoryanelhayat-a567c.firebaseio.com/activities/$orgId.json';
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       final List<Activity> loadedOrganizations = [];
@@ -285,10 +281,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
             image: prodData['image'],
             description: prodData['description']));
       });
-      _loading = false;
-      setState(() {
-        _activitesList = loadedOrganizations;
-      });
+      setState(() {});
     } catch (error) {
       throw (error);
     }
@@ -298,7 +291,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
     const url =
         'https://shoryanelhayat-a567c.firebaseio.com/CharitableOrganizations.json';
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
       final List<Organization> loadedOrganizations = [];
@@ -439,7 +432,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                       decoration: BoxDecoration(
                                           border: Border(
                                               bottom: BorderSide(
-                                                  color: Colors.grey[200]))),
+                                                  color: Colors.grey[200]!))),
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
@@ -451,8 +444,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                             hintStyle:
                                                 TextStyle(color: Colors.grey)),
                                         validator: (value) {
-                                          if (value.length < 3 ||
-                                              value == null) {
+                                          if (value!.length < 3) {
                                             bool spaceRex =
                                                 new RegExp(r"^\\s+$")
                                                     .hasMatch(value);
@@ -475,7 +467,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                       decoration: BoxDecoration(
                                           border: Border(
                                               bottom: BorderSide(
-                                                  color: Colors.grey[200]))),
+                                                  color: Colors.grey[200]!))),
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
@@ -488,8 +480,8 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                                 TextStyle(color: Colors.grey)),
                                         keyboardType: TextInputType.phone,
                                         inputFormatters: <TextInputFormatter>[
-                                          WhitelistingTextInputFormatter
-                                              .digitsOnly
+                                          FilteringTextInputFormatter
+                                              .digitsOnly // Allows only digits
                                         ],
                                         onChanged: (val) {
                                           _authData['mobile'] = val;
@@ -497,9 +489,10 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                         controller: mobileController,
                                         validator: (value) {
                                           bool spaceRex = new RegExp(r"^\\s+$")
-                                              .hasMatch(value);
+                                              .hasMatch(value!);
                                           if (spaceRex ||
                                               value.length == 0 ||
+                                              // ignore: unnecessary_null_comparison
                                               value == null) {
                                             return 'ادخل رقم الهاتف من فضلك';
                                           } else if (value.length < 11) {
@@ -529,10 +522,8 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                         },
                                         validator: (value) {
                                           bool spaceRex = new RegExp(r"^\\s+$")
-                                              .hasMatch(value);
-                                          if (spaceRex ||
-                                              value.length == 0 ||
-                                              value == null) {
+                                              .hasMatch(value!);
+                                          if (spaceRex || value.length == 0) {
                                             return 'ادخل العنوان من فضلك';
                                           } else if (value.length < 5) {
                                             return 'العنوان لايمكن ان يكون اقل من 5 احرف';
@@ -558,7 +549,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                       decoration: BoxDecoration(
                                           border: Border(
                                               bottom: BorderSide(
-                                                  color: Colors.grey[200]))),
+                                                  color: Colors.grey[200]!))),
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                             border: OutlineInputBorder(
@@ -580,10 +571,8 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                         controller: timeController,
                                         validator: (value) {
                                           bool spaceRex = new RegExp(r"^\\s+$")
-                                              .hasMatch(value);
-                                          if (spaceRex ||
-                                              value.length == 0 ||
-                                              value == null) {
+                                              .hasMatch(value!);
+                                          if (spaceRex || value.length == 0) {
                                             return 'ادخل الوقت من فضلك';
                                           }
                                           return null;
@@ -632,7 +621,8 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                             .toList(),
                                         onChanged: (selectedAccountType) {
                                           setState(() {
-                                            selectedType = selectedAccountType;
+                                            selectedType =
+                                                selectedAccountType as String?;
                                             if (selectedType == 'نقدى' &&
                                                 scondForm) {
                                               next = false;
@@ -658,7 +648,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                       decoration: BoxDecoration(
                                           border: Border(
                                               bottom: BorderSide(
-                                                  color: Colors.grey[200]))),
+                                                  color: Colors.grey[200]!))),
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
@@ -671,8 +661,8 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                                 TextStyle(color: Colors.grey)),
                                         keyboardType: TextInputType.number,
                                         inputFormatters: <TextInputFormatter>[
-                                          WhitelistingTextInputFormatter
-                                              .digitsOnly
+                                          FilteringTextInputFormatter
+                                              .digitsOnly // Allows only digits
                                         ],
                                         onChanged: (value) {
                                           _authData['amount'] = value;
@@ -680,10 +670,8 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                         controller: moneyController,
                                         validator: (value) {
                                           bool spaceRex = new RegExp(r"^\\s+$")
-                                              .hasMatch(value);
-                                          if (spaceRex ||
-                                              value.length == 0 ||
-                                              value == null) {
+                                              .hasMatch(value!);
+                                          if (spaceRex || value.length == 0) {
                                             return 'ادخل المبلغ من فضلك';
                                           }
                                           return null;
@@ -725,7 +713,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                         width: 200,
                                         height: 200,
                                         child: _isLoadImg
-                                            ? Image.file(_image)
+                                            ? Image.file(File(_image!.path))
                                             : Icon(
                                                 Icons.add,
                                                 size: 40,
@@ -774,10 +762,8 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                         controller: itemsController,
                                         validator: (value) {
                                           bool spaceRex = new RegExp(r"^\\s+$")
-                                              .hasMatch(value);
-                                          if (spaceRex ||
-                                              value.length == 0 ||
-                                              value == null) {
+                                              .hasMatch(value!);
+                                          if (spaceRex || value.length == 0) {
                                             return 'ادخل الوصف من فضلك';
                                           }
                                           return null;
@@ -857,7 +843,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(30, 0, 30, 30),
                         child: Center(
-                          child: FlatButton(
+                          child: TextButton(
                             child: Text(
                               "السابق",
                               style: TextStyle(color: Colors.green),

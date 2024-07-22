@@ -52,7 +52,6 @@ class _EmailScreenState extends State<EmailScreen> {
           padding: EdgeInsets.all(8.0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
-          
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text('مستقبل الرساله'),
@@ -66,9 +65,9 @@ class _EmailScreenState extends State<EmailScreen> {
                   ),
                 ),
               ),
-            const   Text('الموضوع'),
+              const Text('الموضوع'),
               Padding(
-                padding: const  EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   controller: _subjectController,
                   textDirection: TextDirection.rtl,
@@ -114,9 +113,8 @@ class _EmailScreenState extends State<EmailScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        
         icon: Icon(Icons.camera),
-        label: const  Text(
+        label: const Text(
           'إضافة صورة',
           style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
         ),
@@ -126,9 +124,11 @@ class _EmailScreenState extends State<EmailScreen> {
   }
 
   void _openImagePicker() async {
-    File pick = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? img = await picker.pickImage(source: ImageSource.gallery);
+    // File pick = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
-      attachments.add(pick.path);
+      attachments.add(img!.path);
     });
   }
 }

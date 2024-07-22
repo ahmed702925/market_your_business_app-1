@@ -1,5 +1,4 @@
-import 'dart:async';
-import 'dart:io' show Platform;
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +10,8 @@ class ExternalDonation extends StatefulWidget {
 }
 
 class _ExternalDonationState extends State<ExternalDonation> {
-  final Completer<WebViewController> _controller =
-      new Completer<WebViewController>();
-  bool _isLoading;
-
+  bool? _isLoading;
+  WebViewController? controller;
   @override
   void initState() {
     super.initState();
@@ -23,8 +20,39 @@ class _ExternalDonationState extends State<ExternalDonation> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onBackPressed,
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {
+            setState(() {
+              _isLoading = false;
+            });
+          },
+          onHttpError: (HttpResponseError error) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith('https://www.youtube.com/')) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse("https://pay.jumia.com.eg/services/donations"));
+    return PopScope(
+      onPopInvoked: _onBackPressed(),
+      // TO DO
+      // onWillPop: _onBackPressed,
+      // onWillPop: () {
+      //   _onBackPressed();
+      //   return null;
+      // },
       child: Scaffold(
         appBar: AppBar(
           title: const Text('التبرعات الخارجية'),
@@ -32,19 +60,10 @@ class _ExternalDonationState extends State<ExternalDonation> {
         ),
         body: Stack(
           children: <Widget>[
-            new WebView(
-              initialUrl: "https://pay.jumia.com.eg/services/donations",
-              javascriptMode: JavascriptMode.unrestricted,
-              onWebViewCreated: (WebViewController webViewController) {
-                _controller.complete(webViewController);
-              },
-              onPageFinished: (_) {
-                setState(() {
-                  _isLoading = false;
-                });
-              },
+            WebViewWidget(
+              controller: controller!,
             ),
-            _isLoading
+            _isLoading!
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -68,46 +87,45 @@ class _ExternalDonationState extends State<ExternalDonation> {
     );
   }
 
-  Future<bool> _onBackPressed() {
+  _onBackPressed() {
     return showDialog(
-          context: context,
-          builder: (context) => (Platform.isAndroid)
-              ? new AlertDialog(
-                  elevation: 25.0,
-                  title: const Text('الخروج'),
-                  content: const Text('هل تريد الخروج من التبرعات الخارجية ؟'),
-                  actions: <Widget>[
-                    new GestureDetector(
-                      onTap: () => Navigator.of(context).pop(false),
-                      child: Text("لا"),
-                    ),
-                    SizedBox(width: 30),
-                    new GestureDetector(
-                      onTap: () => Navigator.of(context).pop(true),
-                      child: const Text("نعم",
-                          style: TextStyle(
-                              color: Colors.red, fontWeight: FontWeight.bold)),
-                    ),
-                  ],
-                )
-              : CupertinoAlertDialog(
-                  title: const Text('الخروج'),
-                  content: const Text('هل تريد الخروج من التبرعات الخارجية ؟'),
-                  actions: <Widget>[
-                    CupertinoDialogAction(
-                      child: const Text("نعم",
-                          style: TextStyle(
-                              color: Colors.red, fontWeight: FontWeight.bold)),
-                      isDefaultAction: true,
-                      onPressed: () => Navigator.of(context).pop(true),
-                    ),
-                    CupertinoDialogAction(
-                      child: const Text("لا"),
-                      onPressed: () => Navigator.of(context).pop(false),
-                    )
-                  ],
+      context: context,
+      builder: (context) => (Platform.isAndroid)
+          ? new AlertDialog(
+              elevation: 25.0,
+              title: const Text('الخروج'),
+              content: const Text('هل تريد الخروج من التبرعات الخارجية ؟'),
+              actions: <Widget>[
+                new GestureDetector(
+                  onTap: () => Navigator.of(context).pop(false),
+                  child: Text("لا"),
                 ),
-        ) ??
-        false;
+                SizedBox(width: 30),
+                new GestureDetector(
+                  onTap: () => Navigator.of(context).pop(true),
+                  child: const Text("نعم",
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.bold)),
+                ),
+              ],
+            )
+          : CupertinoAlertDialog(
+              title: const Text('الخروج'),
+              content: const Text('هل تريد الخروج من التبرعات الخارجية ؟'),
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  child: const Text("نعم",
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.bold)),
+                  isDefaultAction: true,
+                  onPressed: () => Navigator.of(context).pop(true),
+                ),
+                CupertinoDialogAction(
+                  child: const Text("لا"),
+                  onPressed: () => Navigator.of(context).pop(false),
+                )
+              ],
+            ),
+    );
   }
 }

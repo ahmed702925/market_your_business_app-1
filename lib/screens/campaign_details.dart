@@ -18,7 +18,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
   bool isFirstTime = true;
   var more = true;
 
-  CampaignNotifier campaignNotifier;
+  CampaignNotifier? campaignNotifier;
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
@@ -27,13 +27,13 @@ class _CampaignDetailState extends State<CampaignDetail> {
               title: const Text('تسجيل دخول'),
               content: Text(message),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: const Text('ليس الآن'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: const Text('تسجيل الدخول'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
@@ -65,14 +65,14 @@ class _CampaignDetailState extends State<CampaignDetail> {
   }
 
   Future<UserNav> loadSharedPrefs() async {
-    UserNav user;
+    UserNav? user;
     try {
       SharedPref sharedPref = SharedPref();
       user = UserNav.fromJson(await sharedPref.read("user"));
     } catch (Excepetion) {
       // do something
     }
-    return user;
+    return user!;
   }
 
   @override
@@ -84,7 +84,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
       isFirstTime = false;
     }
     var appBar = AppBar(
-      title: Text(campaignNotifier.currentCampaign.campaignName),
+      title: Text(campaignNotifier!.currentCampaign.campaignName),
       backgroundColor: Colors.green,
     );
     return Scaffold(
@@ -101,7 +101,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
         //  children: <Widget>[
 //            Expanded(
 //                child:
-//                    Image.network(campaignNotifier.currentCampaign.imagesUrl)),
+//                    Image.network(campaignNotifier!.currentCampaign.imagesUrl)),
         //   Expanded(
 
         child: SingleChildScrollView(
@@ -120,7 +120,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
 //                  decoration: BoxDecoration(
 //                    image: DecorationImage(
 //                      image: NetworkImage(
-//                        campaignNotifier.currentCampaign.imagesUrl,
+//                        campaignNotifier!.currentCampaign.imagesUrl,
 //                      ),
 //                      fit: BoxFit.fill,
 //                    ),
@@ -133,22 +133,22 @@ class _CampaignDetailState extends State<CampaignDetail> {
                           MediaQuery.of(context).padding.top) *
                       0.5,
                   child: Image.network(
-                      campaignNotifier.currentCampaign.imagesUrl)),
+                      campaignNotifier!.currentCampaign.imagesUrl)),
 
               Flexible(
-                child: Text(campaignNotifier.currentCampaign.campaignName,
+                child: Text(campaignNotifier!.currentCampaign.campaignName,
                     style:
                         TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
               ),
 
               SizedBox(height: 2),
               more == true &&
-                      campaignNotifier
+                      campaignNotifier!
                               .currentCampaign.campaignDescription.length >=
                           60
                   ? Flexible(
                       child: Text(
-                        campaignNotifier.currentCampaign.campaignDescription,
+                        campaignNotifier!.currentCampaign.campaignDescription,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontSize: 18,
@@ -158,7 +158,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
                     )
                   : Flexible(
                       child: Text(
-                        campaignNotifier.currentCampaign.campaignDescription,
+                        campaignNotifier!.currentCampaign.campaignDescription,
                         style: TextStyle(
                             fontSize: 18,
                             fontStyle: FontStyle.italic,
@@ -177,38 +177,38 @@ class _CampaignDetailState extends State<CampaignDetail> {
                   children: [
                     Text(
                       more &&
-                              campaignNotifier.currentCampaign
+                              campaignNotifier!.currentCampaign
                                       .campaignDescription.length >=
                                   60
                           ? 'المزيد'
                           : '',
-                      style: textTheme.body1
-                          .copyWith(fontSize: 18.0, color: theme.accentColor),
+                      style: textTheme.bodySmall!.copyWith(
+                          fontSize: 18.0, color: theme.colorScheme.secondary),
                     ),
                     Text(
                       more == false &&
-                              campaignNotifier.currentCampaign
+                              campaignNotifier!.currentCampaign
                                       .campaignDescription.length >=
                                   60
                           ? 'اقل'
                           : '',
-                      style: textTheme.body1
-                          .copyWith(fontSize: 18.0, color: theme.accentColor),
+                      style: textTheme.bodySmall!.copyWith(
+                          fontSize: 18.0, color: theme.colorScheme.secondary),
                     ),
                     Icon(
                       more &&
-                              campaignNotifier.currentCampaign
+                              campaignNotifier!.currentCampaign
                                       .campaignDescription.length >=
                                   60
                           ? Icons.keyboard_arrow_down
                           : more == false &&
-                                  campaignNotifier.currentCampaign
+                                  campaignNotifier!.currentCampaign
                                           .campaignDescription.length >=
                                       60
                               ? Icons.keyboard_arrow_down
                               : null,
                       size: 20.0,
-                      color: theme.accentColor,
+                      color: theme.colorScheme.secondary,
                     ),
 //                    Icon(
 //                      Icons.keyboard_arrow_up
@@ -219,18 +219,20 @@ class _CampaignDetailState extends State<CampaignDetail> {
                   ],
                 ),
               ),
-              RaisedButton(
-                color: Colors.green,
-                shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(5.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green, // Background color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
                 ),
                 child: Text(
                   'صور لحملات سابقة',
                   style: TextStyle(fontSize: 21.0, color: Colors.white),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
                 onPressed: () {
-                  print(campaignNotifier.currentCampaign.id);
+                  print(campaignNotifier!.currentCampaign.id);
 
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -242,30 +244,28 @@ class _CampaignDetailState extends State<CampaignDetail> {
                 },
               ),
               SizedBox(height: 30),
-              RaisedButton(
-                color: Colors.green,
-                shape: RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(5.0),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green, // Background color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
                 ),
                 onPressed: () async {
-                  UserNav userLoad = await loadSharedPrefs();
-                  if (userLoad == null) {
-                    print("user is not here");
-                    _showErrorDialog("برجاء تسجيل الدخول أولا");
-                  } else {
-                    print("user is  here");
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) {
+                  print("user is here");
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (BuildContext context) {
                       return CampaignDenotationScreen();
-                    }));
-                  }
-                },
+                    }),
+                  );
+                                },
                 child: Text(
                   'تبرع الآن',
                   style: TextStyle(fontSize: 21.0, color: Colors.white),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
               ),
+
               SizedBox(height: 10),
 
 //                      Row(

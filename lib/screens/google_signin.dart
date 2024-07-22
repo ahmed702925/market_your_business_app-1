@@ -9,12 +9,12 @@ class GmailSignin extends StatefulWidget {
 }
 
 class _GmailSigninState extends State<GmailSignin> {
-  GoogleSignInAccount _currentUser;
+  GoogleSignInAccount? _currentUser;
 
   @override
   void initState() {
     super.initState();
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) {
+    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount? account) {
       setState(() {
         _currentUser = account;
       });
@@ -41,12 +41,12 @@ class _GmailSigninState extends State<GmailSignin> {
         children: <Widget>[
           ListTile(
             leading: GoogleUserCircleAvatar(
-              identity: _currentUser,
+              identity: _currentUser!,
             ),
-            title: Text(_currentUser.displayName ?? ''),
-            subtitle: Text(_currentUser.email ?? ''),
+            title: Text(_currentUser!.displayName ?? ''),
+            subtitle: Text(_currentUser!.email),
           ),
-          RaisedButton(
+          ElevatedButton(
             onPressed: _handleSignOut,
             child: const Text('SIGN OUT'),
           )
@@ -59,7 +59,7 @@ class _GmailSigninState extends State<GmailSignin> {
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           const Text('You are not signed in..'),
-          RaisedButton(
+          ElevatedButton(
             onPressed: _handleSignIn,
             child: const Text('SIGN IN'),
           )

@@ -65,13 +65,13 @@ class _ActivityScreenState extends State<OrganizationActivity> {
               title: const Text('تسجيل دخول'),
               content: Text(message),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: const Text('ليس الأن'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: const Text('تسجيل الدخول'),
                   onPressed: () {
                     Navigator.of(ctx).pop();
@@ -102,8 +102,8 @@ class _ActivityScreenState extends State<OrganizationActivity> {
     );
   }
 
-  Future<UserNav> loadSharedPrefs() async {
-    UserNav user;
+  Future<UserNav?> loadSharedPrefs() async {
+    UserNav? user;
     try {
       SharedPref sharedPref = SharedPref();
       user = UserNav.fromJson(await sharedPref.read("user"));
@@ -467,14 +467,18 @@ class _ActivityScreenState extends State<OrganizationActivity> {
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: <Widget>[
-                                                      RaisedButton(
-                                                        color: Colors.blue[200],
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              new BorderRadius
-                                                                      .circular(
-                                                                  5.0),
+                                                      ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor: Colors.blue[
+                                                              200], // Background color
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5.0),
+                                                          ),
                                                         ),
                                                         onPressed: () async {
                                                           activityNotifier
@@ -483,7 +487,7 @@ class _ActivityScreenState extends State<OrganizationActivity> {
                                                                       .activityList[
                                                                   index];
 
-                                                          UserNav userLoad =
+                                                          UserNav? userLoad =
                                                               await loadSharedPrefs();
                                                           if (userLoad ==
                                                               null) {
@@ -506,22 +510,26 @@ class _ActivityScreenState extends State<OrganizationActivity> {
                                                         child: Text(
                                                           'تبرع',
                                                           style: TextStyle(
-                                                              fontSize: 20.0,
-                                                              color:
-                                                                  Colors.black),
+                                                            fontSize: 20.0,
+                                                            color: Colors.black,
+                                                          ),
                                                         ),
                                                       ),
                                                       SizedBox(
                                                         width: 10,
                                                       ),
-                                                      RaisedButton(
-                                                        color: Colors.blue[200],
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              new BorderRadius
-                                                                      .circular(
-                                                                  5.0),
+                                                      ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          backgroundColor: Colors.blue[
+                                                              200], // Background color
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5.0),
+                                                          ),
                                                         ),
                                                         onPressed: () async {
                                                           activityNotifier
@@ -529,22 +537,25 @@ class _ActivityScreenState extends State<OrganizationActivity> {
                                                               activityNotifier
                                                                       .activityList[
                                                                   index];
-                                                          Navigator.of(context).push(
-                                                              MaterialPageRoute(
-                                                                  builder:
-                                                                      (BuildContext
-                                                                          context) {
-                                                            return ActivityDetails();
-                                                          }));
+                                                          Navigator.of(context)
+                                                              .push(
+                                                            MaterialPageRoute(
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return ActivityDetails();
+                                                              },
+                                                            ),
+                                                          );
                                                         },
                                                         child: Text(
                                                           'تفاصيل ',
                                                           style: TextStyle(
-                                                              fontSize: 20.0,
-                                                              color:
-                                                                  Colors.black),
+                                                            fontSize: 20.0,
+                                                            color: Colors.black,
+                                                          ),
                                                         ),
-                                                      ),
+                                                      )
                                                     ],
                                                   ),
                                                 ],

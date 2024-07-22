@@ -23,13 +23,13 @@ class _StorylineState extends State<Storyline> {
       children: [
         Text(
           'الوصف',
-          style: textTheme.subtitle1.copyWith(fontSize: 24.0),
+          style: textTheme.titleMedium!.copyWith(fontSize: 24.0),
         ),
         SizedBox(height: 5.0),
         Text(
           widget.storyline.description,
           //  'وَأَطْعِمُوا الطَّعَامَ، وَصِلُوا الْأَرْحَامَ، وَصَلُّوا بِاللَّيْلِ وَالنَّاسُ نِيَامٌ تَدْخُلُوا الْجَنَّةَ بِسَلَامٍ',
-          style: textTheme.bodyText2.copyWith(
+          style: textTheme.bodyMedium!.copyWith(
             color: Colors.black45,
             fontSize: 18.0,
           ),
@@ -41,7 +41,7 @@ class _StorylineState extends State<Storyline> {
               children: [
                 Text(
                   'العنوان',
-                  style: textTheme.subtitle1.copyWith(fontSize: 21.0),
+                  style: textTheme.titleMedium!.copyWith(fontSize: 21.0),
                 ),
                 SizedBox(height: 5.0),
                 Row(
@@ -52,7 +52,7 @@ class _StorylineState extends State<Storyline> {
                     ),
                     Text(
                       widget.storyline.address,
-                      style: textTheme.bodyText2.copyWith(
+                      style: textTheme.bodyMedium!.copyWith(
                         color: Colors.black45,
                         fontSize: 18.0,
                       ),
@@ -61,14 +61,14 @@ class _StorylineState extends State<Storyline> {
                 ),
                 Text(
                   'البريد الإلكتروني',
-                  style: textTheme.subtitle1.copyWith(fontSize: 21.0),
+                  style: textTheme.titleMedium!.copyWith(fontSize: 21.0),
                 ),
                 SizedBox(height: 5.0),
                 GestureDetector(
                   onLongPress: () => {
                     Clipboard.setData(
-                        new ClipboardData(text: widget.storyline.email)),
-                    Scaffold.of(context).showSnackBar(SnackBar(
+                        new ClipboardData(text: widget.storyline.email!)),
+                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(
                           'تم نسخ البريد الإلكتروني الى الحافظة \n تستطيع لصقه في المكان المناسب لك'),
                       duration: Duration(milliseconds: 1800),
@@ -85,8 +85,8 @@ class _StorylineState extends State<Storyline> {
                       SizedBox(
                         width: 8,
                       ),
-                      Text(widget.storyline.email,
-                          style: textTheme.bodyText2.copyWith(
+                      Text(widget.storyline.email!,
+                          style: textTheme.bodyMedium!.copyWith(
                             color: Colors.black45,
                             fontSize: 18.0,
                           )),
@@ -99,7 +99,7 @@ class _StorylineState extends State<Storyline> {
                 ),
                 Text(
                   ' رقم التليفون المحمول',
-                  style: textTheme.subtitle1.copyWith(fontSize: 21.0),
+                  style: textTheme.titleMedium!.copyWith(fontSize: 21.0),
                 ),
                 SizedBox(height: 5.0),
                 GestureDetector(
@@ -110,7 +110,7 @@ class _StorylineState extends State<Storyline> {
                     //  toastLength: Toast.LENGTH_LONG,
 
                     //  ),
-                    Scaffold.of(context).showSnackBar(SnackBar(
+                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(
                           'تم نسخ الرقم الى الحافظة \n تستطيع لصقه في المكان المناسب لك'),
                       duration: Duration(milliseconds: 1800),
@@ -129,7 +129,7 @@ class _StorylineState extends State<Storyline> {
                       ),
                       Text(
                         widget.storyline.mobileNo,
-                        style: textTheme.bodyText2.copyWith(
+                        style: textTheme.bodyMedium!.copyWith(
                           color: Colors.black45,
                           fontSize: 18.0,
                         ),
@@ -143,7 +143,7 @@ class _StorylineState extends State<Storyline> {
                 ),
                 Text(
                   ' رابط صفحة الإنترنت ',
-                  style: textTheme.subtitle1.copyWith(fontSize: 21.0),
+                  style: textTheme.titleMedium!.copyWith(fontSize: 21.0),
                 ),
                 SizedBox(height: 5.0),
                 Row(
@@ -188,13 +188,13 @@ class _StorylineState extends State<Storyline> {
             children: [
               Text(
                 more ? 'المزيد' : 'اقل',
-                style: textTheme.bodyText2
-                    .copyWith(fontSize: 18.0, color: theme.accentColor),
+                style: textTheme.bodyMedium!
+                    .copyWith(fontSize: 18.0, color: theme.colorScheme.secondary),
               ),
               Icon(
                 more ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_up,
                 size: 20.0,
-                color: theme.accentColor,
+                color: theme.colorScheme.secondary,
               ),
             ],
           ),

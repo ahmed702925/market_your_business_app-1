@@ -68,7 +68,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
     final url =
         'https://shoryanelhayat-a567c.firebaseio.com/activities/$orgId.json';
     try {
-      final response = await http.get(url);
+      final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Activity> loadedOrganizations = [];
       extractedData.forEach((prodId, prodData) {

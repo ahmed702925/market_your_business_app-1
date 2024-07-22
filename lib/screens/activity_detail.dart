@@ -15,7 +15,7 @@ class ActivityDetails extends StatefulWidget {
 class _ActivityDetailsState extends State<ActivityDetails> {
   bool isFirstTime = true;
   String myTitle = "default title";
-  ActivityNotifier activityNotifier;
+  ActivityNotifier? activityNotifier;
 
   bool more = true;
 
@@ -26,13 +26,13 @@ class _ActivityDetailsState extends State<ActivityDetails> {
         title: const Text('تسجيل دخول'),
         content: Text(message),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: const Text('ليس الأن'),
             onPressed: () {
               Navigator.of(ctx).pop();
             },
           ),
-          FlatButton(
+          TextButton(
             child: const Text('تسجيل الدخول'),
             onPressed: () {
               Navigator.of(ctx).pop();
@@ -45,14 +45,14 @@ class _ActivityDetailsState extends State<ActivityDetails> {
   }
 
   Future<UserNav> loadSharedPrefs() async {
-    UserNav user;
+    UserNav? user;
     try {
       SharedPref sharedPref = SharedPref();
       user = UserNav.fromJson(await sharedPref.read("user"));
     } catch (Excepetion) {
       // do something
     }
-    return user;
+    return user!;
   }
 
   @override
@@ -87,7 +87,7 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                       bottomRight: Radius.circular(20),
                       topRight: Radius.circular(0),
                       topLeft: Radius.circular(20)),
-                  color: Colors.green[700].withOpacity(0.75),
+                  color: Colors.green[700]!.withOpacity(0.75),
                 ),
                 child: Text(
                   ' الوصف',
@@ -97,7 +97,7 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                       color: Colors.white,
                       shadows: [
                         Shadow(
-                            color: Colors.grey[600],
+                            color: Colors.grey[600]!,
                             blurRadius: 2.0,
                             offset: Offset(4, 2))
                       ]),
@@ -127,12 +127,12 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     more == true &&
-                            activityNotifier
+                            activityNotifier!
                                     .currentActivity.description.length >=
                                 60
                         ? Flexible(
                             child: Text(
-                              activityNotifier.currentActivity.description,
+                              activityNotifier!.currentActivity.description,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 18,
@@ -142,7 +142,7 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                           )
                         : Flexible(
                             child: Text(
-                              activityNotifier.currentActivity.description,
+                              activityNotifier!.currentActivity.description,
                               style: TextStyle(
                                   fontSize: 18,
                                   fontStyle: FontStyle.italic,
@@ -162,41 +162,41 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                           Flexible(
                             child: Text(
                               more &&
-                                      activityNotifier.currentActivity
+                                      activityNotifier!.currentActivity
                                               .description.length >=
                                           60
                                   ? 'المزيد'
                                   : '',
-                              style: textTheme.body1.copyWith(
-                                  fontSize: 18.0, color: theme.accentColor),
+                              style: textTheme.bodySmall!.copyWith(
+                                  fontSize: 18.0, color: theme.colorScheme.secondary),
                             ),
                           ),
                           Flexible(
                             child: Text(
                               more == false &&
-                                      activityNotifier.currentActivity
+                                      activityNotifier!.currentActivity
                                               .description.length >=
                                           60
                                   ? 'اقل'
                                   : '',
-                              style: textTheme.body1.copyWith(
-                                  fontSize: 18.0, color: theme.accentColor),
+                              style: textTheme.bodySmall!.copyWith(
+                                  fontSize: 18.0, color: theme.colorScheme.secondary),
                             ),
                           ),
                           Icon(
                             more &&
-                                    activityNotifier.currentActivity.description
+                                    activityNotifier!.currentActivity.description
                                             .length >=
                                         60
                                 ? Icons.keyboard_arrow_down
                                 : more == false &&
-                                        activityNotifier.currentActivity
+                                        activityNotifier!.currentActivity
                                                 .description.length >=
                                             60
                                     ? Icons.keyboard_arrow_down
                                     : null,
                             size: 20.0,
-                            color: theme.accentColor,
+                            color: theme.colorScheme.secondary,
                           ),
 //                    Icon(
 //                      Icons.keyboard_arrow_up
@@ -221,18 +221,14 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                 builder: (ctx) => InkWell(
                   onTap: () async {
                     UserNav userLoad = await loadSharedPrefs();
-                    if (userLoad == null) {
-                      _showErrorDialog("برجاء تسجيل الدخول أولا ");
-                    } else {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return NormalDenotationScreen();
-                          },
-                        ),
-                      );
-                    }
-                  }, // handle your onTap here
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) {
+                          return NormalDenotationScreen();
+                        },
+                      ),
+                    );
+                                    }, // handle your onTap here
                   child: Center(
                     child: Container(
                       height: 50,
@@ -289,7 +285,7 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                     color: Colors.green.withOpacity(0.75),
                   ),
                   child: Text(
-                    activityNotifier.currentActivity.name,
+                    activityNotifier!.currentActivity.name,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 19.0,
@@ -304,7 +300,7 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: NetworkImage(
-                              activityNotifier.currentActivity.image,
+                              activityNotifier!.currentActivity.image,
                             ),
                             fit: BoxFit.fill,
                           ),

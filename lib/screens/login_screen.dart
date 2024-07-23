@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:shoryanelhayat_user/providers/auth.dart';
 
@@ -107,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _authData['email']!,
           _authData['password']!,
         );
-
+log("user is is : "+localId);
         Provider.of<UsersProvider>(context, listen: false)
             .setUserData(email: _authData['email'], userId: localId);
 

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:shoryanelhayat_user/models/user_nav.dart';
 import 'package:shoryanelhayat_user/providers/shard_pref.dart';
@@ -28,9 +29,12 @@ class ChatProvider with ChangeNotifier {
 
   Future<void> fetchAndSetChat(String id, String orgId) async {
     final url =
-        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/chat/$orgId/$id.json';
+        'https://shoryanelhayat-a567c.firebaseio.com/chat/$orgId/$id.json';
     try {
+      log("orgId is : "+orgId);
+      log("id is : "+id);
       final response = await http.get(Uri.parse(url));
+      log("response chat is : "+response.body);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Chat> loadedChat = [];
       if (extractedData != null) {
@@ -40,12 +44,16 @@ class ChatProvider with ChangeNotifier {
               Chat(
                 id: messageId,
                 userName: chatData['name'],
-                userId: chatData['userId'].toString(),
+                userId: 
+                // "zNRzRliSjLbXxz4FPQjMQJXAOmj1",
+                chatData['userId'].toString(),
                 text: chatData['text'],
                 img: chatData['image'],
               ));
         });
         _items = loadedChat;
+                log("chat mesages are : "+_items.toString());
+
         notifyListeners();
       } else {
         _items = [];
@@ -59,14 +67,16 @@ class ChatProvider with ChangeNotifier {
 
   Future<void> addMessage(Chat chat, String id, String orgId) async {
     final url =
-        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/chat/$orgId/$id.json';
+        'https://shoryanelhayat-a567c.firebaseio.com/chat/$orgId/$id.json';
     try {
       final response = await http.post(
         Uri.parse(url),
         body: json.encode(
           {
             'name': chat.userName,
-            'userId': chat.userId,
+            'userId': 
+            // "zNRzRliSjLbXxz4FPQjMQJXAOmj1",
+            chat.userId,
             'text': chat.text,
             'image': chat.img,
             'time': DateTime.now().toString(),
@@ -75,7 +85,9 @@ class ChatProvider with ChangeNotifier {
       );
       final newMessage = Chat(
         id: json.decode(response.body)['name'],
-        userId: chat.userId,
+        userId: 
+        // "zNRzRliSjLbXxz4FPQjMQJXAOmj1",
+        chat.userId,
         userName: chat.userName,
         text: chat.text,
         img: chat.img,

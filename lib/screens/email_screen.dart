@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import '../providers/email_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,6 +27,7 @@ class _EmailScreenState extends State<EmailScreen> {
   final _bodyController = TextEditingController();
 
   void send() {
+    log("send presses");
     emailM = EmailM(
         recipientController: widget.orgEmail,
         subjectController: emailM.subjectController,
@@ -59,7 +61,7 @@ class _EmailScreenState extends State<EmailScreen> {
                 padding: EdgeInsets.all(8.0),
                 child: TextField(
                   controller: _recipientController,
-                  readOnly: true,
+                  readOnly: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                   ),

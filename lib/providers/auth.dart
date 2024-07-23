@@ -11,7 +11,7 @@ class Auth with ChangeNotifier {
     return _userData;
   }
 
-  final String myKey = 'AIzaSyBvWoCL9RGZdK9Y2vpFAlJho3vW7G6jOws';
+  final String myKey = 'AIzaSyALv7hZQYwXCLLKxR1T1WgVZUlEeHPYCTw';
 
   Future<String> _authenticate(
       String email, String password, String urlSegment) async {

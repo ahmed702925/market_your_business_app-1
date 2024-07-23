@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:shoryanelhayat_user/models/user_nav.dart';
 import 'package:shoryanelhayat_user/providers/shard_pref.dart';
 import '../widgets/message_bubble.dart';
@@ -42,7 +44,9 @@ class _ChatScreenState extends State<ChatScreen> {
       img: chat.img,
       text: _enteredMessage,
       userName: chat.userName,
-      userId: chat.userId,
+      userId: 
+      // "zNRzRliSjLbXxz4FPQjMQJXAOmj1",
+      chat.userId,
       id: chat.id,
       time: chat.time,
     );
@@ -82,6 +86,16 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final chatDocs = Provider.of<ChatProvider>(context);
+    log("chat is : "+chatDocs.items.length.toString());
+    if(userLoad!=null){
+ Provider.of<ChatProvider>(context)
+                .fetchAndSetChat(userLoad!.email!.split('.')[0], widget.orgId)
+                .then((value) => {
+                      _loading = true,
+                    });
+
+    }
+   
     return Scaffold(
       appBar: AppBar(
         title: Text('المحادثة'),

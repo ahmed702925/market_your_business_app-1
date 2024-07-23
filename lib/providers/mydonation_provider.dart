@@ -36,7 +36,7 @@ class MyDonationsProvider with ChangeNotifier {
     await loadSharedPrefs();
     userId = userLoad!.id!;
     final url =
-        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/MyDonations/$userId.json';
+        'https://shoryanelhayat-a567c.firebaseio.com/MyDonations/$userId.json';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -73,7 +73,7 @@ class MyDonationsProvider with ChangeNotifier {
     String userId = newDonation.userId;
     if (donationIndex >= 0) {
       final url =
-          'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/MyDonations/$userId/$id.json';
+          'https://shoryanelhayat-a567c.firebaseio.com/MyDonations/$userId/$id.json';
       await http.patch(Uri.parse(url),
           body: json.encode({
             'activityName': newDonation.actName,
@@ -99,7 +99,7 @@ class MyDonationsProvider with ChangeNotifier {
     await loadSharedPrefs();
     userId = userLoad!.id;
     final url =
-        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/MyDonations/$userId.json';
+        'https://shoryanelhayat-a567c.firebaseio.com/MyDonations/$userId.json';
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     MyDonation? existingProduct = _items[existingProductIndex];
     _items.removeWhere((activity) => activity.id == id);
@@ -139,7 +139,7 @@ class MyDonationsProvider with ChangeNotifier {
     if (reqIndex >= 0) {
       var reqId = donationReq.id;
       final url =
-          'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/DonationRequests/$orgId/$reqId.json';
+          'https://shoryanelhayat-a567c.firebaseio.com/DonationRequests/$orgId/$reqId.json';
       await http.patch(Uri.parse(url),
           body: json.encode({
             'activityName': donationReq.actName,
@@ -163,7 +163,7 @@ class MyDonationsProvider with ChangeNotifier {
 
   Future<Organization> fetchAndSetOrg(String orgName) async {
     final url =
-        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/CharitableOrganizations.json';
+        'https://shoryanelhayat-a567c.firebaseio.com/CharitableOrganizations.json';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;

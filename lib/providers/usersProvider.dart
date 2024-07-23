@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:shoryanelhayat_user/models/user_nav.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -127,10 +129,13 @@ class UsersProvider with ChangeNotifier {
       String? activityName,
       String? userId,
       String? orgName}) async {
+        log("called don request");
+    // log("userId is : " + userId.toString());
     await loadSharedPrefs();
     userId = userLoad!.id;
+    log("userId is : " + userId.toString());
     final url =
-        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/DonationRequests/$orgId.json';
+        'https://shoryanelhayat-a567c.firebaseio.com/DonationRequests/$orgId.json';
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -158,7 +163,7 @@ class UsersProvider with ChangeNotifier {
 
       var reqId = json.decode(response.body)['name'];
       final reqUrl =
-          'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/MyDonations/$userId/$reqId.json';
+          'https://shoryanelhayat-a567c.firebaseio.com/MyDonations/$userId/$reqId.json';
       await http.patch(
         Uri.parse(reqUrl),
         body: json.encode(

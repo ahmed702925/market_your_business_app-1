@@ -94,6 +94,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
     try {
       await Provider.of<UsersProvider>(context, listen: false)
           .makeDonationRequest2(
+            
         orgId: campaignNotifier!.currentCampaign.orgId,
         orgName: campaignNotifier!.currentCampaign.orgName,
         availableOn: _authData['time'],

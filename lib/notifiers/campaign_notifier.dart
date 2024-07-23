@@ -26,7 +26,7 @@ class CampaignNotifier with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
-    const url = 'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/Campaigns.json';
+    const url = 'https://shoryanelhayat-a567c.firebaseio.com/Campaigns.json';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -54,7 +54,7 @@ class CampaignNotifier with ChangeNotifier {
 
   Future<void> fetchPreviousCampaigns() async {
     const url =
-        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/PreviousCampaigns.json';
+        'https://shoryanelhayat-a567c.firebaseio.com/PreviousCampaigns.json';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:shoryanelhayat_user/Animation/FadeAnimation.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 // import 'package:connectivity/connectivity.dart';
 import '../background.dart';
+import '../providers/auth.dart';
 
 class OrgOverviewScreen extends StatefulWidget {
   static const routeName = '/home';
@@ -219,6 +221,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log("userId is :"+Provider.of<Auth>(context).userData.id);
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
@@ -376,46 +379,46 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                         ? new Container(
                             height: 150.0, width: _width, child: headerList)
                         : Container(child: Text("لا يوجد حملات حايا")),
-                    ButtonTheme(
-                      minWidth: MediaQuery.of(context).size.width - 50,
-                      height: 50.0,
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Colors.blue, // Background color
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                ),
-                                textStyle: TextStyle(
-                                  fontSize: 22.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              onPressed: () async {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) {
-                                      return FastDonationScreen();
-                                    },
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'اطلب الآن',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // ButtonTheme(
+                    //   minWidth: MediaQuery.of(context).size.width - 50,
+                    //   height: 50.0,
+                    //   child: Container(
+                    //     margin: EdgeInsets.only(bottom: 10),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //       children: <Widget>[
+                    //         ElevatedButton(
+                    //           style: ElevatedButton.styleFrom(
+                    //             backgroundColor:
+                    //                 Colors.blue, // Background color
+                    //             shape: RoundedRectangleBorder(
+                    //               borderRadius: BorderRadius.circular(24.0),
+                    //             ),
+                    //             textStyle: TextStyle(
+                    //               fontSize: 22.0,
+                    //               fontWeight: FontWeight.bold,
+                    //             ),
+                    //           ),
+                    //           onPressed: () async {
+                    //             Navigator.of(context).push(
+                    //               MaterialPageRoute(
+                    //                 builder: (BuildContext context) {
+                    //                   return FastDonationScreen();
+                    //                 },
+                    //               ),
+                    //             );
+                    //           },
+                    //           child: Text(
+                    //             'اطلب الآن',
+                    //             style: TextStyle(
+                    //               color: Colors.white,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                     ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
@@ -722,48 +725,48 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                         width: _width,
                         child: headerList)
                     : Container(child: Text("لا يوجد حملات حايا")),
-                ButtonTheme(
-                  minWidth: MediaQuery.of(context).size.width - 50,
-                  height: (MediaQuery.of(context).size.height -
-                          appBar.preferredSize.height -
-                          MediaQuery.of(context).padding.top) *
-                      0.02,
-                  child: Expanded(
-                    child: Container(
-//                    padding: EdgeInsets.only(bottom: 5),
-                      margin: EdgeInsets.only(bottom: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue, // Background color
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    24.0), // Border radius
-                              ),
-                              textStyle: TextStyle(
-                                fontSize: 22.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white, // Text color
-                              ),
-                            ),
-                            onPressed: () async {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) {
-                                    return FastDonationScreen();
-                                  },
-                                ),
-                              );
-                            },
-                            child: Text('اطلب الآن'),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+//                 ButtonTheme(
+//                   minWidth: MediaQuery.of(context).size.width - 50,
+//                   height: (MediaQuery.of(context).size.height -
+//                           appBar.preferredSize.height -
+//                           MediaQuery.of(context).padding.top) *
+//                       0.02,
+//                   child: Expanded(
+//                     child: Container(
+// //                    padding: EdgeInsets.only(bottom: 5),
+//                       margin: EdgeInsets.only(bottom: 5),
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                         children: <Widget>[
+//                           ElevatedButton(
+//                             style: ElevatedButton.styleFrom(
+//                               backgroundColor: Colors.blue, // Background color
+//                               shape: RoundedRectangleBorder(
+//                                 borderRadius: BorderRadius.circular(
+//                                     24.0), // Border radius
+//                               ),
+//                               textStyle: TextStyle(
+//                                 fontSize: 22.0,
+//                                 fontWeight: FontWeight.bold,
+//                                 color: Colors.white, // Text color
+//                               ),
+//                             ),
+//                             onPressed: () async {
+//                               Navigator.of(context).push(
+//                                 MaterialPageRoute(
+//                                   builder: (BuildContext context) {
+//                                     return FastDonationScreen();
+//                                   },
+//                                 ),
+//                               );
+//                             },
+//                             child: Text('اطلب الآن'),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   ),
+//                 ),
 
                 ListView.builder(
                   shrinkWrap: true,

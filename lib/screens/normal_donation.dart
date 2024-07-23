@@ -59,6 +59,80 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
     'items': '',
     'amount': '',
   };
+  // Future<void> _submit(BuildContext context) async {
+  //   String amount = _authData['amount']!;
+  //   String items = _authData['items']!;
+
+  //   if (!_formKey.currentState!.validate()) {
+  //     // Invalid!
+  //     return;
+  //   }
+  //   if (_image == null && selectedType != 'نقدى') {
+  //     _showErrorDialog("من فضلك اضاف صورة التبرع ");
+  //     return;
+  //   }
+
+  //   _formKey.currentState!.save();
+
+  //   setState(() {
+  //     _submitLoading = true;
+  //   });
+  //   if (selectedType != 'نقدى') {
+  //     _downloadUrl = await uploadImage(File(_image!.path));
+  //     if (selectedType == 'عينى') {
+  //       amount = "";
+  //     }
+  //   } else {
+  //     items = "";
+  //     _downloadUrl =
+  //         'https://www.moneyunder30.com/wp-content/uploads/2018/05/2_how-to-invest-648x364-c-default.jpg';
+  //   }
+
+  //   var arabicTimeFormat = DateFormat.Hms('ar');
+  //   var arabicDateFormat = DateFormat.yMd('ar');
+
+  //   String formattedTime = arabicTimeFormat.format(DateTime.now());
+  //   String formattedDate = arabicDateFormat.format(DateTime.now());
+  //   String arabicFormattedDateTime = formattedTime + ' ' + formattedDate;
+  //   final data = Provider.of<Auth>(context);
+  //   try {
+  //     await Provider.of<UsersProvider>(context, listen: false)
+  //         .makeDonationRequest2(
+  //             userId: data.userData.id,
+  //             orgId: orgNotifier!.currentOrg.id,
+  //             orgName: orgNotifier!.currentOrg.orgName,
+  //             availableOn: _authData['time'],
+  //             donationAmount: amount,
+  //             donationDate: arabicFormattedDateTime,
+  //             donationType: selectedType,
+  //             activityName: activityNotifier!.currentActivity.name,
+  //             donatorAddress: _authData['address'],
+  //             donatorItems: items,
+  //             image: _downloadUrl,
+  //             mobile: _authData['mobile'],
+  //             userName: _authData['name']);
+
+  //     Flushbar(
+  //       message: 'تم ارسال طلب تبرعك بنجاح',
+  //       icon: Icon(
+  //         Icons.thumb_up,
+  //         size: 28.0,
+  //         color: Colors.blue[300],
+  //       ),
+  //       duration: Duration(seconds: 3),
+  //       margin: const EdgeInsets.all(8),
+  //       borderRadius: BorderRadius.circular(8),
+  //     )..show(context).then((value) => Navigator.of(context).pop());
+  //   } catch (error) {
+  //     print(error);
+  //     const errorMessage = ' حدث خطا ما';
+  //     _showErrorDialog(errorMessage);
+  //   }
+  //   setState(() {
+  //     _submitLoading = false;
+  //   });
+  // }
+
   Future<void> _submit(BuildContext context) async {
     String amount = _authData['amount']!;
     String items = _authData['items']!;
@@ -67,13 +141,12 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
       // Invalid!
       return;
     }
-    if (_image == null && selectedType != 'نقدى') {
-      _showErrorDialog("من فضلك اضاف صورة التبرع ");
+    if (selectedType != 'نقدى') {
+      _showErrorDialog("من فضلك اضف صورة التبرع ");
       return;
     }
 
     _formKey.currentState!.save();
-
     setState(() {
       _submitLoading = true;
     });
@@ -94,23 +167,23 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
     String formattedTime = arabicTimeFormat.format(DateTime.now());
     String formattedDate = arabicDateFormat.format(DateTime.now());
     String arabicFormattedDateTime = formattedTime + ' ' + formattedDate;
-    final data = Provider.of<Auth>(context);
     try {
       await Provider.of<UsersProvider>(context, listen: false)
           .makeDonationRequest2(
-              userId: data.userData.id,
-              orgId: orgNotifier!.currentOrg.id,
-              orgName: orgNotifier!.currentOrg.orgName,
-              availableOn: _authData['time'],
-              donationAmount: amount,
-              donationDate: arabicFormattedDateTime,
-              donationType: selectedType,
-              activityName: activityNotifier!.currentActivity.name,
-              donatorAddress: _authData['address'],
-              donatorItems: items,
-              image: _downloadUrl,
-              mobile: _authData['mobile'],
-              userName: _authData['name']);
+            
+        orgId: activityNotifier!.currentActivity.orgId,
+        orgName: orgNotifier!.currentOrg.orgName,
+        availableOn: _authData['time'],
+        donationAmount: amount,
+        donationDate: arabicFormattedDateTime,
+        donationType: selectedType,
+        activityName: activityNotifier!.currentActivity.name,
+        donatorAddress: _authData['address'],
+        donatorItems: items,
+        image: _downloadUrl,
+        mobile: _authData['mobile'],
+        userName: _authData['name'],
+      );
 
       Flushbar(
         message: 'تم ارسال طلب تبرعك بنجاح',
@@ -120,7 +193,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
           color: Colors.blue[300],
         ),
         duration: Duration(seconds: 3),
-        margin: const EdgeInsets.all(8),
+        margin: EdgeInsets.all(8),
         borderRadius: BorderRadius.circular(8),
       )..show(context).then((value) => Navigator.of(context).pop());
     } catch (error) {

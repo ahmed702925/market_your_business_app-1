@@ -260,7 +260,7 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
           // ),
           new ListTile(
             title: const Text(
-              "تبرعاتي",
+              "طلباتى",
               style: TextStyle(
                 fontSize: 16,
                 // fontWeight: FontWeight.bold

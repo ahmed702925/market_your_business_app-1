@@ -33,7 +33,7 @@ class _ActivityScreenState extends State<OrganizationActivity> {
         _isLoading = true;
       });
       Provider.of<ActivityNotifier>(context)
-          .fetchAndSetActivities(widget.id)
+          .getActivites(widget.id)
           .then((_) {
         setState(() {
           _isLoading = false;
@@ -508,7 +508,7 @@ class _ActivityScreenState extends State<OrganizationActivity> {
                                                           }
                                                         },
                                                         child: Text(
-                                                          'تبرع',
+                                                          'اطلب',
                                                           style: TextStyle(
                                                             fontSize: 20.0,
                                                             color: Colors.black,
@@ -551,7 +551,7 @@ class _ActivityScreenState extends State<OrganizationActivity> {
                                                         child: Text(
                                                           'تفاصيل ',
                                                           style: TextStyle(
-                                                            fontSize: 20.0,
+                                                            fontSize: 15.0,
                                                             color: Colors.black,
                                                           ),
                                                         ),

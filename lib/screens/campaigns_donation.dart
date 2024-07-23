@@ -233,7 +233,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                   // ignore: unnecessary_null_comparison
                   campaignNotifier!.currentCampaign.campaignName != null
                       ? campaignNotifier!.currentCampaign.campaignName
-                      : 'تبرع الآن',
+                      : 'اطلب الآن',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16.0,
@@ -285,7 +285,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                           // ignore: unnecessary_null_comparison
                           campaignNotifier!.currentCampaign.orgName != null
                               ? campaignNotifier!.currentCampaign.orgName
-                              : 'تبرع الآن',
+                              : 'اطلب الآن',
                           style: TextStyle(
                               fontSize: 21,
                               fontWeight: FontWeight.bold,
@@ -330,8 +330,8 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                               child: TextFormField(
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
-//                                  labelText:'اسم المتبرع',
-                                    hintText: "اسم المتبرع",
+//                                  labelText:'اسم صاحب الطلب',
+                                    hintText: "اسم صاحب الطلب",
                                     prefixIcon: Icon(
                                       Icons.person,
                                       color: Colors.green[700],
@@ -662,7 +662,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                           child: Center(
                             child: _submitLoading == false
                                 ? Text(
-                                    "تبرع الأن",
+                                    "اطلب الآن",
                                     style: TextStyle(color: Colors.white),
                                   )
                                 : CircularProgressIndicator(

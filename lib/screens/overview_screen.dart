@@ -11,13 +11,13 @@ import 'package:shoryanelhayat_user/screens/fast_donation.dart';
 import 'package:shoryanelhayat_user/screens/navigation_drawer.dart';
 import 'package:shoryanelhayat_user/screens/org_widgets/movie_details_page.dart';
 import 'package:shoryanelhayat_user/screens/organization_activities.dart';
-import 'package:app_settings/app_settings.dart';
+// import 'package:app_settings/app_settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:connectivity/connectivity.dart';
+// import 'package:connectivity/connectivity.dart';
 import '../background.dart';
 
 class OrgOverviewScreen extends StatefulWidget {
@@ -209,7 +209,8 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
 
     await Provider.of<OrganizationNotifier>(context).getOrganizations();
 
-    await Provider.of<CampaignNotifier>(context, listen: false).fetchAndSetProducts();
+    await Provider.of<CampaignNotifier>(context, listen: false)
+        .fetchAndSetProducts();
 
     setState(() {
       _isLoading = false;
@@ -224,9 +225,9 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
     final _width = MediaQuery.of(context).size.width;
     var appBar = AppBar(
       title: new Text(
-        'شريان الحياة',
+        'شركة ISES للتوريدات الكهربية',
         style: new TextStyle(
-            color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
+            color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
       backgroundColor: Colors.green,
@@ -316,7 +317,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
     final bodyLandscape = new Scaffold(
       appBar: new AppBar(
         title: new Text(
-          'شريان الحياة',
+          'شركة ISES للتوريدات الكهربية',
           style: new TextStyle(
               color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
         ),
@@ -357,16 +358,16 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                             viewportFraction: 0.9,
                           ),
                           items: [
-                            Image.asset('assets/offers/sh2.png',
+                            Image.asset('assets/offers/ises.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/Offer2.jpg',
+                            Image.asset('assets/offers/ups.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/offer6.jpg',
+                            Image.asset('assets/offers/inverter.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/offer7.jpg',
+                            Image.asset('assets/offers/battery.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/Offer5.jpg',
-                                fit: BoxFit.cover),
+                            // Image.asset('assets/offers/Offer5.jpg',
+                            //     fit: BoxFit.cover),
                           ],
                         ),
                       ),
@@ -385,8 +386,8 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                           children: <Widget>[
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color.fromRGBO(
-                                    1, 123, 126, 1), // Background color
+                                backgroundColor:
+                                    Colors.blue, // Background color
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(24.0),
                                 ),
@@ -405,7 +406,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                 );
                               },
                               child: Text(
-                                'تبرع الآن',
+                                'اطلب الآن',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -491,7 +492,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 2,
                                               style: new TextStyle(
-                                                  fontSize: 17.0,
+                                                  fontSize: 14.0,
                                                   color: Colors.green,
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -560,7 +561,10 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                                     ),
                                                   );
                                                 },
-                                                child: Text('تفاصيل'),
+                                                child: Text('تفاصيل',
+                                                    style: TextStyle(
+                                                      fontSize: 15.0,
+                                                    )),
                                               ),
                                               ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
@@ -609,7 +613,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                                     ),
                                                   );
                                                 },
-                                                child: Text('أنشطة'),
+                                                child: Text("منتجاتنا"),
                                               ),
                                             ],
                                           )
@@ -681,13 +685,13 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                             viewportFraction: 0.9,
                           ),
                           items: [
-                            Image.asset('assets/offers/sh2.png',
+                            Image.asset('assets/offers/ises.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/Offer2.jpg',
+                            Image.asset('assets/offers/ups.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/offer6.jpg',
+                            Image.asset('assets/offers/inverter.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/offer7.jpg',
+                            Image.asset('assets/offers/battery.jpg',
                                 fit: BoxFit.cover),
                           ],
                         ),
@@ -733,8 +737,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                         children: <Widget>[
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Color.fromRGBO(
-                                  1, 123, 126, 1), // Background color
+                              backgroundColor: Colors.blue, // Background color
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(
                                     24.0), // Border radius
@@ -754,7 +757,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                 ),
                               );
                             },
-                            child: Text('تبرع الآن'),
+                            child: Text('اطلب الآن'),
                           ),
                         ],
                       ),
@@ -985,8 +988,9 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                                               style:
                                                                   ElevatedButton
                                                                       .styleFrom(
-                                                                backgroundColor: Colors
-                                                                    .white, // Background color
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .white, // Background color
                                                                 shape:
                                                                     RoundedRectangleBorder(
                                                                   borderRadius:
@@ -1033,6 +1037,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                                                 'تفاصيل',
                                                                 style:
                                                                     TextStyle(
+                                                                  fontSize: 9.0,
                                                                   color: Colors
                                                                           .green[
                                                                       900],
@@ -1092,8 +1097,9 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                                             );
                                                           },
                                                           child: Text(
-                                                            'أنشطة',
+                                                            'منتجاتنا',
                                                             style: TextStyle(
+                                                              fontSize: 9.0,
                                                               color: Colors
                                                                   .green[900],
                                                             ),

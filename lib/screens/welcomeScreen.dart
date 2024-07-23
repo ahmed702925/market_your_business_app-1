@@ -28,7 +28,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         padding: const EdgeInsets.all(15),
         child: Center(
           child: Image.asset(
-            'assets/images/splash.png',
+            'assets/offers/ises.jpg',
             fit: BoxFit.fill,
           ),
         ),

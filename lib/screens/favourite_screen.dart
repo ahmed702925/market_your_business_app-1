@@ -264,9 +264,9 @@ class _FavouriteState extends State<Favourite> {
                                                             style:
                                                                 ElevatedButton
                                                                     .styleFrom(
-                                                              backgroundColor: Colors
-                                                                      .grey[
-                                                                  200], // Background color
+                                                              backgroundColor:
+                                                                  Colors.grey[
+                                                                      200], // Background color
                                                               shape:
                                                                   RoundedRectangleBorder(
                                                                 borderRadius:
@@ -311,9 +311,9 @@ class _FavouriteState extends State<Favourite> {
                                                             style:
                                                                 ElevatedButton
                                                                     .styleFrom(
-                                                              backgroundColor: Colors
-                                                                      .grey[
-                                                                  200], // Background color
+                                                              backgroundColor:
+                                                                  Colors.grey[
+                                                                      200], // Background color
                                                               shape:
                                                                   RoundedRectangleBorder(
                                                                 borderRadius:
@@ -344,7 +344,7 @@ class _FavouriteState extends State<Favourite> {
                                                             child: Text(
                                                               'تفاصيل ',
                                                               style: TextStyle(
-                                                                fontSize: 20.0,
+                                                                fontSize: 15.0,
                                                                 color: Colors
                                                                     .black,
                                                               ),
@@ -567,7 +567,7 @@ class _FavouriteState extends State<Favourite> {
 //                                                       }));
 //                                             },
 //                                             child: const Text(
-//                                               'تبرع الآن',
+//                                               'اطلب الآن',
 //                                               style: TextStyle(
 //                                                   fontSize: 20.0,
 //                                                   color:

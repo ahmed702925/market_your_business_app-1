@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:shoryanelhayat_user/models/organization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +22,16 @@ class OrganizationNotifier with ChangeNotifier {
   }
 
   Future<void> getOrganizations() async {
+    log('get orgs called');
     final url =
-        'https://shoryanelhayat-a567c.firebaseio.com/CharitableOrganizations.json';
+        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/CharitableOrganizations.json';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       final List<Organization> loadedOrganizations = [];
       extractedData.forEach((prodId, prodData) {
-        loadedOrganizations.add(Organization(
+        loadedOrganizations.add(
+          Organization(
           id: prodId,
           orgName: prodData['orgName'],
           address: prodData['address'],
@@ -44,6 +47,7 @@ class OrganizationNotifier with ChangeNotifier {
       });
 
       _orgList = loadedOrganizations;
+      log(loadedOrganizations.toString());
       notifyListeners();
     } catch (error) {
       throw (error);

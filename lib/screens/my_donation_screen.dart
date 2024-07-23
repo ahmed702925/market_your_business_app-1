@@ -39,7 +39,7 @@ class _MyDonationsState extends State<MyDonationsScreen> {
     final historyData = Provider.of<MyDonationsProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('تبرعاتي'),
+        title: const Text('طلباتى'),
         backgroundColor: Colors.green,
       ),
       body: _isLoading
@@ -49,7 +49,7 @@ class _MyDonationsState extends State<MyDonationsScreen> {
           : historyData.items.length == 0
               ? Center(
                   child: const Text(
-                    'لا توجد تبرعات حاليا',
+                    'لا توجد طلبات حاليا',
                     style: TextStyle(
                       fontSize: 19,
                     ),

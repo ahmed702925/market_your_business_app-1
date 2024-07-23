@@ -168,7 +168,8 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                                   ? 'المزيد'
                                   : '',
                               style: textTheme.bodySmall!.copyWith(
-                                  fontSize: 18.0, color: theme.colorScheme.secondary),
+                                  fontSize: 18.0,
+                                  color: theme.colorScheme.secondary),
                             ),
                           ),
                           Flexible(
@@ -180,13 +181,14 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                                   ? 'اقل'
                                   : '',
                               style: textTheme.bodySmall!.copyWith(
-                                  fontSize: 18.0, color: theme.colorScheme.secondary),
+                                  fontSize: 18.0,
+                                  color: theme.colorScheme.secondary),
                             ),
                           ),
                           Icon(
                             more &&
-                                    activityNotifier!.currentActivity.description
-                                            .length >=
+                                    activityNotifier!.currentActivity
+                                            .description.length >=
                                         60
                                 ? Icons.keyboard_arrow_down
                                 : more == false &&
@@ -228,7 +230,7 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                         },
                       ),
                     );
-                                    }, // handle your onTap here
+                  }, // handle your onTap here
                   child: Center(
                     child: Container(
                       height: 50,
@@ -239,7 +241,7 @@ class _ActivityDetailsState extends State<ActivityDetails> {
                       ),
                       child: Center(
                         child: Text(
-                          "تبرع الأن",
+                          "اطلب الآن",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,

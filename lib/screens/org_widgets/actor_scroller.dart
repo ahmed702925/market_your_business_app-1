@@ -54,7 +54,7 @@ class ActorScroller extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Text(
-            'الأنشطة',
+            'منتجاتنا',
             style: textTheme.titleMedium!.copyWith(fontSize: 18.0),
           ),
         ),

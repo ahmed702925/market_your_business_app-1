@@ -55,7 +55,7 @@ class _ExternalDonationState extends State<ExternalDonation> {
       // },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('التبرعات الخارجية'),
+          title: const Text('الطلبات الخارجية'),
           backgroundColor: Colors.blue,
         ),
         body: Stack(
@@ -94,7 +94,7 @@ class _ExternalDonationState extends State<ExternalDonation> {
           ? new AlertDialog(
               elevation: 25.0,
               title: const Text('الخروج'),
-              content: const Text('هل تريد الخروج من التبرعات الخارجية ؟'),
+              content: const Text('هل تريد الخروج من الطلبات الخارجية ؟'),
               actions: <Widget>[
                 new GestureDetector(
                   onTap: () => Navigator.of(context).pop(false),
@@ -111,7 +111,7 @@ class _ExternalDonationState extends State<ExternalDonation> {
             )
           : CupertinoAlertDialog(
               title: const Text('الخروج'),
-              content: const Text('هل تريد الخروج من التبرعات الخارجية ؟'),
+              content: const Text('هل تريد الخروج من الطلبات الخارجية ؟'),
               actions: <Widget>[
                 CupertinoDialogAction(
                   child: const Text("نعم",

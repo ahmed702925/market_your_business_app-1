@@ -200,7 +200,7 @@ class _EditDonationState extends State<EditDonation> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'اسم المتبرع',
+                            'اسم صاحب الطلب',
                             textAlign: TextAlign.center,
                           ),
                           TextFormField(
@@ -213,7 +213,7 @@ class _EditDonationState extends State<EditDonation> {
                             },
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'من فضلك أدخل أسم المتبرع';
+                                return 'من فضلك أدخل أسم صاحب الطلب';
                               }
                               return null;
                             },
@@ -241,7 +241,7 @@ class _EditDonationState extends State<EditDonation> {
                             },
                           ),
                           Text(
-                            'عنوان المتبرع',
+                            'عنوان صاحب الطلب',
                             textAlign: TextAlign.center,
                           ),
                           TextFormField(
@@ -254,7 +254,7 @@ class _EditDonationState extends State<EditDonation> {
                             },
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'من فضلك أدخل عنوان المتبرع';
+                                return 'من فضلك أدخل عنوان صاحب الطلب';
                               }
                               return null;
                             },

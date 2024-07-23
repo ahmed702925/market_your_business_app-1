@@ -28,7 +28,7 @@ class ChatProvider with ChangeNotifier {
 
   Future<void> fetchAndSetChat(String id, String orgId) async {
     final url =
-        'https://shoryanelhayat-a567c.firebaseio.com/chat/$orgId/$id.json';
+        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/chat/$orgId/$id.json';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -59,7 +59,7 @@ class ChatProvider with ChangeNotifier {
 
   Future<void> addMessage(Chat chat, String id, String orgId) async {
     final url =
-        'https://shoryanelhayat-a567c.firebaseio.com/chat/$orgId/$id.json';
+        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/chat/$orgId/$id.json';
     try {
       final response = await http.post(
         Uri.parse(url),

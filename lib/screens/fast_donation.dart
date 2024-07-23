@@ -240,7 +240,8 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
 
 //    _activitesList = [];
 //    selectedActivity = null;
-    final url = 'https://shoryanelhayat-a567c.firebaseio.com/activities.json';
+    final url =
+        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/activities.json';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -268,7 +269,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
   Future<void> getActivites(String orgId) async {
     selectedActivity = null;
     final url =
-        'https://shoryanelhayat-a567c.firebaseio.com/activities/$orgId.json';
+        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/activities/$orgId.json';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -289,7 +290,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
 
   Future<void> getOrganizations() async {
     const url =
-        'https://shoryanelhayat-a567c.firebaseio.com/CharitableOrganizations.json';
+        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/CharitableOrganizations.json';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -369,7 +370,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
       appBar: AppBar(
         title: Container(
           alignment: Alignment.center,
-          child: Text("تبرع الآن",
+          child: Text("اطلب الآن",
               style: TextStyle(
                 color: Colors.white,
               )),
@@ -391,7 +392,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: CircleAvatar(
-                          child: Image.asset("assets/images/logo.jpg"),
+                          child: Image.asset("assets/offers/ises.jpg"),
                         ),
                       ),
                     ),
@@ -436,7 +437,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                       child: TextFormField(
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
-                                            hintText: "اسم المتبرع",
+                                            hintText: "اسم صاحب الطلب",
                                             prefixIcon: Icon(
                                               Icons.person,
                                               color: Colors.green[700],
@@ -823,7 +824,7 @@ class _FastDonationScreenState extends State<FastDonationScreen> {
                                 child: Center(
                                   child: _submitLoading == false
                                       ? Text(
-                                          "تبرع الأن",
+                                          "اطلب الآن",
                                           style: TextStyle(color: Colors.white),
                                         )
                                       : CircularProgressIndicator(

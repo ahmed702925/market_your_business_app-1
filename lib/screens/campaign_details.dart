@@ -259,9 +259,9 @@ class _CampaignDetailState extends State<CampaignDetail> {
                       return CampaignDenotationScreen();
                     }),
                   );
-                                },
+                },
                 child: Text(
-                  'تبرع الآن',
+                  'اطلب الآن',
                   style: TextStyle(fontSize: 21.0, color: Colors.white),
                 ),
               ),
@@ -295,7 +295,7 @@ class _CampaignDetailState extends State<CampaignDetail> {
 //                                }
 //                              },
 //                              child: Text(
-//                                'تبرع الآن',
+//                                'اطلب الآن',
 //                                style: TextStyle(fontSize: 21.0, color: Colors.white),
 //                              ),
 //                              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),

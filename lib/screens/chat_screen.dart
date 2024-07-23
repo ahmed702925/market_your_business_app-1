@@ -62,7 +62,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void didChangeDependencies() {
     if (_isInit) {
       loadSharedPrefs().then((_) => {
-            Provider.of<ChatProvider>(context)
+            Provider.of<ChatProvider>(context,listen: false)
                 .fetchAndSetChat(userLoad!.email!.split('.')[0], widget.orgId)
                 .then((value) => {
                       _loading = true,

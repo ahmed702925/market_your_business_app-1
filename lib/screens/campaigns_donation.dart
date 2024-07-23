@@ -246,7 +246,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image:
-                              NetworkImage("https://i.imgur.com/5xFZM4o.jpg"),
+                              NetworkImage("https://drive.usercontent.google.com/download?id=1R0-ZoGQqvALGWguq0RVK-L1xsjJvEfQ2&export=view&authuser=0"),
                           fit: BoxFit.fill,
                         ),
                       ),

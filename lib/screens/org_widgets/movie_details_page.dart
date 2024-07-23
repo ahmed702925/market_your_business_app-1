@@ -66,7 +66,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
     _activitesList = [];
     // selectedActivity = null;
     final url =
-        'https://shoryanelhayat-a567c.firebaseio.com/activities/$orgId.json';
+        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/activities/$orgId.json';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;

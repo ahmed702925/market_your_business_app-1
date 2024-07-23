@@ -135,7 +135,7 @@ class UsersProvider with ChangeNotifier {
     userId = userLoad!.id;
     log("userId is : " + userId.toString());
     final url =
-        'https://shoryanelhayat-a567c.firebaseio.com/DonationRequests/$orgId.json';
+        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/DonationRequests/$orgId.json';
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -163,7 +163,7 @@ class UsersProvider with ChangeNotifier {
 
       var reqId = json.decode(response.body)['name'];
       final reqUrl =
-          'https://shoryanelhayat-a567c.firebaseio.com/MyDonations/$userId/$reqId.json';
+          'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/MyDonations/$userId/$reqId.json';
       await http.patch(
         Uri.parse(reqUrl),
         body: json.encode(

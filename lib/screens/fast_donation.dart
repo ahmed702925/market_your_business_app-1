@@ -312,7 +312,7 @@
 // //    _activitesList = [];
 // //    selectedActivity = null;
 //     final url =
-//         'https://shoryanelhayat-a567c.firebaseio.com/activities.json';
+//         'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/activities.json';
 //     try {
 //       final response = await http.get(Uri.parse(url));
 //       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -340,7 +340,7 @@
 //   Future<void> getActivites(String orgId) async {
 //     selectedActivity = null;
 //     final url =
-//         'https://shoryanelhayat-a567c.firebaseio.com/activities/$orgId.json';
+//         'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/activities/$orgId.json';
 //     try {
 //       final response = await http.get(Uri.parse(url));
 //       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -361,7 +361,7 @@
 
 //   Future<void> getOrganizations() async {
 //     const url =
-//         'https://shoryanelhayat-a567c.firebaseio.com/CharitableOrganizations.json';
+//         'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/CharitableOrganizations.json';
 //     try {
 //       final response = await http.get(Uri.parse(url));
 //       final extractedData = json.decode(response.body) as Map<String, dynamic>;

@@ -87,7 +87,7 @@
 //     if (current < 3) {
 //       if (current == 2 && (selectedType == null || selectedActivity == null)) {
 //         _showErrorDialog(
-//             "من فضلك اختر نوع التبرع والجمعية والنشاط الذى تود التبرع له");
+//             "من فضلك اختر نوع الطلب والجمعية والنشاط الذى تود الطلب له");
 //       } else {
 //         current++;
 //       }
@@ -183,7 +183,7 @@
 // //       return;
 // //     }
 // //     if (selectedType != 'نقدى') {
-// //       _showErrorDialog("من فضلك اضف صورة التبرع ");
+// //       _showErrorDialog("من فضلك اضف صورة الطلب ");
 // //       return;
 // //     }
 
@@ -706,7 +706,7 @@
 //                                         value: selectedType,
 //                                         isExpanded: false,
 //                                         hint: const Text(
-//                                           'اختار نوع التبرع',
+//                                           'اختار نوع الطلب',
 //                                           style: TextStyle(
 //                                               color: Color(0xff11b719)),
 //                                         ),
@@ -770,7 +770,7 @@
 //                                           SizedBox(width: 10),
 //                                           Expanded(
 //                                               child: const Text(
-//                                                   "اضف صورة التبرع",
+//                                                   "اضف صورة الطلب",
 //                                                   style: TextStyle(
 //                                                       fontSize: 15,
 //                                                       fontWeight:
@@ -797,7 +797,7 @@
 //                                         padding: const EdgeInsets.fromLTRB(
 //                                             10, 5, 10, 0),
 //                                         child: Text(
-//                                           'اكتب مواصفات ونوع الاشياء والكمية التي تود التبرع بها ',
+//                                           'اكتب مواصفات ونوع الاشياء والكمية التي تود الطلب بها ',
 //                                           style: TextStyle(
 //                                               fontSize: 17,
 //                                               height: 1,

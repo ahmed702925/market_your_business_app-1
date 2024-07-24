@@ -47,7 +47,7 @@ class ActorScroller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var textTheme = Theme.of(context).textTheme;
-    activityNotifier = Provider.of<ActivityNotifier>(context);
+    activityNotifier = Provider.of<ActivityNotifier>(context,listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

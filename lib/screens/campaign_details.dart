@@ -219,30 +219,31 @@ class _CampaignDetailState extends State<CampaignDetail> {
                   ],
                 ),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green, // Background color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
-                ),
-                child: Text(
-                  'صور لحملات سابقة',
-                  style: TextStyle(fontSize: 21.0, color: Colors.white),
-                ),
-                onPressed: () {
-                  print(campaignNotifier!.currentCampaign.id);
+              // ElevatedButton(
+              //   style: ElevatedButton.styleFrom(
+              //     backgroundColor: Colors.green, // Background color
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(5.0),
+              //     ),
+              //     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 3),
+              //   ),
+              //   child: Text(
+              //     'صور لحملات سابقة',
+              //     style: TextStyle(fontSize: 21.0, color: Colors.white),
+              //   ),
+              //   onPressed: () {
+              //     print(campaignNotifier!.currentCampaign.id);
 
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) {
-                        return PreviousCampaignsDetails();
-                      },
-                    ),
-                  );
-                },
-              ),
+              //     Navigator.of(context).push(
+              //       MaterialPageRoute(
+              //         builder: (BuildContext context) {
+              //           return PreviousCampaignsDetails();
+              //         },
+              //       ),
+              //     );
+              //   },
+              // ),
+            
               SizedBox(height: 30),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(

@@ -167,7 +167,7 @@ class _EditDonationState extends State<EditDonation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('تعديل طلب التبرع'),
+        title: Text('تعديل طلب الطلب'),
         backgroundColor: Colors.green,
       ),
       body: _isLoading

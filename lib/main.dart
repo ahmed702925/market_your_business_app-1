@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
                 ),
               );
             },
-            title: 'شريان الحياة',
+            title: 'ISES',
             theme: new ThemeData(
                 primarySwatch: Colors.green,
                 textTheme: TextTheme(

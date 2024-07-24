@@ -66,7 +66,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
       return;
     }
     if (selectedType != 'نقدى') {
-      _showErrorDialog("من فضلك اضف صورة التبرع ");
+      _showErrorDialog("من فضلك اضف صورة الطلب ");
       return;
     }
 
@@ -110,7 +110,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
       );
 
       Flushbar(
-        message: 'تم ارسال طلب تبرعك بنجاح',
+        message: 'تم ارسال طلبك بنجاح',
         icon: Icon(
           Icons.thumb_up,
           size: 28.0,
@@ -508,7 +508,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                   value: selectedType,
                                   isExpanded: false,
                                   hint: Text(
-                                    'اختار نوع التبرع',
+                                    'اختار نوع الطلب',
                                     style: TextStyle(color: Color(0xff11b719)),
                                   ),
                                 )
@@ -564,7 +564,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                     ),
                                     SizedBox(width: 10),
                                     Expanded(
-                                        child: Text("اضف صورة التبرع",
+                                        child: Text("اضف صورة الطلب",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold)))
@@ -591,7 +591,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                               Container(
                                   padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
                                   child: Text(
-                                    'اكتب مواصفات ونوع الاشياء والكمية التي تود التبرع بها ',
+                                    'اكتب مواصفات ونوع الاشياء والكمية التي تود الطلب بها ',
                                     style: TextStyle(
                                         fontSize: 17,
                                         height: 1,
@@ -601,7 +601,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                               Container(
                                   padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
                                   child: Text(
-                                    ' مثال:3 اطقم ملابس و 2بطاطين....',
+                                    ' مثال:3  محولات و 2 مولدات....',
                                     style: TextStyle(
                                         fontSize: 14,
                                         height: 1,

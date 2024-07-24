@@ -68,7 +68,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
   //     return;
   //   }
   //   if (_image == null && selectedType != 'نقدى') {
-  //     _showErrorDialog("من فضلك اضاف صورة التبرع ");
+  //     _showErrorDialog("من فضلك اضاف صورة الطلب ");
   //     return;
   //   }
 
@@ -142,7 +142,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
       return;
     }
     if (selectedType != 'نقدى') {
-      _showErrorDialog("من فضلك اضف صورة التبرع ");
+      _showErrorDialog("من فضلك اضف صورة الطلب ");
       return;
     }
 
@@ -186,7 +186,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
       );
 
       Flushbar(
-        message: 'تم ارسال طلب تبرعك بنجاح',
+        message: 'تم ارسال طلبك بنجاح',
         icon: Icon(
           Icons.thumb_up,
           size: 28.0,
@@ -316,7 +316,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image:
-                              NetworkImage("https://i.imgur.com/5xFZM4o.jpg"),
+                              NetworkImage("https://drive.usercontent.google.com/download?id=1R0-ZoGQqvALGWguq0RVK-L1xsjJvEfQ2&export=view&authuser=0"),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -573,7 +573,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                   value: selectedType,
                                   isExpanded: false,
                                   hint: const Text(
-                                    'اختار نوع التبرع',
+                                    'اختار نوع الطلب',
                                     style: TextStyle(color: Color(0xff11b719)),
                                   ),
                                 )
@@ -629,7 +629,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                     ),
                                     SizedBox(width: 10),
                                     Expanded(
-                                        child: const Text("اضف صورة التبرع",
+                                        child: const Text("اضف صورة الطلب",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold)))
@@ -657,7 +657,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                   padding:
                                       const EdgeInsets.fromLTRB(10, 5, 10, 0),
                                   child: const Text(
-                                    'اكتب مواصفات ونوع الاشياء والكمية التي تود التبرع بها ',
+                                    'اكتب مواصفات ونوع الاشياء والكمية التي تود الطلب بها ',
                                     style: TextStyle(
                                         fontSize: 17,
                                         height: 1,
@@ -668,7 +668,7 @@ class _NormalDenotationScreenState extends State<NormalDenotationScreen> {
                                   padding:
                                       const EdgeInsets.fromLTRB(10, 5, 10, 0),
                                   child: const Text(
-                                    ' مثال:3 اطقم ملابس و 2بطاطين....',
+                                    ' مثال:3  محولات و 3 مولدات....',
                                     style: TextStyle(
                                         fontSize: 14,
                                         height: 1,

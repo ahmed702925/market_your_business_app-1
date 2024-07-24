@@ -379,46 +379,47 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                         ? new Container(
                             height: 150.0, width: _width, child: headerList)
                         : Container(child: Text("لا يوجد حملات حايا")),
-                    // ButtonTheme(
-                    //   minWidth: MediaQuery.of(context).size.width - 50,
-                    //   height: 50.0,
-                    //   child: Container(
-                    //     margin: EdgeInsets.only(bottom: 10),
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //       children: <Widget>[
-                    //         ElevatedButton(
-                    //           style: ElevatedButton.styleFrom(
-                    //             backgroundColor:
-                    //                 Colors.blue, // Background color
-                    //             shape: RoundedRectangleBorder(
-                    //               borderRadius: BorderRadius.circular(24.0),
-                    //             ),
-                    //             textStyle: TextStyle(
-                    //               fontSize: 22.0,
-                    //               fontWeight: FontWeight.bold,
-                    //             ),
-                    //           ),
-                    //           onPressed: () async {
-                    //             Navigator.of(context).push(
-                    //               MaterialPageRoute(
-                    //                 builder: (BuildContext context) {
-                    //                   return FastDonationScreen();
-                    //                 },
-                    //               ),
-                    //             );
-                    //           },
-                    //           child: Text(
-                    //             'اطلب الآن',
-                    //             style: TextStyle(
-                    //               color: Colors.white,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+                    ButtonTheme(
+                      minWidth: MediaQuery.of(context).size.width - 50,
+                      height: 50.0,
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Colors.blue, // Background color
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                ),
+                                textStyle: TextStyle(
+                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              onPressed: () async {
+                                // Navigator.of(context).push(
+                                //   MaterialPageRoute(
+                                //     builder: (BuildContext context) {
+                                //       return FastDonationScreen();
+                                //     },
+                                //   ),
+                                // );
+                              },
+                              child: Text(
+                                'اطلب الآن',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Container(height: 200,margin: EdgeInsets.only(bottom: 20),),
                     ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
@@ -427,7 +428,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                         return ClipRRect(
                           borderRadius: new BorderRadius.circular(20),
                           child: Card(
-                            margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                            margin: EdgeInsets.fromLTRB(10, 5, 40, 5),
 //                            color: Colors.purple[200],
                             child: new ListTile(
                               contentPadding: EdgeInsets.fromLTRB(5, 5, 10, 0),

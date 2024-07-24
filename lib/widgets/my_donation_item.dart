@@ -47,7 +47,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
                 alignment: Alignment.center,
                 decoration: BoxDecoration(color: Colors.grey[300]),
                 child: Text(
-                  "تفاصيل التبرع",
+                  "تفاصيل الطلب",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 18,
@@ -116,7 +116,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
                         alignment: WrapAlignment.start,
                         children: <Widget>[
                           Text(
-                            'نوع التبرع : ',
+                            'نوع الطلب : ',
                             style: TextStyle(
                                 color: Colors.green,
                                 fontSize: 16.0,
@@ -165,7 +165,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
                             alignment: WrapAlignment.start,
                             children: <Widget>[
                               Text(
-                                'وصف التبرع : ',
+                                'وصف الطلب : ',
                                 style: TextStyle(
                                     color: Colors.green,
                                     fontSize: 16.0,
@@ -324,7 +324,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
             //       ? Row(
             //           children: <Widget>[
             //             Text(
-            //               'نوع التبرع : ',
+            //               'نوع الطلب : ',
             //               style: TextStyle(
             //                   color: Colors.green,
             //                   fontSize: 12.0,
@@ -368,7 +368,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
             //       ? Row(
             //           children: <Widget>[
             //             Text(
-            //               'وصف التبرع : ',
+            //               'وصف الطلب : ',
             //               style: TextStyle(
             //                   color: Colors.green,
             //                   fontSize: 12.0,
@@ -443,7 +443,7 @@ class _MyDonationItemState extends State<MyDonationItem> {
                             ), // Text color
                           ),
                           child: Text(
-                            'تعديل التبرع',
+                            'تعديل الطلب',
                             style: TextStyle(
                               color: Colors.green[900],
                             ),

@@ -157,7 +157,7 @@ class _MyDonationsState extends State<MyDonationsScreen> {
                                                                 children: <
                                                                     Widget>[
                                                                   Text(
-                                                                    'حالة التبرع : ',
+                                                                    'حالة الطلب : ',
                                                                     style: TextStyle(
 //                                                                  color: Colors.green,
                                                                         fontSize: 18.0,
@@ -177,11 +177,11 @@ class _MyDonationsState extends State<MyDonationsScreen> {
                                                                       : historyData.items[i].status ==
                                                                               'done'
                                                                           ? const Text(
-                                                                              'تم قبول التبرع',
+                                                                              'تم قبول الطلب',
                                                                               style: TextStyle(color: Colors.green, fontSize: 18.0, fontWeight: FontWeight.bold),
                                                                             )
                                                                           : const Text(
-                                                                              'تم رفض التبرع',
+                                                                              'تم رفض الطلب',
                                                                               style: TextStyle(color: Colors.red, fontSize: 18.0, fontWeight: FontWeight.bold),
                                                                             ),
                                                                 ],

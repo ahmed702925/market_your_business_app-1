@@ -281,7 +281,7 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
           ),
 //          new ListTile(
 //            title: const Text(
-//              "التبرعات الخارجية",
+//              "الطلبات الخارجية",
 //              style: TextStyle(fontSize: 16),
 //            ),
 //            leading: new Icon(

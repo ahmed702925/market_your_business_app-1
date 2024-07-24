@@ -32,17 +32,17 @@ class _ActivityScreenState extends State<OrganizationActivity> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<ActivityNotifier>(context)
+      Provider.of<ActivityNotifier>(context,listen: false)
           .getActivites(widget.id)
           .then((_) {
         setState(() {
           _isLoading = false;
         });
       });
-      Provider.of<ActivityNotifier>(context)
+      Provider.of<ActivityNotifier>(context,listen: false)
           .fetchAndSetFavorites()
           .then((_) => {
-                _savedFav = Provider.of<ActivityNotifier>(context).favorites,
+                _savedFav = Provider.of<ActivityNotifier>(context,listen: false).favorites,
                 if (_savedFav.length > 0)
                   {
                     _savedFav.forEach((element) {
@@ -51,7 +51,7 @@ class _ActivityScreenState extends State<OrganizationActivity> {
                   }
               });
 
-      activityNotifier = Provider.of<ActivityNotifier>(context);
+      activityNotifier = Provider.of<ActivityNotifier>(context,listen: false);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -328,7 +328,7 @@ class _ActivityScreenState extends State<OrganizationActivity> {
     final body = new Scaffold(
       appBar: new AppBar(
         title: new Text(
-          'الانشطة',
+          'المنتجات',
           style: new TextStyle(
               color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
         ),
@@ -609,10 +609,10 @@ class _ActivityScreenState extends State<OrganizationActivity> {
         setState(() {
           if (alreadySaved) {
             _saved.remove(activity.name);
-            Provider.of<ActivityNotifier>(context).deleteFavorite(activity);
+            Provider.of<ActivityNotifier>(context,listen: false).deleteFavorite(activity);
           } else {
             _saved.add(activity.name);
-            Provider.of<ActivityNotifier>(context).addFavorite(activity.name,
+            Provider.of<ActivityNotifier>(context,listen: false).addFavorite(activity.name,
                 activity.description, activity.image, activity.id);
           }
         });

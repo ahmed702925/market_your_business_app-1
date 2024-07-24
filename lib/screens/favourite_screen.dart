@@ -27,15 +27,15 @@ class _FavouriteState extends State<Favourite> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<ActivityNotifier>(context).fetchAndSetFavorites().then((_) {
+      Provider.of<ActivityNotifier>(context,listen: false).fetchAndSetFavorites().then((_) {
         setState(() {
           _isLoading = false;
         });
       });
-      Provider.of<ActivityNotifier>(context)
+      Provider.of<ActivityNotifier>(context,listen: false)
           .fetchAndSetFavorites()
           .then((_) => {
-                _savedFav = Provider.of<ActivityNotifier>(context).favorites,
+                _savedFav = Provider.of<ActivityNotifier>(context,listen: false).favorites,
                 if (_savedFav.length > 0)
                   {
                     _savedFav.forEach((element) {
@@ -44,7 +44,7 @@ class _FavouriteState extends State<Favourite> {
                   }
               });
 
-      activityNotifier = Provider.of<ActivityNotifier>(context);
+      activityNotifier = Provider.of<ActivityNotifier>(context,listen: false);
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -296,7 +296,7 @@ class _FavouriteState extends State<Favourite> {
                                                               );
                                                             },
                                                             child: Text(
-                                                              'تبرع',
+                                                              'طلب',
                                                               style: TextStyle(
                                                                 fontSize: 20.0,
                                                                 color: Colors
@@ -403,10 +403,10 @@ class _FavouriteState extends State<Favourite> {
         setState(() {
           if (alreadySaved) {
             _saved.remove(activity.name);
-            Provider.of<ActivityNotifier>(context).deleteFavorite(activity);
+            Provider.of<ActivityNotifier>(context,listen: false).deleteFavorite(activity);
           } else {
             _saved.add(activity.name);
-            Provider.of<ActivityNotifier>(context).addFavorite(activity.name,
+            Provider.of<ActivityNotifier>(context,listen: false).addFavorite(activity.name,
                 activity.description, activity.image, activity.id);
           }
         });

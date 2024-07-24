@@ -251,7 +251,7 @@ log("user is is : "+localId);
                           padding: const EdgeInsets.only(top: 70),
                           child: Center(
                             child: const Text(
-                              'مرحبا بك فى شريان الحياة',
+                              'مرحبا بك فى ISES',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 28,

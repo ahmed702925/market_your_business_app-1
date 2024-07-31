@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:shoryanelhayat_user/models/user_nav.dart';
-import 'package:shoryanelhayat_user/providers/shard_pref.dart';
+import 'package:market_app/models/user_nav.dart';
+import 'package:market_app/providers/shard_pref.dart';
 import '../widgets/message_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

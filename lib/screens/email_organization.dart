@@ -1,6 +1,6 @@
-import 'package:shoryanelhayat_user/notifiers/organization_notifier.dart';
+import 'package:market_app/notifiers/organization_notifier.dart';
 
-import 'package:shoryanelhayat_user/screens/email_screen.dart';
+import 'package:market_app/screens/email_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

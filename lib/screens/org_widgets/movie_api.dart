@@ -1,4 +1,4 @@
-import 'package:shoryanelhayat_user/screens/org_widgets/models.dart';
+import 'package:market_app/screens/org_widgets/models.dart';
 
 final Movie testMovie = Movie(
   bannerUrl: 'images/banner.png',

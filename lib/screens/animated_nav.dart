@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:shoryanelhayat_user/screens/overview_screen.dart';
+import 'package:market_app/screens/overview_screen.dart';
 
 class AnimatedNav extends StatefulWidget {
   @override

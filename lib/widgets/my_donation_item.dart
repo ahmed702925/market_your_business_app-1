@@ -1,6 +1,6 @@
 import 'package:provider/provider.dart';
-import 'package:shoryanelhayat_user/providers/mydonation_provider.dart';
-import 'package:shoryanelhayat_user/screens/my_donation_edit.dart';
+import 'package:market_app/providers/mydonation_provider.dart';
+import 'package:market_app/screens/my_donation_edit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

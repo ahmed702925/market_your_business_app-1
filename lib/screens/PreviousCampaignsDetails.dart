@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shoryanelhayat_user/notifiers/campaign_notifier.dart';
-//import 'package:shoryanelhayat_user/Animation/FadeAnimation.dart';
+import 'package:market_app/notifiers/campaign_notifier.dart';
+//import 'package:market_app/Animation/FadeAnimation.dart';
 
 class PreviousCampaignsDetails extends StatefulWidget {
   @override

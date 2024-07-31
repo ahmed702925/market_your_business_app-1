@@ -3,10 +3,10 @@ import 'dart:ui';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shoryanelhayat_user/models/user_nav.dart';
-import 'package:shoryanelhayat_user/providers/auth.dart';
-import 'package:shoryanelhayat_user/providers/shard_pref.dart';
-import 'package:shoryanelhayat_user/providers/usersProvider.dart';
+import 'package:market_app/models/user_nav.dart';
+import 'package:market_app/providers/auth.dart';
+import 'package:market_app/providers/shard_pref.dart';
+import 'package:market_app/providers/usersProvider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

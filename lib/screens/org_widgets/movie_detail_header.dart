@@ -1,7 +1,7 @@
-import 'package:shoryanelhayat_user/models/organization.dart';
+import 'package:market_app/models/organization.dart';
 import 'package:flutter/material.dart';
 
-import 'package:shoryanelhayat_user/screens/org_widgets/arc_banner_image.dart';
+import 'package:market_app/screens/org_widgets/arc_banner_image.dart';
 
 
 class MovieDetailHeader extends StatelessWidget {

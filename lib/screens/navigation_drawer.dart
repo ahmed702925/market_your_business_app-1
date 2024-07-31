@@ -4,11 +4,11 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shoryanelhayat_user/models/user_nav.dart';
-import 'package:shoryanelhayat_user/providers/shard_pref.dart';
-import 'package:shoryanelhayat_user/screens/help_screen.dart';
-import 'package:shoryanelhayat_user/screens/login_screen.dart';
-import 'package:shoryanelhayat_user/screens/my_donation_screen.dart';
+import 'package:market_app/models/user_nav.dart';
+import 'package:market_app/providers/shard_pref.dart';
+import 'package:market_app/screens/help_screen.dart';
+import 'package:market_app/screens/login_screen.dart';
+import 'package:market_app/screens/my_donation_screen.dart';
 
 import '../providers/usersProvider.dart';
 

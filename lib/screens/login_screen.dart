@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:another_flushbar/flushbar.dart';
-import 'package:shoryanelhayat_user/providers/auth.dart';
+import 'package:market_app/providers/auth.dart';
 
-import 'package:shoryanelhayat_user/providers/usersProvider.dart';
+import 'package:market_app/providers/usersProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';

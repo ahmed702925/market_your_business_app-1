@@ -1,4 +1,4 @@
-import 'package:shoryanelhayat_user/models/organization.dart';
+import 'package:market_app/models/organization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';

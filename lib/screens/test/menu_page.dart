@@ -1,5 +1,5 @@
-// import 'package:shoryanelhayat_user/screens/test/circular_image.dart';
-// import 'package:shoryanelhayat_user/screens/test/zoom_scaffold.dart';
+// import 'package:market_app/screens/test/circular_image.dart';
+// import 'package:market_app/screens/test/zoom_scaffold.dart';
 // import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 

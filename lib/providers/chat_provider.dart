@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:shoryanelhayat_user/models/user_nav.dart';
-import 'package:shoryanelhayat_user/providers/shard_pref.dart';
+import 'package:market_app/models/user_nav.dart';
+import 'package:market_app/providers/shard_pref.dart';
 import '../models/chat.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';

@@ -1,12 +1,12 @@
 import 'dart:developer';
 
-import 'package:shoryanelhayat_user/models/user_nav.dart';
+import 'package:market_app/models/user_nav.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../models/http_exception.dart';
-import 'package:shoryanelhayat_user/providers/shard_pref.dart';
+import 'package:market_app/providers/shard_pref.dart';
 
 class UsersProvider with ChangeNotifier {
   UserNav? userLoad;

@@ -1,8 +1,8 @@
-import 'package:shoryanelhayat_user/models/user_nav.dart';
+import 'package:market_app/models/user_nav.dart';
 
-import 'package:shoryanelhayat_user/providers/shard_pref.dart';
-import 'package:shoryanelhayat_user/screens/Help_organizations.dart';
-import 'package:shoryanelhayat_user/screens/email_organization.dart';
+import 'package:market_app/providers/shard_pref.dart';
+import 'package:market_app/screens/Help_organizations.dart';
+import 'package:market_app/screens/email_organization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;

@@ -1,7 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:shoryanelhayat_user/notifiers/campaign_notifier.dart';
+import 'package:market_app/notifiers/campaign_notifier.dart';
 
-import 'package:shoryanelhayat_user/providers/usersProvider.dart';
+import 'package:market_app/providers/usersProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

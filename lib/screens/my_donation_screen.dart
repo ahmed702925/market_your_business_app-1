@@ -1,6 +1,6 @@
-import 'package:shoryanelhayat_user/providers/auth.dart';
-import 'package:shoryanelhayat_user/providers/mydonation_provider.dart';
-import 'package:shoryanelhayat_user/widgets/my_donation_item.dart';
+import 'package:market_app/providers/auth.dart';
+import 'package:market_app/providers/mydonation_provider.dart';
+import 'package:market_app/widgets/my_donation_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

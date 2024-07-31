@@ -1,6 +1,6 @@
-import 'package:shoryanelhayat_user/models/activity.dart';
-import 'package:shoryanelhayat_user/notifiers/activity_notifier.dart';
-import 'package:shoryanelhayat_user/screens/activity_detail.dart';
+import 'package:market_app/models/activity.dart';
+import 'package:market_app/notifiers/activity_notifier.dart';
+import 'package:market_app/screens/activity_detail.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';

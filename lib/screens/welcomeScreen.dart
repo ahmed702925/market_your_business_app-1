@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:shoryanelhayat_user/screens/overview_screen.dart';
+import 'package:market_app/screens/overview_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override

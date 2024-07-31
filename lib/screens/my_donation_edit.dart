@@ -1,5 +1,5 @@
-import 'package:shoryanelhayat_user/models/mydonation.dart';
-import 'package:shoryanelhayat_user/providers/mydonation_provider.dart';
+import 'package:market_app/models/mydonation.dart';
+import 'package:market_app/providers/mydonation_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

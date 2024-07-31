@@ -1,8 +1,8 @@
-import 'package:shoryanelhayat_user/models/user_nav.dart';
-import 'package:shoryanelhayat_user/notifiers/campaign_notifier.dart';
-import 'package:shoryanelhayat_user/providers/shard_pref.dart';
-import 'package:shoryanelhayat_user/screens/PreviousCampaignsDetails.dart';
-import 'package:shoryanelhayat_user/screens/campaigns_donation.dart';
+import 'package:market_app/models/user_nav.dart';
+import 'package:market_app/notifiers/campaign_notifier.dart';
+import 'package:market_app/providers/shard_pref.dart';
+import 'package:market_app/screens/PreviousCampaignsDetails.dart';
+import 'package:market_app/screens/campaigns_donation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

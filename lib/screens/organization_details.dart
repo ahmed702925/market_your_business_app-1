@@ -1,5 +1,5 @@
-import 'package:shoryanelhayat_user/models/organization.dart';
-import 'package:shoryanelhayat_user/notifiers/organization_notifier.dart';
+import 'package:market_app/models/organization.dart';
+import 'package:market_app/notifiers/organization_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

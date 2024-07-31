@@ -1,8 +1,8 @@
 import 'package:another_flushbar/flushbar.dart';
-import 'package:shoryanelhayat_user/notifiers/activity_notifier.dart';
-import 'package:shoryanelhayat_user/notifiers/organization_notifier.dart';
-import 'package:shoryanelhayat_user/providers/auth.dart';
-import 'package:shoryanelhayat_user/providers/usersProvider.dart';
+import 'package:market_app/notifiers/activity_notifier.dart';
+import 'package:market_app/notifiers/organization_notifier.dart';
+import 'package:market_app/providers/auth.dart';
+import 'package:market_app/providers/usersProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

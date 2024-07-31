@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:shoryanelhayat_user/models/campaign.dart';
+import 'package:market_app/models/campaign.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

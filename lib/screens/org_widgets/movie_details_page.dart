@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:shoryanelhayat_user/models/activity.dart';
-import 'package:shoryanelhayat_user/models/organization.dart';
+import 'package:market_app/models/activity.dart';
+import 'package:market_app/models/organization.dart';
 import 'package:flutter/material.dart';
 
-import 'package:shoryanelhayat_user/screens/org_widgets/story_line.dart';
-import 'package:shoryanelhayat_user/screens/org_widgets/actor_scroller.dart';
+import 'package:market_app/screens/org_widgets/story_line.dart';
+import 'package:market_app/screens/org_widgets/actor_scroller.dart';
 
-import 'package:shoryanelhayat_user/screens/org_widgets/movie_detail_header.dart';
+import 'package:market_app/screens/org_widgets/movie_detail_header.dart';
 
 import 'package:http/http.dart' as http;
 

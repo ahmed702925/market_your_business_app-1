@@ -221,14 +221,14 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log("userId is :"+Provider.of<Auth>(context).userData.id);
+    log("userId is :" + Provider.of<Auth>(context).userData.id);
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
     final _width = MediaQuery.of(context).size.width;
     var appBar = AppBar(
       title: new Text(
-        'شركة ISES للتوريدات الكهربية',
+        "Dailykoot",
         style: new TextStyle(
             color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
       ),
@@ -320,7 +320,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
     final bodyLandscape = new Scaffold(
       appBar: new AppBar(
         title: new Text(
-          'شركة ISES للتوريدات الكهربية',
+          "Dailykoot",
           style: new TextStyle(
               color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
         ),
@@ -361,13 +361,13 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                             viewportFraction: 0.9,
                           ),
                           items: [
-                            Image.asset('assets/offers/ises.jpg',
+                            Image.asset('assets/offers/dk_logo.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/ups.jpg',
+                            Image.asset('assets/offers/fruits.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/inverter.jpg',
+                            Image.asset('assets/offers/carrot.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/battery.jpg',
+                            Image.asset('assets/offers/pot.jpg',
                                 fit: BoxFit.cover),
                             // Image.asset('assets/offers/Offer5.jpg',
                             //     fit: BoxFit.cover),
@@ -689,13 +689,13 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                             viewportFraction: 0.9,
                           ),
                           items: [
-                            Image.asset('assets/offers/ises.jpg',
+                            Image.asset('assets/offers/dk_logo.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/ups.jpg',
+                            Image.asset('assets/offers/fruits.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/inverter.jpg',
+                            Image.asset('assets/offers/carrot.jpg',
                                 fit: BoxFit.cover),
-                            Image.asset('assets/offers/battery.jpg',
+                            Image.asset('assets/offers/pot.jpg',
                                 fit: BoxFit.cover),
                           ],
                         ),
@@ -820,7 +820,7 @@ class _OrgOverviewScreenState extends State<OrgOverviewScreen> {
                                               decoration: new BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(5),
-                                                color: Colors.white,
+                                                color: Color(0xffFFF6E6),
                                                 boxShadow: [
                                                   new BoxShadow(
                                                       color: Colors.blueGrey

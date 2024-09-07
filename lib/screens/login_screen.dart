@@ -251,7 +251,7 @@ log("user is is : "+localId);
                           padding: const EdgeInsets.only(top: 70),
                           child: Center(
                             child: const Text(
-                              'مرحبا بك فى ISES',
+                              'مرحبا بك فى Dailykoot',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 28,

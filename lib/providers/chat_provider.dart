@@ -29,7 +29,7 @@ class ChatProvider with ChangeNotifier {
 
   Future<void> fetchAndSetChat(String id, String orgId) async {
     final url =
-        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/chat/$orgId/$id.json';
+        'https://dailykoot-default-rtdb.firebaseio.com/chat/$orgId/$id.json';
     try {
       log("orgId is : "+orgId);
       log("id is : "+id);
@@ -67,7 +67,7 @@ class ChatProvider with ChangeNotifier {
 
   Future<void> addMessage(Chat chat, String id, String orgId) async {
     final url =
-        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/chat/$orgId/$id.json';
+        'https://dailykoot-default-rtdb.firebaseio.com/chat/$orgId/$id.json';
     try {
       final response = await http.post(
         Uri.parse(url),

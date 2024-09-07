@@ -63,28 +63,28 @@ class _MyDonationItemState extends State<MyDonationItem> {
               ),
               ///////////////////////////////////////////////////////////////
 
-              widget.orgName != '' && widget.orgName != null
-                  ? Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      alignment: WrapAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'اسم الجمعية : ',
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          widget.orgName!,
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
+              // widget.orgName != '' && widget.orgName != null
+              //     ? Wrap(
+              //         crossAxisAlignment: WrapCrossAlignment.start,
+              //         alignment: WrapAlignment.start,
+              //         children: <Widget>[
+              //           Text(
+              //             'اسم الجمعية : ',
+              //             style: TextStyle(
+              //                 color: Colors.green,
+              //                 fontSize: 16.0,
+              //                 fontWeight: FontWeight.bold),
+              //           ),
+              //           Text(
+              //             widget.orgName!,
+              //             style: TextStyle(
+              //               color: Colors.green,
+              //               fontSize: 16.0,
+              //             ),
+              //           ),
+              //         ],
+              //       )
+              //     : Container(),
               Container(
                 child: widget.actName != '' && widget.actName != null
                     ? Wrap(
@@ -275,50 +275,51 @@ class _MyDonationItemState extends State<MyDonationItem> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              child: widget.orgName != '' && widget.orgName != null
-                  ? Row(
-                      children: <Widget>[
-                        Text(
-                          'اسم الجمعية : ',
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          widget.orgName!,
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    )
-                  : Container(),
-            ),
-            Container(
-              child: widget.actName != '' && widget.actName != null
-                  ? Row(
-                      children: <Widget>[
-                        Text(
-                          'اسم النشاط : ',
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          widget.actName!,
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    )
-                  : Container(),
-            ),
+            // Container(
+            //   child: widget.orgName != '' && widget.orgName != null
+            //       ? Row(
+            //           children: <Widget>[
+            //             Text(
+            //               'اسم الجمعية : ',
+            //               style: TextStyle(
+            //                   color: Colors.green,
+            //                   fontSize: 12.0,
+            //                   fontWeight: FontWeight.bold),
+            //             ),
+            //             Text(
+            //               widget.orgName!,
+            //               style: TextStyle(
+            //                   color: Colors.green,
+            //                   fontSize: 12.0,
+            //                   fontWeight: FontWeight.bold),
+            //             ),
+            //           ],
+            //         )
+            //       : Container(),
+            // ),
+            // Container(
+            //   child: widget.actName != '' && widget.actName != null
+            //       ? Row(
+            //           children: <Widget>[
+            //             Text(
+            //               'اسم النشاط : ',
+            //               style: TextStyle(
+            //                   color: Colors.green,
+            //                   fontSize: 12.0,
+            //                   fontWeight: FontWeight.bold),
+            //             ),
+            //             Text(
+            //               widget.actName!,
+            //               style: TextStyle(
+            //                   color: Colors.green,
+            //                   fontSize: 12.0,
+            //                   fontWeight: FontWeight.bold),
+            //             ),
+            //           ],
+            //         )
+            //       : Container(),
+            // ),
+           
             // Container(
             //   child: donationType != '' && donationType != null
             //       ? Row(

@@ -23,7 +23,7 @@ class CampaignDenotationScreen extends StatefulWidget {
 }
 
 class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
-  String? selectedType;
+  String? selectedType="نقدى";
   CampaignNotifier? campaignNotifier;
   var _submitLoading = false;
   List<String> _denoteType = <String>[
@@ -246,7 +246,7 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image:
-                              NetworkImage("https://drive.usercontent.google.com/download?id=1R0-ZoGQqvALGWguq0RVK-L1xsjJvEfQ2&export=view&authuser=0"),
+                              NetworkImage("https://i.imgur.com/tItVppE.jpeg"),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -474,44 +474,45 @@ class _CampaignDenotationScreenState extends State<CampaignDenotationScreen> {
                                   size: 25.0,
                                   color: Colors.green[700],
                                 ),
-                                SizedBox(width: 50.0),
-                                DropdownButton(
-                                  items: _denoteType
-                                      .map(
-                                        (value) => DropdownMenuItem(
-                                          child: Row(
-                                            children: <Widget>[
-                                              Icon(
-                                                _denoteIcons[
-                                                    _denoteType.indexOf(value)],
-                                                size: 25.0,
-                                                color: Color(0xff11b719),
-                                              ),
-                                              SizedBox(width: 50.0),
-                                              Text(
-                                                value,
-                                                style: TextStyle(
-                                                    color: Color(0xff11b719)),
-                                              ),
-                                            ],
-                                          ),
-                                          value: value,
-                                        ),
-                                      )
-                                      .toList(),
-                                  onChanged: (selectedAccountType) {
-                                    setState(() {
-                                      selectedType =
-                                          selectedAccountType as String?;
-                                    });
-                                  },
-                                  value: selectedType,
-                                  isExpanded: false,
-                                  hint: Text(
-                                    'اختار نوع الطلب',
-                                    style: TextStyle(color: Color(0xff11b719)),
-                                  ),
-                                )
+                                // SizedBox(width: 50.0),
+                                // DropdownButton(
+                                //   items: _denoteType
+                                //       .map(
+                                //         (value) => DropdownMenuItem(
+                                //           child: Row(
+                                //             children: <Widget>[
+                                //               Icon(
+                                //                 _denoteIcons[
+                                //                     _denoteType.indexOf(value)],
+                                //                 size: 25.0,
+                                //                 color: Color(0xff11b719),
+                                //               ),
+                                //               SizedBox(width: 50.0),
+                                //               Text(
+                                //                 value,
+                                //                 style: TextStyle(
+                                //                     color: Color(0xff11b719)),
+                                //               ),
+                                //             ],
+                                //           ),
+                                //           value: value,
+                                //         ),
+                                //       )
+                                //       .toList(),
+                                //   onChanged: (selectedAccountType) {
+                                //     setState(() {
+                                //       selectedType =
+                                //           selectedAccountType as String?;
+                                //     });
+                                //   },
+                                //   value: selectedType,
+                                //   isExpanded: false,
+                                //   hint: Text(
+                                //     'اختار نوع الطلب',
+                                //     style: TextStyle(color: Color(0xff11b719)),
+                                //   ),
+                                // )
+                             
                               ],
                             ),
                             if (selectedType == 'نقدى' ||

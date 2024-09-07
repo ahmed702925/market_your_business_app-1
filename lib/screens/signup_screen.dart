@@ -162,7 +162,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         horizontal: 20, vertical: 100),
                     child: Center(
                       child: const Text(
-                        'مرحبا بك فى  ISES',
+                        'مرحبا بك فى  Dailykoot',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 28,

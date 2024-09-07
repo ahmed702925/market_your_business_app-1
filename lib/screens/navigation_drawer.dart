@@ -258,6 +258,7 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
           //     Navigator.pushNamed(context, '/Notifications');
           //   },
           // ),
+          if (userLoad != null)
           new ListTile(
             title: const Text(
               "طلباتى",
@@ -295,22 +296,22 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
 //            },
 //          ),
 
-          new ListTile(
-            title: const Text(
-              "الدعم و المساعدة",
-              style: TextStyle(fontSize: 16),
-            ),
-            leading: new Icon(
-              Icons.help,
-              size: 30,
-            ),
-            onTap: () {
-              Navigator.of(context).pop();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HelpScreen()));
-            },
-          ),
-          Divider(),
+          // new ListTile(
+          //   title: const Text(
+          //     "الدعم و المساعدة",
+          //     style: TextStyle(fontSize: 16),
+          //   ),
+          //   leading: new Icon(
+          //     Icons.help,
+          //     size: 30,
+          //   ),
+          //   onTap: () {
+          //     Navigator.of(context).pop();
+          //     Navigator.push(context,
+          //         MaterialPageRoute(builder: (context) => HelpScreen()));
+          //   },
+          // ),
+          // Divider(),
 
           if (userLoad != null)
             new ListTile(

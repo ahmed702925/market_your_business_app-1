@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
                 ),
               );
             },
-            title: 'ISES',
+            title: 'Dailykoot',
             theme: new ThemeData(
                 primarySwatch: Colors.green,
                 textTheme: TextTheme(

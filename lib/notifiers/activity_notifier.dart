@@ -37,7 +37,7 @@ Future<void> getActivites(String orgId) async {
 
     // selectedActivity = null;
     final url =
-        'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/activities/$orgId.json';
+        'https://dailykoot-default-rtdb.firebaseio.com/activities/$orgId.json';
     try {
       final response = await http.get(Uri.parse(url));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -71,7 +71,7 @@ Future<void> getActivites(String orgId) async {
   // Old Bad Failed Function 
   // Future<void> fetchAndSetActivities(String orgId) async {
   //   final url = Uri.parse(
-  //       'https://marketbusinessapp-8a624-default-rtdb.firebaseio.com/activities/$orgId.json');
+  //       'https://dailykoot-default-rtdb.firebaseio.com/activities/$orgId.json');
   //   try {
   //     final response = await http.get(url);
   //     final extractedData = json.decode(response.body) as Map<String, dynamic>;

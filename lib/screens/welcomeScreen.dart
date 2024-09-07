@@ -23,12 +23,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF46A04F),
+      backgroundColor: Color(0xffFFF6E6),
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: Center(
           child: Image.asset(
-            'assets/offers/ises.jpg',
+            'assets/offers/dk_logo.jpg',
             fit: BoxFit.fill,
           ),
         ),

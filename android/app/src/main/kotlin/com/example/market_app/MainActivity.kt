@@ -1,4 +1,4 @@
-package com.ahmedelsayed.ises
+package com.ahmedelsayed.dailykoot
 
 import io.flutter.embedding.android.FlutterActivity
 

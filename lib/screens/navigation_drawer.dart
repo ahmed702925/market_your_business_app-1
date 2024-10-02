@@ -258,27 +258,28 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
           //     Navigator.pushNamed(context, '/Notifications');
           //   },
           // ),
-          new ListTile(
-            title: const Text(
-              "طلباتى",
-              style: TextStyle(
-                fontSize: 16,
-                // fontWeight: FontWeight.bold
+          if (userLoad != null)
+            new ListTile(
+              title: const Text(
+                "طلباتى",
+                style: TextStyle(
+                  fontSize: 16,
+                  // fontWeight: FontWeight.bold
+                ),
               ),
+              leading: new Icon(
+                FontAwesomeIcons.handsHelping,
+                size: 30,
+                color: Colors.green,
+              ),
+              onTap: () async {
+                Navigator.pop(context);
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                  return MyDonationsScreen();
+                }));
+              },
             ),
-            leading: new Icon(
-              FontAwesomeIcons.handsHelping,
-              size: 30,
-              color: Colors.green,
-            ),
-            onTap: () async {
-              Navigator.pop(context);
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (BuildContext context) {
-                return MyDonationsScreen();
-              }));
-            },
-          ),
 //          new ListTile(
 //            title: const Text(
 //              "الطلبات الخارجية",
@@ -294,23 +295,23 @@ class _CustomNavigationDrawerState extends State<CustomNavigationDrawer> {
 //              Navigator.pushNamed(context, '/ExternalDonation');
 //            },
 //          ),
-
-          new ListTile(
-            title: const Text(
-              "الدعم و المساعدة",
-              style: TextStyle(fontSize: 16),
-            ),
-            leading: new Icon(
-              Icons.help,
-              size: 30,
-            ),
-            onTap: () {
-              Navigator.of(context).pop();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => HelpScreen()));
-            },
-          ),
-          Divider(),
+          // if (userLoad != null)
+          //         new ListTile(
+          //           title: const Text(
+          //             "الدعم و المساعدة",
+          //             style: TextStyle(fontSize: 16),
+          //           ),
+          //           leading: new Icon(
+          //             Icons.help,
+          //             size: 30,
+          //           ),
+          //           onTap: () {
+          //             Navigator.of(context).pop();
+          //             Navigator.push(context,
+          //                 MaterialPageRoute(builder: (context) => HelpScreen()));
+          //           },
+          //         ),
+          //         Divider(),
 
           if (userLoad != null)
             new ListTile(
